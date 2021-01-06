@@ -1,0 +1,47 @@
+@media (max-width: 1920px) { /* это будет показано при разрешении монитора до 1920 пикселей */
+
+    .table-container {
+        height: 250px;
+        overflow: auto;
+    }  
+} 
+@media (max-width: 1400px) { /* это будет показано при разрешении монитора до 1366 пикселей */
+    .table-container {
+        height: 150px;
+        overflow: auto;
+    }  
+}
+:host ::ng-deep .mat-form-field-flex > .mat-form-field-infix { 
+    padding: 0.4em 0px !important;
+}
+:host ::ng-deep .mat-form-field-label-wrapper { 
+    top: -1.3em; 
+}
+:host ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+table {
+    width: 100%;
+}
+tr.mat-header-row {
+    height: 30px;
+}
+tr.mat-row, tr.mat-footer-row {
+    height: 30px;
+}
+.ng-tns-c272-6, .ng-tns-c171-3 {
+    font-size: calc(4px + .5vw);
+}
+button {
+    top: .2rem;
+    height: calc(24px + 1vh);
+    font-size: calc(4px + .5vw);
+}
+.mat-form-field {
+    margin: 0.4rem;
+    width: calc(7.5rem + 5vw);
+    
+    font-size: calc(6px + .4vw);
+    height: calc(24px + 1vh);
+}

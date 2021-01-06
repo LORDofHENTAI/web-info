@@ -1,0 +1,25 @@
+<!-- <mat-form-field appearance="outline">
+    <mat-label>Количество</mat-label>
+    <input type="number" step="0.01" min="0" matInput class="input-search" #inputData="matInput"  placeholder="Введите значение" 
+        (input)="onInputSearchData($event.target.value)" (keyup.enter)="onOkClick()">
+    <mat-icon id="close" matSuffix *ngIf="inputData.value.length > 0" (click)="inputData.value = ''">close</mat-icon>
+</mat-form-field> -->
+
+<!-- <div mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="onNoClick()">Отмена</button>
+    <button mat-stroked-button (click)="onOkClick()" *ngIf="inputData.value.length === 0" [disabled]="true">Принять</button>
+    <button mat-stroked-button (click)="onOkClick()" *ngIf="inputData.value.length > 0">Принять</button>
+</div> -->
+
+<mat-form-field appearance="outline">
+    <mat-label>Количество</mat-label>
+    <input type="number" step="0.01" min="0" matInput class="input-search" #inputData="matInput" placeholder="Введите значение" 
+        [(ngModel)]="countItem" (keyup.enter)="onOkClick()">
+    <mat-icon id="close" matSuffix *ngIf="inputData.value.length > 0" (click)="inputData.value = ''; countItem = 0">close</mat-icon>
+</mat-form-field>
+
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="onNoClick()">Отмена</button>
+    <button mat-stroked-button (click)="onOkClick()" *ngIf="inputData.value.length === 0" [disabled]="true">Принять</button>
+    <button mat-stroked-button (click)="onOkClick()" *ngIf="inputData.value.length > 0">Принять</button>
+</div>

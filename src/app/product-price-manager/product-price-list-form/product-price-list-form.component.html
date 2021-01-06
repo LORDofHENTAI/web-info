@@ -1,0 +1,48 @@
+<div class="card-item-list" *ngIf="listVipiska">
+    <ng-container *ngIf="listVipiska.list">
+        <div class="card-item" *ngFor="let vipiska of listVipiska.list">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <img class="card-item-img" *ngIf="vipiska.img" src="{{vipiska.img | urlImg}}">
+                        <img width="40px" height="40px" *ngIf="!vipiska.img" src="../../../../../assets/no_photo.png">
+                    </div>
+                    <div class="row">Артикул: {{vipiska.article}}</div>
+                    <div class="row">
+                        ПРОДАЖИ ПО БЕЗНАЛИЧНОМУ РАСЧЕТУ:&nbsp;
+                        <ng-container *ngIf="!vipiska.info">ДА</ng-container>
+                        <ng-container *ngIf="vipiska.info">НЕТ</ng-container>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row card-item-name">{{vipiska.name}}</div>
+                    <div class="row">Количество: {{vipiska.quantity}} {{vipiska.mesname}} / Цена: {{vipiska.price}}</div>
+                    <div class="row">Сумма: {{vipiska.summa}}</div>
+                    <div class="row">
+                        <div class="foot">
+                            <button
+                                class="bt-card-item"
+                                mat-icon-button>
+                                <mat-icon matTooltip="Удалить позицию" (click)="onDeleteItem(vipiska)">delete</mat-icon>
+                            </button>
+                           
+                            <button
+                                class="bt-card-item"
+                                mat-icon-button>
+                                <mat-icon matTooltip="Редактировать количество" (click)="onEditItem(vipiska)">edit</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<mat-divider></mat-divider>
+<div class="form-inline">
+    <div class="card-summ" *ngIf="listVipiska"><b>Сумма: {{listVipiska.summa | number:'1.0-2'}}</b></div>
+    <div class="foot">
+        <button mat-stroked-button (click)="onPrintLable()">Печать</button>
+        <button mat-stroked-button class="m-1" (click)="onClearList()">Очистить</button>
+    </div>
+</div>

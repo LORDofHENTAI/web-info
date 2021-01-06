@@ -1,0 +1,64 @@
+<div class="product-pits-contant">
+    <div class="form-inline">
+        <div class="left-col">
+            <div>
+                <button id="new-doc" mat-stroked-button data-placement="bottom" matTooltip="Новый документ" > Новый документ </button> 
+            </div>
+            <div>
+                <button mat-stroked-button data-placement="bottom" matTooltip="Просмотр" > Просмотр </button> 
+            </div>
+        </div>
+
+        <div class="center-col">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Заявки</mat-label>
+                    <mat-select  [(ngModel)]="selectedRequest">
+                        <mat-option *ngFor="let request of requests" [value]="request">{{request}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" >
+                    <mat-label>Отдел</mat-label>
+                    <mat-select [(ngModel)]="selectedRequest">
+                        <mat-option *ngFor="let request of requests" [value]="request">{{request}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="right-col">
+            <div class="right-bt-gr">
+                <button mat-stroked-button data-placement="bottom" matTooltip="Новый документ" > Отобрать по фильтру </button> 
+                <button mat-stroked-button data-placement="bottom" matTooltip="Новый документ" > Отобрать все </button>    
+            </div>
+            <div>
+                <div class="form-inline">
+                    <mat-label class="product-point">Торговая точка: </mat-label>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Отдел</mat-label>
+                        <mat-select>
+                            <mat-option>None</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div>
+        <mat-form-field appearance="outline" >
+            <mat-label>Выберите диапозон дат</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="Начальная дата">
+              <input matEndDate formControlName="end" placeholder="Конечная дата">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          
+            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Ошибка начальной даты</mat-error>
+            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Ошибка конечной даты</mat-error>
+        </mat-form-field>
+    </div> -->
+</div>

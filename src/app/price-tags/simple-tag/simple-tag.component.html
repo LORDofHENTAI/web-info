@@ -1,0 +1,23 @@
+<div class="price">
+    <div class="name-shop"> 
+        <p>Маг. "Mile", г.Минск, Долгиновский тракт, 188, 220053</p>
+    </div>
+    <div class="block-name-product">
+        <p class="name-product">{{vipiska.name}}</p>
+    </div>
+    <div class="form-inline">
+        <div><img class="black-rectangle" src="../../../assets/black-rectangle.png"></div>
+        <div class="cost">{{vipiska.price}}</div>
+        <div class="units">/шт</div>
+    </div>
+    <div class="form-inline">
+        <div class="barcode">
+            <div class="country">Poland</div>
+            <img width="95px" height="32px" [src]="imgSource + vipiska.barcode">
+        </div>
+        <div class="data-product">
+            <div>артикул: {{vipiska.article}}</div>
+            <div>08.12.2020</div>
+        </div>
+    </div>
+</div>

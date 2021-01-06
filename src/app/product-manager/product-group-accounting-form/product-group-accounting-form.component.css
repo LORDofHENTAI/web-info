@@ -1,0 +1,378 @@
+/* @media (max-width: 1920px) { 
+    .tree-container {
+        width: 100vw; 
+        height: 94vh;
+    }
+    .prod {
+        height: 46vh;
+    }
+} 
+
+@media (max-width: 1366px) {
+    .tree-container {
+        width: 100vw; 
+        height: 90vh;
+    }
+    .prod {
+        height: 36vh;
+    }
+} */
+.prod {
+    height: calc(100vh - 204px);;
+}
+.mat-drawer-container {
+    height: calc(100vh - 98px);
+    overflow: auto;
+}
+tr.mat-header-row  {
+    height: 32px !important;
+    background-color: rgb(230, 230, 230);
+}
+tr.mat-row, tr.mat-footer-row {
+    height: 30px;
+}
+mat-drawer {
+    padding: 5px;
+    width: 25%;
+}
+.mat-tree-node {
+    min-height: 2em;
+}
+mat-tree {
+    cursor: pointer;
+}
+mat-tree-node button {
+    border: none;
+    outline: none;
+}
+mat-tree-node:hover {
+    background-color: rgba(185, 151, 218, 0.4);
+}
+mat-tree-node button:hover {
+    cursor: pointer;
+}
+::ng-deep .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: rgba(185, 151, 218, 0.4);
+    cursor: pointer;
+}
+.select-row {
+    background: rgba(137, 43, 226, 0.5);
+}
+mat-form-field#input-search {
+    width: 90%;
+}
+.search-container {
+    margin: 0 .2rem .5rem 0;
+}
+.search-group {
+    width: 15vw;
+    display: table-cell;
+}
+.search-group button {
+    margin-left: 0.4rem;
+}
+mat-spinner {
+    margin-left: 0.45em;
+    margin-right: 1em;
+}
+
+.mat-button-toggle-checked {
+    color: black;
+    background-color: rgba(137, 43, 226, 0.5);
+}
+.mat-button-toggle {
+    width: 10vw;
+    min-width: 5rem;
+}
+.bt-font-size mat-button-toggle {
+    font-size: calc(6px + .6vw);
+}
+mat-button-toggle-group {
+    height: 32px;
+}
+
+mat-tree-node mat-icon {
+    position: relative;
+    top: -0.8em;
+    right: 0.1em;
+    height: 18px;
+    width: 18px;
+}
+mat-tree-node button {
+    height: 18px;
+    width: 18px;
+}
+mat-tree-node label {
+    position: relative;
+    top: -0.8em;
+}
+mat-tree-node label:hover  {
+    cursor: pointer;
+}
+
+.button-group {
+    position: relative;
+    top: 1rem;
+}
+.col-padding {
+    margin-bottom: 0.5rem;
+}
+.search-panel {
+    padding-bottom: 0%;
+}
+
+.error-style {
+    color: red;
+}
+
+.table-container {
+    width: 100%;
+    overflow: auto;
+}
+table {
+    width: 100%;
+}
+.list-prop {
+    height: 22vh;
+    width: 16vw;
+    border: 0.12em solid rgba(128, 128, 128, 0.4);
+    border-radius: 5px;
+}
+.mat-column-articl {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+   
+    word-break: break-word;
+   
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}   
+.mat-column-name {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 36% !important;
+    width: 36% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+   
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}  
+.mat-column-status {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}   
+.mat-column-barcode {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 20% !important;
+    width: 20% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}   
+.mat-column-balancestore {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 7% !important;
+    width: 7% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+} 
+.mat-column-balancedefect {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 7% !important;
+    width: 7% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+.mat-column-action {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+mat-card  {
+    padding: 0% 1em;
+}
+.mat-card-borderr-bottom {
+    border-bottom-color: rgba(128, 128, 128, 0.4); 
+    border-bottom-style: double; 
+    border-bottom-width: 0.08em;
+    border-radius: 0%;
+    /* margin-bottom: 0.5em; */
+}
+.mat-card-margin {
+    padding-top: 0.5em;
+    width: 100%;
+}
+.card-overflow {
+    overflow: auto;
+}
+
+mat-nav-list {
+    margin: 0% !important;
+    padding: 0% !important;
+    border: 0.08em double rgba(128, 128, 128, 0.4);
+    border-radius: 5px;
+    height: 11em;
+    width: 15em;
+    overflow: auto;
+}
+table#table-prop {
+    width: 100%;
+}
+table#table-prop th td{
+    margin: 0%;
+    width: 20em;
+}
+mat-form-field#form-prop {
+    margin: 0% !important;
+    padding: 0% !important;
+}
+div#link {
+    margin: 0.1em !important;
+    padding: 0.1em !important;
+}
+p#common-count {
+   color: rgba(128, 128, 128);
+}
+mat-icon#push {
+    padding: 0;
+    cursor: pointer;
+    font-size: 22px;
+}
+mat-icon#push:hover {
+    font-size: 23px;
+    color: blueviolet;
+}
+.ng-star-inserted {
+    margin-left: 0 !important;
+}
+#form-name {
+    width: 90%;
+}
+mat-drawer-content button {
+    width: 6vw;
+    height: calc(26px + 1vh);
+
+    font-size: calc(4px + .6vw);
+}
+.row-width {
+    width: 90%;
+}
+:host ::ng-deep .mat-tab-label {
+    height: 32px !important;
+}
+:host ::ng-deep .mat-tab-header {
+    height: 32px;
+    border-top: 1px solid rgb(168, 168, 168);
+    /* background-color: rgb(230, 230, 230); */
+}
+:host ::ng-deep .mat-tab-label:hover {
+    color: blueviolet;
+}
+.mat-card-margin {
+    padding-top: 0%;
+}
+:host ::ng-deep .mat-tab-label {
+    width: 75px;
+}
+:host ::ng-deep .mat-tab-label, .mat-tab-link {
+    font-size: 12px !important;
+}
+.lb-cost {
+    margin-left: .4rem;
+    font-size: calc(4px + .6vw);
+    border: 1px solid rgb(168, 168, 168);
+    border-radius: .2rem;
+    padding: .2rem .6rem;
+}
+::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 6px;
+}
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #0ae;
+	border-radius: 6px;
+}
+.mat-panel-overflow {
+    max-height: calc(100vh - 280px);
+    overflow: auto;
+}
+
+.mat-expansion-panel-header {
+    padding: 0px 4px;
+}
+:host ::ng-deep .mat-expansion-panel-body {
+    padding: 0;
+    margin: 0 0 5px 5px;
+}
+
+mat-expansion-panel {
+    margin-bottom: 0.4rem;
+}
+.mat-expansion-panel-header.mat-expanded {
+    height: 44px;
+}
+mat-panel-title {
+    font-size: 20px;
+    font-weight: 400;
+}

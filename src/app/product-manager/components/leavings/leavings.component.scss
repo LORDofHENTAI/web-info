@@ -1,0 +1,22 @@
+@media (max-width: 1920px) { /* это будет показано при разрешении монитора до 1920 пикселей */
+
+    .table-container {
+        height: 250px;
+        overflow: auto;
+    }  
+} 
+@media (max-width: 1400px) { /* это будет показано при разрешении монитора до 1366 пикселей */
+    .table-container {
+        height: 150px;
+        overflow: auto;
+    }  
+}
+table {
+    width: 100%;
+}
+tr.mat-header-row {
+    height: 32px;
+}
+tr.mat-row, tr.mat-footer-row {
+    height: 30px;
+}

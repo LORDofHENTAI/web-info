@@ -1,0 +1,51 @@
+
+<table>
+    <th>Магазин MILE </th>
+</table>
+
+<div class="table-container">
+
+    <table class="table-hover" mat-table [dataSource]="data">
+<!-- 
+        <ng-container matColumnDef="article">
+            <th mat-header-cell *matHeaderCellDef> Артикул </th>
+            <td mat-cell *matCellDef="let element"> {{element.article}} </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Наименование </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="row space">Артикул: {{element.article}}</div>
+                <div class="row"> Наименование: {{element.name}} </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="barcode">
+            <th mat-header-cell *matHeaderCellDef> Штрихкод </th>
+            <td mat-cell *matCellDef="let element"> {{element.barcode}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef>Количество </th>
+            <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="units">
+            <th mat-header-cell *matHeaderCellDef> Ед. измерения </th>
+            <td mat-cell *matCellDef="let element"> {{element.units}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cost">
+            <th mat-header-cell *matHeaderCellDef> Цена 2009 </th>
+            <td mat-cell *matCellDef="let element"> {{element.cost}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="summ">
+            <th mat-header-cell *matHeaderCellDef> Сумма 2009 </th>
+            <td mat-cell *matCellDef="let element"> {{element.summ}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

@@ -1,0 +1,17 @@
+<div id="print-price-section">
+    <div class="card-data">
+        <div *ngFor="let tag of data.list">
+            <div class="card">             
+                <app-simple-tag [vipiska]="tag"></app-simple-tag>             
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="onPrint()"><mat-icon>print</mat-icon></button>
+    <button mat-stroked-button (click)="onNoClick()">Отмена</button>
+</div>
+
+<!-- <ng-container *ngIf="tag === 10">
+    <p style="page-break-after: always;">&nbsp;</p>
+</ng-container> -->

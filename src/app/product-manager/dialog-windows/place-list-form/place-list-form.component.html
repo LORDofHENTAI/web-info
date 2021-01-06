@@ -1,0 +1,85 @@
+<div id="print-section">
+    <div class="prod table-container">
+        <table mat-table [dataSource]="data.productList" class="table-hover" #productTable >
+
+            <ng-container matColumnDef="article">
+                <th mat-header-cell *matHeaderCellDef> Артикул </th>
+                <td mat-cell *matCellDef="let element"> {{element[0]}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Наименование </th>
+                <td mat-cell *matCellDef="let element"> <div class="marg">{{element[1]}}</div>  </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Тип </th>
+                <td mat-cell *matCellDef="let element"> {{element[2]}} </td>
+            </ng-container>     
+
+            <ng-container matColumnDef="barcode">
+                <th mat-header-cell *matHeaderCellDef> Штрихкод </th>
+                <td mat-cell *matCellDef="let element"> {{element[3]}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="balancestore">
+                <th mat-header-cell *matHeaderCellDef> Ост. склад </th>
+                <td mat-cell *matCellDef="let element" > {{element[4]}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="balancedefect">
+                <th mat-header-cell *matHeaderCellDef> Ост. брак </th>
+                <td mat-cell *matCellDef="let element"> {{element[5]}} </td>
+            </ng-container>           
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsProducts; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsProducts;" 
+                (click)="onSelectRowClick(row)"
+                [ngClass]="{ 'select-row': selectedRowIndex == row[0] }"></tr>
+
+        </table>
+    </div>
+    <br>
+    <div class="places">
+        <table mat-table [dataSource]="dataPlace" class="table-hover places">
+
+            <ng-container matColumnDef="num">
+                <th mat-header-cell *matHeaderCellDef> № </th>
+                <td mat-cell *matCellDef="let element"> {{element.num}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="place">
+                <th mat-header-cell *matHeaderCellDef> Места хранения </th>
+                <td mat-cell *matCellDef="let element"> {{element.place}} </td>
+            </ng-container>   
+            
+            <ng-container matColumnDef="count">
+                <th mat-header-cell *matHeaderCellDef> Количество </th>
+                <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsPlaces; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsPlaces;"></tr>
+
+        </table>
+    </div>
+</div>
+<br>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" class="btn btn-default" (click)="onNoClick()"> 
+        Закрыть 
+    </button>
+    <button mat-raised-button color="primary" class="btn btn-default"
+        [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
+        printSectionId="print-section"  
+        ngxPrint> 
+        <mat-icon>print</mat-icon> 
+    </button>
+</div>
+
+<!-- <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>  </th>
+    <td mat-cell *matCellDef="let element" matTooltip="Распечатать инфо"> 
+        <mat-icon id="push" (click)="onPrintInfo(element)">print</mat-icon>
+    </td>
+</ng-container>  -->
