@@ -5,8 +5,10 @@ export class ProductQuery{
         public article: string,
         public name: string,
         public barcode: string,
-        public place: string,
-        public dilevery: string,
-        public current: string
+        public storeType: string,
+        public priceType: string,
+        // public place: string, //to do delete
+        // public dilevery: string,
+        public current: string,
     ){}
 }

@@ -1,29 +1,16 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { ProductService } from '../services/product.service';
 import { DownList } from '../models/down-list';
-import { CookieService } from 'ngx-cookie-service';
-import { environment } from 'src/environments/environment';
 import { ProductQuery } from '../models/product-query';
-import { ProductProp } from '../models/product-prop';
 import { ProductPropAnswer } from '../models/product-prop-answer';
 import { MatDialog } from '@angular/material/dialog';
-import { PrintLableFormComponent } from '../dialog-windows/print-lable-form/print-lable-form.component';
-import { StoragePlacesEditorComponent } from '../dialog-windows/storage-places-editor/storage-places-editor.component';
-import { PlaceListFormComponent } from '../dialog-windows/place-list-form/place-list-form.component';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
 import { AttentionFormComponent } from 'src/app/common/components/dialog-windows/attention-dialog/attention-form/attention-form.component';
-import { PrintWindowComponent } from 'src/app/price-tags/dialog-windows/print-window/print-window.component';
 import { ProductCardComponent } from '../dialog-windows/product-card/product-card.component';
-import { CheckAnswer } from 'src/app/price-manager/models/check-answer';
-import { SelectCountComponent } from 'src/app/price-manager/dialog-windows/select-count/select-count.component';
 import { TokenService } from 'src/app/common/services/token/token.service';
-import { AddToVipiska } from 'src/app/price-manager/models/add-to-vipiska';
-import { VipiskaQuery } from 'src/app/price-manager/models/vipiska-query';
-import { VipiskaEnd } from 'src/app/price-manager/models/vipiska-end';
-
-declare var require: any
+import { ProductAnswer } from '../models/product-answer';
 
 interface PoductNode {
   id: string;
@@ -49,7 +36,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   productArticlePrice: string;
   group: string = '';
   selectedRowTree: string = '';
-  selectedRow: Array<string> = [];
+  
   searchValue: string = '';
 
   selectedSearchVar: string = 'article';
@@ -58,25 +45,28 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   hoveredIndex: any;
   valueModeVar: string;
 
-  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', '');
-  displayedColumnsProducts = ['article', 'name', 'status', 'barcode', 'balancestore', 'balancedefect', 'action'];
+  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
+  displayedColumnsProducts = ['article', 'name', 'type', 'goods', 'price', 'action'];
   displayedColumnsPlaces = ['place', 'bt'];
   displayedColumnsDelivers = ['delivers'];
   treeData: any;
-  dataSourceProducts: Array<Array<string>> = [];
-  tempDataSourceProducts: Array<Array<string>> = [];
+
+  selectedRow: ProductAnswer = new ProductAnswer('', '', '', '', '');
+  dataSourceProducts: ProductAnswer[] = [];
+  tempDataSourceProducts: ProductAnswer[] = [];
   listPlaces: Array<string> = [];
   listDelivers: Array<string> = [];
   isEmptySearchValue = false;
-  private nameCookie = environment.cookieName;
   countListProducts: number = 0;
   scrollPosition = 5000;
   curentPositionTable = 200;
   isLoading: any;
 
   panelOpenStateTree = true;
-  panelOpenStateList = false;
+  panelOpenStateOrdering = false;
   panelOpenStatePrice = false;
+
+  isOpenProductPits = false;
   
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   action = 'Ok';
@@ -101,28 +91,22 @@ export class ProductGroupAccountingFormComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private zone: NgZone,
     private tokenService: TokenService,
-    private cookieService: CookieService,
     private productService: ProductService,
-    private snackbarService: SnackbarService,) { }
+    private snackbarService: SnackbarService,) 
+    { }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   
   ngOnInit() {
-    this.productService.getList(new DownList(this.getToken(this.nameCookie))).subscribe(response => {
-      this.checkResponseList(response); 
+    this.productService.getList(new DownList(this.tokenService.getToken())).subscribe(response => {
+      if(response)
+        this.dataSource.data = response;
     }, 
     error => { 
       console.log(error);
       this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
     });
-  }
-
-  checkResponseList(response) {
-    if(response) {
-      this.dataSource.data = response;
-    }
   }
 
   onSelectNode(node) {
@@ -132,8 +116,13 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     if(this.group) {
       this.dataSourceProducts = [];
       this.scrollPosition = 5000;
-      this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), this.group, '', '', '', '', '', '')).subscribe(response => {
-        this.checkResponseProduct(response); 
+      this.productService.getProducts(
+        new ProductQuery(this.tokenService.getToken(), this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), ''))
+        .subscribe(response => {
+          if(response) {
+            this.dataSourceProducts = this.dataSourceProducts.concat(response);
+            this.countListProducts = this.dataSourceProducts.length;
+          }
       }, 
       error => { 
         console.log(error);
@@ -141,14 +130,14 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     }
   }
 
-  checkResponseProduct(response) {
+  assignResponseProduct(response) {
     if(response) {
       this.dataSourceProducts = this.dataSourceProducts.concat(response);
       this.countListProducts = this.dataSourceProducts.length;
     }
   }
 
-  checkResponseProductSearch(response) {
+  assignResponseProductSearch(response) {
     if(response) {
       this.dataSourceProducts = response;
       this.countListProducts = this.dataSourceProducts.length;
@@ -158,17 +147,11 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     }
   }
 
-  checkResponseProductProp(response: ProductPropAnswer) {
+  assignResponseProductProp(response: ProductPropAnswer) {
     if(response) {
       this.listPlaces = [];
       this.listDelivers = [];
       this.productPropAnswer = response;  
-      if(this.productPropAnswer.places) {
-        var splitPlace = this.productPropAnswer.places.split("; ");
-        splitPlace.forEach(element => {
-          this.listPlaces.push(element);
-        }); 
-      }
       if(this.productPropAnswer.delivers) {
         var splitDelivers = this.productPropAnswer.delivers.split("; ");
         splitDelivers.forEach(element => {
@@ -193,40 +176,30 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       console.log(this.searchValue);
       this.isEmptySearchValue = false;
       if(this.selectedSearchVar === 'article') {
-        this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), '', this.searchValue, '', '', '', '', '')).subscribe(response => {
-          this.checkResponseProductSearch(response); 
+        this.productService.getProducts(
+          new ProductQuery(this.tokenService.getToken(), '', this.searchValue, '', '', this.tokenService.getShop(), this.tokenService.getType(), ''))
+          .subscribe(response => {
+            this.assignResponseProductSearch(response); 
         }, 
         error => { 
           console.log(error);
         });
       }
       if(this.selectedSearchVar === 'name') {
-        this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), '', '', this.searchValue, '', '', '', '')).subscribe(response => {
-          this.checkResponseProductSearch(response); 
+        this.productService.getProducts(
+          new ProductQuery(this.tokenService.getToken(), '', '', this.searchValue, '', this.tokenService.getShop(), this.tokenService.getType(), ''))
+          .subscribe(response => {
+            this.assignResponseProductSearch(response); 
         }, 
         error => { 
           console.log(error);
         });
       }
       if(this.selectedSearchVar === 'barcode') {
-        this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), '', '', '', this.searchValue, '', '', '')).subscribe(response => {
-          this.checkResponseProductSearch(response); 
-        }, 
-        error => { 
-          console.log(error);
-        });
-      }
-      if(this.selectedSearchVar === 'storage') {
-        this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), '', '', '', '', this.searchValue, '', '')).subscribe(response => {
-          this.checkResponseProductSearch(response); 
-        }, 
-        error => { 
-          console.log(error);
-        });
-      }
-      if(this.selectedSearchVar === 'provider') {
-        this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), '', '', '', '', '', this.searchValue, '')).subscribe(response => {
-          this.checkResponseProductSearch(response); 
+        this.productService.getProducts(
+          new ProductQuery(this.tokenService.getToken(), '', '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), ''))
+          .subscribe(response => {
+            this.assignResponseProductSearch(response);
         }, 
         error => { 
           console.log(error);
@@ -251,27 +224,19 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     }
   }
 
-  onSelectRowClick(row: Array<string>) {
-    if(row[0]) {
+  onSelectRowClick(row: ProductAnswer) {
+    if(row.article) {
       this.selectedRow = row;
-      // this.productService.getProductProp(new ProductProp(this.getToken(this.nameCookie), row[0])).subscribe(response => {
-      //   this.checkResponseProductProp(response); 
-      // }, 
-      // error => { 
-      //   console.log(error);
-      // });
     }
   }
 
-  onOpenProductCard(row: Array<string>) {
+  onOpenProductCard(row: ProductAnswer) {
     const dialogRef = this.dialog.open(ProductCardComponent, {
-      // width: "300px",
-      data: { article: row[0] },
+      // width: "70%",
+      // height: "70%",
+      data: row.article
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result === 'true') {
-        this.onSelectRowClick(this.dataSourceProducts[0]);
-      }
     });
   }
 
@@ -280,49 +245,41 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       this.scrollPosition += 5000;
       var pos = this.countListProducts + 200;
       if(pos % 200 == 0) {
-        if(this.group) {
-          this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), this.group, '', '', '', '', '', pos.toString())).subscribe(response => {
-            this.checkResponseProduct(response); 
+        if(this.group && !this.searchValue) {
+          this.productService.getProducts(
+            new ProductQuery(this.tokenService.getToken(), this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()))
+            .subscribe(response => {
+              this.assignResponseProduct(response); 
           }, 
           error => { 
             console.log(error);
           });
         }
-        if(this.selectedSearchVar === 'article') {
-          this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), '', this.searchValue, '', '', '', '', pos.toString())).subscribe(response => {
-            this.checkResponseProduct(response); 
+        if(this.selectedSearchVar === 'article' && this.searchValue) {
+          this.productService.getProducts(
+            new ProductQuery(this.tokenService.getToken(), '', this.searchValue, '', '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()))
+            .subscribe(response => {
+              this.assignResponseProduct(response); 
           }, 
           error => { 
             console.log(error);
           });
         }
-        if(this.selectedSearchVar === 'name') {
-          this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), '', '', this.searchValue, '', '', '', pos.toString())).subscribe(response => {
-            this.checkResponseProduct(response); 
+        if(this.selectedSearchVar === 'name' && this.searchValue) {
+          this.productService.getProducts(
+            new ProductQuery(this.tokenService.getToken(), '', '', this.searchValue, '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()))
+            .subscribe(response => {
+              this.assignResponseProduct(response); 
           }, 
           error => { 
             console.log(error);
           });
         }
-        if(this.selectedSearchVar === 'barcode') {
-          this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), '', '', '', this.searchValue, '', '', pos.toString())).subscribe(response => {
-            this.checkResponseProduct(response); 
-          }, 
-          error => { 
-            console.log(error);
-          });
-        }
-        if(this.selectedSearchVar === 'storage') {
-          this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), '', '', '', '', this.searchValue, '', pos.toString())).subscribe(response => {
-            this.checkResponseProduct(response); 
-          }, 
-          error => { 
-            console.log(error);
-          });
-        }
-        if(this.selectedSearchVar === 'provider') {
-          this.productService.getProducts(new ProductQuery(this.getToken(this.nameCookie), '', '', '', '', '', this.searchValue, pos.toString())).subscribe(response => {
-            this.checkResponseProduct(response); 
+        if(this.selectedSearchVar === 'barcode' && this.searchValue) {
+          this.productService.getProducts(
+            new ProductQuery(this.tokenService.getToken(), '', '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), pos.toString()))
+            .subscribe(response => {
+              this.assignResponseProduct(response); 
           }, 
           error => { 
             console.log(error);
@@ -339,30 +296,8 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {});
   }
 
-  getToken(nameCookie: string) {
-    if(this.cookieService.check(nameCookie)){
-      let fullData = this.cookieService.get(nameCookie);
-      let loginFromCookie = JSON.parse(fullData);
-      if(loginFromCookie){
-        return loginFromCookie.token
-      }
-    }
-    else return false;
-  }
-
-  onPrintLable(element) {
-    const dialogRef = this.dialog.open(PrintWindowComponent, {
-      width: '800px', 
-      height: '500px',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-      }
-    });
-  }
-
   clearProp() {
-    this.productPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', '');
+    this.productPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
     this.listPlaces = [];
     this.listDelivers = [];
   }
@@ -373,12 +308,6 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     else {
       this.selectedModeVar = '';
       this.valueModeVar = '';
-    }
-  }
-
-  onScanF12(event: KeyboardEvent) {
-    if(event.key === 'F2') {
-      let t = 0;
     }
   }
 }

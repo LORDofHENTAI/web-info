@@ -9,6 +9,6 @@ export class Vipiska{
         public quantity: string,
         public price: string,
         public summa: string,
-        public info: boolean,
+        public cashLess: boolean,
     ){}
 }

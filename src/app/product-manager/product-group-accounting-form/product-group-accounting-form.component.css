@@ -1,24 +1,8 @@
-/* @media (max-width: 1920px) { 
-    .tree-container {
-        width: 100vw; 
-        height: 94vh;
-    }
-    .prod {
-        height: 46vh;
-    }
-} 
-
-@media (max-width: 1366px) {
-    .tree-container {
-        width: 100vw; 
-        height: 90vh;
-    }
-    .prod {
-        height: 36vh;
-    }
-} */
 .prod {
     height: calc(100vh - 204px);;
+}
+.prod-pits {
+    height: calc(100vh - 40vh - 204px);;
 }
 .mat-drawer-container {
     height: calc(100vh - 98px);
@@ -90,7 +74,9 @@ mat-spinner {
 mat-button-toggle-group {
     height: 32px;
 }
-
+.mat-checkbox-label {
+    font-size: calc(6px + .6vw) !important;
+}
 mat-tree-node mat-icon {
     position: relative;
     top: -0.8em;
@@ -375,4 +361,7 @@ mat-expansion-panel {
 mat-panel-title {
     font-size: 20px;
     font-weight: 400;
+}
+.mat-divider {
+    border-top-width: 4px;
 }

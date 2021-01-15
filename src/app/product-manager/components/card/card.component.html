@@ -44,39 +44,9 @@
         </div>
     </div>     
     <div class="row">
-        <div class="col-4">
+        <div class="col-6">
             <div class="list-prop">
-                <table mat-table [dataSource]="productPropAnswer.places | split:splitElement" class="table-hover">
-
-                    <ng-container matColumnDef="place">
-                        <th mat-header-cell *matHeaderCellDef> Места хранения </th>
-                        <td mat-cell *matCellDef="let element"> {{element}} </td>
-                    </ng-container>   
-                    
-                    <ng-container matColumnDef="bt">
-                        <th mat-header-cell *matHeaderCellDef> 
-                            <ng-container *ngIf="productPropAnswer.places.length > 0">
-                                <button mat-button (click)="openPlaceForm(productPropAnswer.places)"  matTooltip="Просмотр документа">
-                                    <mat-icon id="push"> remove_red_eye </mat-icon>
-                                </button>
-                            </ng-container>
-                        </th>
-                        <td mat-cell *matCellDef="let element"> 
-                        <button mat-button (click)="openStoragePlacesDialog(element)">
-                            <mat-icon aria-hidden="false" aria-label="Example home icon"> edit </mat-icon>
-                        </button>
-                        </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumnsPlaces; sticky: true"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumnsPlaces;"></tr>
-
-                </table>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="list-prop">
-                <table mat-table [dataSource]="productPropAnswer.delivers | split:splitElement" class="table-hover">
+                <table mat-table [dataSource]="data.delivers | split:splitElement" class="table-hover">
 
                     <ng-container matColumnDef="delivers">
                         <th mat-header-cell *matHeaderCellDef> Поставщики </th>
@@ -89,9 +59,9 @@
                 </table>
             </div>
         </div>   
-        <div class="col-4">
+        <div class="col-6">
             <div class="list-prop">
-                <table mat-table [dataSource]="productPropAnswer.delivers | split:splitElement" class="table-hover">
+                <table mat-table [dataSource]="data.barcode" class="table-hover">
 
                     <ng-container matColumnDef="delivers">
                         <th mat-header-cell *matHeaderCellDef> Штрихкод </th>

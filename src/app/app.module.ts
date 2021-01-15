@@ -40,10 +40,11 @@ import { ZpcComponent } from './product-manager/components/zpc/zpc.component';
 import { SimpleTagComponent } from './price-tags/simple-tag/simple-tag.component';
 import { PrintWindowComponent } from './price-tags/dialog-windows/print-window/print-window.component';
 import { ProductCardComponent } from './product-manager/dialog-windows/product-card/product-card.component';
-import { OrderingListComponent } from './price-manager/components/ordering-list/ordering-list.component';
 import { ProductPriceListFormComponent } from './product-price-manager/product-price-list-form/product-price-list-form.component';
 import { UrlImgPipe } from './pipes/url-img.pipe';
 import { ProductOrderingListFormComponent } from './product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
+import { SelectShopComponent } from './login-manager/select-shop/select-shop.component';
+import { SelectCountComponent } from './product-ordering-manager/dialog-windows/select-count/select-count.component';
 
 @NgModule({
   declarations: [
@@ -72,9 +73,10 @@ import { ProductOrderingListFormComponent } from './product-ordering-manager/pro
     SimpleTagComponent,
     PrintWindowComponent,
     ProductCardComponent,
-    OrderingListComponent,
     ProductPriceListFormComponent,
     ProductOrderingListFormComponent,
+    SelectShopComponent,
+    SelectCountComponent,
   ],
   imports: [
     AppRoutingModule,

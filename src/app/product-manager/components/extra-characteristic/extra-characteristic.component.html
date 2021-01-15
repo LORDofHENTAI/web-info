@@ -1,14 +1,14 @@
 <div class="table-container">
-    <table class="table-hover" mat-table [dataSource]="dataSource">
+    <table class="table-hover" mat-table [dataSource]="data">
   
-        <ng-container matColumnDef="characteristic">
+        <ng-container matColumnDef="addonName">
             <th mat-header-cell *matHeaderCellDef> Характеристика </th>
-            <td mat-cell *matCellDef="let element"> {{element.characteristic}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.addonName}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="value">
+        <ng-container matColumnDef="addonValue">
             <th mat-header-cell *matHeaderCellDef> Значение </th>
-            <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.addonValue}} </td>
         </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

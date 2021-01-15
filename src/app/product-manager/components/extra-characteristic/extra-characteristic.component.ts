@@ -1,22 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-export interface ExtraCharacter {
-  characteristic: string;
-  value: string;
-}
-
-const ELEMENT_DATA: ExtraCharacter[] = [
-  {characteristic: 'Hydrogen', value: 'H'},
-  {characteristic: 'Helium', value: 'He'},
-  {characteristic: 'Lithium', value: 'Li'},
-  {characteristic: 'Beryllium', value: 'Be'},
-  {characteristic: 'Boron', value: 'B'},
-  {characteristic: 'Carbon', value: 'C'},
-  {characteristic: 'Nitrogen', value: 'N'},
-  {characteristic: 'Oxygen', value: 'O'},
-  {characteristic: 'Fluorine', value: 'F'},
-  {characteristic: 'Neon', value: 'Ne'},
-];
+import { ProductAddon } from '../../models/product-addon';
 
 @Component({
   selector: 'app-extra-characteristic',
@@ -25,10 +8,9 @@ const ELEMENT_DATA: ExtraCharacter[] = [
 })
 export class ExtraCharacteristicComponent implements OnInit {
 
-  @Input() data: any;
+  @Input() data: ProductAddon[];
   
-  displayedColumns = ['characteristic', 'value'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns = ['addonName', 'addonValue'];
 
   constructor() { }
 

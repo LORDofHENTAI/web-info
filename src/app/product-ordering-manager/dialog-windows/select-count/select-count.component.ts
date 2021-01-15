@@ -1,6 +1,5 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatInput } from '@angular/material/input';
 
 interface DialogData {
   count: number;
@@ -12,12 +11,10 @@ interface DialogData {
   styleUrls: ['./select-count.component.scss']
 })
 export class SelectCountComponent implements OnInit {
-
+  
   searchString: string ='';
   countItem: number;
   
-  @ViewChild("inputData") inputData: MatInput;
-
   constructor(
     public dialogRef: MatDialogRef<SelectCountComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -26,11 +23,7 @@ export class SelectCountComponent implements OnInit {
   ngOnInit(): void {
     this.countItem = this.data.count;
   }
-
-  ngAfterViewInit() {
-    this.inputData.focus();
-  }
-
+  
   onInputSearchData($event: string) {
     this.searchString = $event;
   }

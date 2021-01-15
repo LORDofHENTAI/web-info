@@ -13,44 +13,15 @@ export class CardComponent implements OnInit {
 
   @Input() data: ProductPropAnswer;
   splitElement = '; ';
-  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', '');
-  listPlaces: Array<string> = [];
-  listDelivers: Array<string> = [];
+  // productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
 
-  displayedColumnsPlaces = ['place', 'bt'];
   displayedColumnsDelivers = ['delivers'];
+  displayedColumnsBarcodes = ['barcodes'];
 
   constructor(
     public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
-    this.productPropAnswer = this.data;
-  }
-
-  openStoragePlacesDialog(element: string) {
-    let str = element.split(' | ');
-    let place = str[0];
-    let count = str[1];
-    const dialogRef = this.dialog.open(StoragePlacesEditorComponent, {
-      width: "300px",
-      data: { article: this.productPropAnswer.article, place: place, count: count, units: this.productPropAnswer.mesabbrev },
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // if(result === 'true') {
-      //   this.onSelectRowClick(this.dataSourceProducts[0]);
-      // }
-    });
-  }
-
-  openPlaceForm(listPlaces) {
-    let list = [this.productPropAnswer];
-    const dialogRef = this.dialog.open(PlaceListFormComponent, {
-      data: { productList: list, placeList: listPlaces  },
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-      }
-    });
   }
 }

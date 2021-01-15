@@ -1,6 +1,6 @@
 import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { VipiskaEnd } from 'src/app/price-manager/models/vipiska-end';
+import { VipiskaEnd } from 'src/app/product-ordering-manager/models/vipiska-end';
 
 @Component({
   selector: 'app-print-window',

@@ -1,20 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-export interface Leaving {
-  store: string;
-  leaving: string;
-  reserve: string;
-  acceptance: string;
-  supply: string;
-  losses: string;
-  oper_real: string;
-  oper_leav: string;
-}
-
-const ELEMENT_DATA: Leaving[] = [
-  {store: 'Hydrogen', leaving: 'H', reserve: '12', acceptance: '3',  supply: '44', losses: '1', oper_real: '-', oper_leav: '-'},
-
-];
+import { TokenService } from 'src/app/common/services/token/token.service';
+import { ProductGoods } from '../../models/product-goods';
 
 @Component({
   selector: 'app-leavings',
@@ -23,13 +9,14 @@ const ELEMENT_DATA: Leaving[] = [
 })
 export class LeavingsComponent implements OnInit {
 
-  @Input() data;
-  displayedColumns = ['store', 'leaving', 'reserve', 'acceptance', 'supply', 'losses', 'oper_real', 'oper_leav'];
-  dataSource = ELEMENT_DATA;
+  @Input() data: ProductGoods[];
+  displayedColumns = ['storeName', 'stock', 'reserve', 'onWay', 'supply', 'losses'];
 
-  constructor() { }
+  constructor(
+    private tokenService: TokenService,
+  ) { }
 
   ngOnInit(): void {
+    this.data;
   }
-
 }

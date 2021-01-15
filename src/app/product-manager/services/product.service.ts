@@ -8,9 +8,7 @@ import { ProductProp } from '../models/product-prop';
 import { ProductPropAnswer } from '../models/product-prop-answer';
 import { StoreEditor } from '../models/store-editor';
 import { Status } from 'src/app/common/models/status';
-import { AddToVipiska } from 'src/app/price-manager/models/add-to-vipiska';
-import { VipiskaEnd } from 'src/app/price-manager/models/vipiska-end';
-import { VipiskaQuery } from 'src/app/price-manager/models/vipiska-query';
+import { ProductAnswer } from '../models/product-answer'
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +24,13 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   getList(token: DownList): Observable<any> {
-    // const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
-    // return this.http.post<any>(`${this.url}`, token,  { headers, responseType: 'text' as 'json'});
     return this.http.post<any>(`${this.urlList}`, token);
   }
 
-  getProducts(data: ProductQuery): Observable<any> {
-    return this.http.post<any>(`${this.urlProduct}`, data);
+  getProducts(data: ProductQuery): Observable<ProductAnswer[]> {
+    return this.http.post<ProductAnswer[]>(`${this.urlProduct}`, data);
   }
+
   getProductProp(data: ProductProp): Observable<ProductPropAnswer> {
     return this.http.post<ProductPropAnswer>(`${this.urlProductProp}`, data);
   }

@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Status } from 'src/app/common/models/status';
-import { AddToVipiska } from 'src/app/price-manager/models/add-to-vipiska';
-import { VipiskaDelete } from 'src/app/price-manager/models/vipiska-delete';
-import { VipiskaEdit } from 'src/app/price-manager/models/vipiska-edit';
-import { VipiskaEnd } from 'src/app/price-manager/models/vipiska-end';
-import { VipiskaQuery } from 'src/app/price-manager/models/vipiska-query';
+import { AddToVipiska } from 'src/app/product-ordering-manager/models/add-to-vipiska';
+import { VipiskaDelete } from 'src/app/product-ordering-manager/models/vipiska-delete';
+import { VipiskaEdit } from 'src/app/product-ordering-manager/models/vipiska-edit';
+import { VipiskaEnd } from 'src/app/product-ordering-manager/models/vipiska-end';
+import { VipiskaQuery } from 'src/app/product-ordering-manager/models/vipiska-query';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,11 +15,11 @@ import { environment } from 'src/environments/environment';
 export class ProductPriceService {
 
   // private urlPice = environment.apiUrlPayment + "check/price/";
-  private urlAddV = environment.apiUrlPayment + "check/price/add/";
-  private urlGetV = environment.apiUrlPayment + "check/price/vipiska/";
-  private urlClear = environment.apiUrlPayment + "check/price/clear/";
-  private urlDelete = environment.apiUrlPayment + "check/price/delete/";
-  private urlEdit = environment.apiUrlPayment + "check/price/edit/";
+  private urlAddV = environment.apiUrl + "check/price/add/";
+  private urlGetV = environment.apiUrl + "check/price/vipiska/";
+  private urlClear = environment.apiUrl + "check/price/clear/";
+  private urlDelete = environment.apiUrl + "check/price/delete/";
+  private urlEdit = environment.apiUrl + "check/price/edit/";
 
   constructor(private http: HttpClient) { }
 

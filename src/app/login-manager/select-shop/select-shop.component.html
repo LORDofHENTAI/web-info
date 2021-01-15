@@ -1,0 +1,22 @@
+<div class="m-4">
+
+    <p class="h4 mb-4">Выбор магазина и типа цены</p>
+
+    <form [formGroup]="shopForm" (ngSubmit)="submit()">
+
+        <select class="form-control mb-4" placeholder="Магазин" formControlName="shop">
+            <option [value]="null" disabled>Выберите магазин</option>
+            <option *ngFor="let shop of shops" [value]="shop.iD">{{shop.name}}</option>
+        </select>
+        
+        <select class="form-control mb-4" placeholder="Магазин" formControlName="type">
+            <option [value]="null" disabled>Выберите магазин</option>
+            <option *ngFor="let type of types" [value]="type.iD">{{type.name}}</option>
+        </select>
+    
+        <div mat-dialog-actions align="end">
+            <button mat-stroked-button type="button" (click)="onNoClick()">Отмена</button>
+            <button mat-stroked-button type="submit" [disabled]="shopForm.invalid">Выбрать</button>
+        </div>
+    </form>
+</div>

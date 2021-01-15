@@ -3,30 +3,28 @@
 
         <p class="h4 mb-4">Вход</p>
 
-        <!-- <input type="text" class="form-control mb-4" placeholder="Login" [(ngModel)]="loginQuery.login" (keyup.enter)="onClickLogin()">
-
-        <input type="password" class="form-control mb-4" placeholder="Password" [(ngModel)]="loginQuery.password" (keyup.enter)="onClickLogin()"> -->
-
-        <!-- <div class="d-flex align-items-center justify-content-center">
-            <button class="btn btn-info btn-block my-4 bt-signin" (click)="onClickLogin()">Sign in</button>
-        </div> -->
-
-        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+        <form [formGroup]="userForm" (ngSubmit)="submit()">
 
             <input type="text" class="form-control mb-4" placeholder="Имя пользователя" formControlName="userName">
 
             <input type="password" class="form-control mb-4" placeholder="Пароль" formControlName="userPassword">
 
-            <select class="form-control" placeholder="Магазин" formControlName="userShop">
+            <select class="form-control mb-4" placeholder="Магазин" formControlName="userShop">
                 <option [value]="null" disabled>Выберите магазин</option>
-                <option *ngFor="let shop of shops" [value]="shop.id">{{shop.name}}</option>
+                <option *ngFor="let shop of shops" [value]="shop.iD">{{shop.name}}</option>
+            </select>
+            
+            <select class="form-control" placeholder="Тип цены" formControlName="userType">
+                <option [value]="null" disabled>Выберите тип цены</option>
+                <option *ngFor="let type of types" [value]="type.iD">{{type.name}}</option>
             </select>
 
             <div class="d-flex align-items-center justify-content-center">
-                <button class="btn btn-info btn-block my-4 bt-signin" [disabled]="loginForm.invalid">
+                <button class="btn btn-info btn-block my-4 bt-signin" [disabled]="userForm.invalid">
                     Войти
                 </button>
             </div>
+
         </form>
     </div>
 </div>

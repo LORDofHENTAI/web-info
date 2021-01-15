@@ -1,18 +1,21 @@
 <div class="card">
-    <mat-tab-group>
+    <mat-tab-group  *ngIf="productPropAnswer.article.length > 0">
+
         <mat-tab label="Карточка"> 
-            <app-card *ngIf="productPropAnswer.article.length > 0" [data]="productPropAnswer"></app-card>  
+            <app-card [data]="productPropAnswer"></app-card>  
         </mat-tab>
+
         <mat-tab label="Доп. характер."> 
-            <app-extra-characteristic></app-extra-characteristic>
+            <app-extra-characteristic [data]="productPropAnswer.addon"></app-extra-characteristic>
         </mat-tab>
+
         <mat-tab label="Остатки"> 
-            <app-leavings></app-leavings>
+            <app-leavings [data]="productPropAnswer.goods"></app-leavings>
         </mat-tab>
 
     </mat-tab-group>
 </div>
+
 <div mat-dialog-actions align="end">
-    <!-- <button mat-stroked-button (click)="onPrint()"><mat-icon>print</mat-icon></button> -->
     <button mat-stroked-button (click)="onNoClick()">Отмена</button>
 </div>

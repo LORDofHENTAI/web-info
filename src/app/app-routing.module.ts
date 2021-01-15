@@ -10,10 +10,6 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'products', component: ProductGroupAccountingFormComponent },
   { path: 'empty', component: EmptyFormComponent },
-  { 
-    path: 'prices', 
-    loadChildren: () => import('./price-manager/price/price.module').then(m => m.PriceModule) 
-  },
 ];
 
 @NgModule({

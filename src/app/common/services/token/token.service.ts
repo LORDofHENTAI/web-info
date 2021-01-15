@@ -2,7 +2,6 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
 import { Subject } from 'rxjs';
-import { LoginResponse } from 'src/app/login-manager/models/login-response';
 import { CookieLogin } from 'src/app/login-manager/models/cookie-login';
 
 @Injectable({
@@ -77,6 +76,23 @@ export class TokenService {
     }
   }
 
+  getType() {
+    try {
+      if(this.cookieService.check(this.cookieName)){
+        let fullData = this.cookieService.get(this.cookieName);
+        let loginFromCookie = JSON.parse(fullData);
+        if(loginFromCookie) {
+          return loginFromCookie.type;
+        }
+      }
+      else return false;
+    }
+    catch(error) {
+      console.error();
+      alert('login error')
+    }
+  }
+
   getIsAdmin() {
     try {
       if(this.cookieService.check(this.cookieName)){
@@ -96,10 +112,28 @@ export class TokenService {
     }
   }
 
+  getCookie() : CookieLogin {
+    try {
+      if(this.cookieService.check(this.cookieName)){
+        let fullData = this.cookieService.get(this.cookieName);
+        let loginFromCookie = JSON.parse(fullData);
+        if(loginFromCookie) {
+          return loginFromCookie;
+        }
+      }
+      else return null;
+    }
+    catch(error) {
+      console.error();
+      alert('login error')
+    }
+  }
+
   deleteCookie() {
     if(this.cookieService.check(this.cookieName)){
-      this.cookieService.delete(this.cookieName);
-      // this.cookieService.delete(this.name,  ' / ' ,  ' localhost');
+      // this.cookieService.delete(this.cookieName);
+      let cookie = this.getCookie();
+      this.setCookie(CookieLogin.setCookieLogin(cookie.shopId, cookie.type, null));
     }
   }
 

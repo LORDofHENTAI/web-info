@@ -1,15 +1,19 @@
-@media (max-width: 1920px) { /* это будет показано при разрешении монитора до 1920 пикселей */
+// @media (max-width: 1920px) {
 
-    .table-container {
-        height: 250px;
-        overflow: auto;
-    }  
-} 
-@media (max-width: 1400px) { /* это будет показано при разрешении монитора до 1366 пикселей */
-    .table-container {
-        height: 150px;
-        overflow: auto;
-    }  
+//     .table-container {
+//         height: 250px;
+//         overflow: auto;
+//     }  
+// } 
+// @media (max-width: 1400px) { 
+//     .table-container {
+//         height: 150px;
+//         overflow: auto;
+//     }  
+// }
+.table-container {
+    height: 547px;
+    overflow: auto;
 }
 table {
     width: 100%;

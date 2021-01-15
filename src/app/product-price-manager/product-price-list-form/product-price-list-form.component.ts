@@ -3,12 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
 import { ProductPriceService } from 'src/app/product-price-manager/services/product-price.service';
-import { VipiskaEnd } from 'src/app/price-manager/models/vipiska-end';
-import { Vipiska } from 'src/app/price-manager/models/vipiska';
-import { VipiskaDelete } from 'src/app/price-manager/models/vipiska-delete';
-import { VipiskaQuery } from 'src/app/price-manager/models/vipiska-query';
-import { VipiskaEdit } from 'src/app/price-manager/models/vipiska-edit';
-import { AddToVipiska } from 'src/app/price-manager/models/add-to-vipiska';
+import { VipiskaEnd } from 'src/app/product-ordering-manager/models/vipiska-end';
+import { Vipiska } from 'src/app/product-ordering-manager/models/vipiska';
+import { VipiskaDelete } from 'src/app/product-ordering-manager/models/vipiska-delete';
+import { VipiskaQuery } from 'src/app/product-ordering-manager/models/vipiska-query';
+import { VipiskaEdit } from 'src/app/product-ordering-manager/models/vipiska-edit';
+import { AddToVipiska } from 'src/app/product-ordering-manager/models/add-to-vipiska';
 import { SimpleChanges } from '@angular/core';
 import { PrintWindowComponent } from 'src/app/price-tags/dialog-windows/print-window/print-window.component';
 
@@ -37,7 +37,7 @@ export class ProductPriceListFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getListVipiska();
+    // this.getListVipiska();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -58,7 +58,7 @@ export class ProductPriceListFormComponent implements OnInit {
   }
 
   addInExcerpt(article) {
-    let addToVipiska = new AddToVipiska(this.tokenService.getToken(), article, this.tokenService.getShop(), '1');
+    let addToVipiska = new AddToVipiska(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType(), '1');
     this.productPriceService.addToVipiska(addToVipiska).subscribe(response => {
       if(response.status.toLocaleLowerCase() === 'ok') {
         this.snackbarService.openSnackBar('Товар добавлен в выписку.', this.action);
