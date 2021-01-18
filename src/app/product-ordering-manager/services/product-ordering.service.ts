@@ -14,9 +14,8 @@ import { environment } from 'src/environments/environment';
 })
 export class ProductOrderingService {
 
-  // private urlPice = environment.apiUrlPayment + "check/price/";
-  private urlAddV = environment.apiUrl + "productlist/add";
-  private urlGetV = environment.apiUrl + "productlist/get/";
+  private urlAdd = environment.apiUrl + "productlist/add";
+  private urlGet = environment.apiUrl + "productlist/get/";
   private urlClear = environment.apiUrl + "productlist/clear/";
   private urlDelete = environment.apiUrl + "productlist/delete/";
   private urlEdit = environment.apiUrl + "productlist/edit/";
@@ -24,11 +23,11 @@ export class ProductOrderingService {
   constructor(private http: HttpClient) { }
 
   getListVipiska(data: VipiskaQuery): Observable<VipiskaEnd> {
-    return this.http.post<VipiskaEnd>(`${this.urlGetV}`, data);
+    return this.http.post<VipiskaEnd>(`${this.urlGet}`, data);
   }
   
   addToVipiska(data: AddToVipiska): Observable<Status> {
-    return this.http.post<Status>(`${this.urlAddV}`, data);
+    return this.http.post<Status>(`${this.urlAdd}`, data);
   }
 
   clearList(data: VipiskaQuery): Observable<Status> {

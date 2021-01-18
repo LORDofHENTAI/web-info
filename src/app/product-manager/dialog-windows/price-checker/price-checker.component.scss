@@ -1,0 +1,59 @@
+.name {
+    width: 100%;
+    max-height: 200px;
+    padding: 1rem;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    border-radius: 5px;
+    font-size: 36px;
+}
+.price {
+    width: 100%;
+    height: 100px;
+    padding: 2rem;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    border-radius: 0 0 5px 5px;
+    font-size: 80px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cost {
+    height: 26px;
+    padding: 3px 0 0 24px;
+    color: rgba(0, 0, 0, .54);
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    background-color: rgb(230, 230, 230);
+    border-radius: 5px 5px 0 0;
+    border-bottom: none;
+}
+table {
+    width: 100%;
+}
+.list-barcodes {
+    height: 126px;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    border-radius: 5px;
+    overflow: auto;
+}
+.list-leavings {
+    max-height: 220px;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    border-radius: 5px;
+    overflow: auto;
+}
+.row {
+    margin-bottom: 1rem;
+}
+.select-row {
+    background: rgba(137, 43, 226, 0.5);
+}
+tr.mat-header-row {
+    height: 26px;
+    background-color: rgb(230, 230, 230);
+}
+tr.mat-row {
+    height: 26px;
+}

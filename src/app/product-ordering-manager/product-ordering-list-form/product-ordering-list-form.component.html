@@ -3,7 +3,7 @@
         <ng-container *ngIf="listVipiska.list">
             <div class="card-item" *ngFor="let vipiska of listVipiska.list">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-6">
                         <div class="row">
                             <img class="card-item-img" *ngIf="vipiska.img" src="{{vipiska.img | urlImg}}">
                             <img width="40px" height="40px" *ngIf="!vipiska.img" src="../../../../../assets/no_photo.png">
@@ -17,7 +17,7 @@
                             </small>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-6">
                         <div class="row card-item-name">{{vipiska.name}}</div>
                         <div class="row">Количество: {{vipiska.quantity}} {{vipiska.mesname}} / Цена: {{vipiska.price}}</div>
                         <div class="row">Сумма: {{vipiska.summa}}</div>

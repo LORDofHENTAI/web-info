@@ -35,7 +35,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { DischargePrintComponent } from './product-manager/print-forms/discharge-print/discharge-print.component';
 import { PricesComponent } from './product-manager/components/prices/prices.component';
-import { ProductPitsComponent } from './product-manager/components/product-pits/product-pits.component';
+import { ProductPitsComponent } from './product-pits-manager/product-pits/product-pits.component';
 import { ZpcComponent } from './product-manager/components/zpc/zpc.component';
 import { SimpleTagComponent } from './price-tags/simple-tag/simple-tag.component';
 import { PrintWindowComponent } from './price-tags/dialog-windows/print-window/print-window.component';
@@ -45,6 +45,9 @@ import { UrlImgPipe } from './pipes/url-img.pipe';
 import { ProductOrderingListFormComponent } from './product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
 import { SelectShopComponent } from './login-manager/select-shop/select-shop.component';
 import { SelectCountComponent } from './product-ordering-manager/dialog-windows/select-count/select-count.component';
+import { PriceCheckerComponent } from './product-manager/dialog-windows/price-checker/price-checker.component';
+import { DatePipe } from '@angular/common';
+import { FilterlistPipe } from './pipes/filterlist.pipe';
 
 @NgModule({
   declarations: [
@@ -77,6 +80,8 @@ import { SelectCountComponent } from './product-ordering-manager/dialog-windows/
     ProductOrderingListFormComponent,
     SelectShopComponent,
     SelectCountComponent,
+    PriceCheckerComponent,
+    FilterlistPipe,
   ],
   imports: [
     AppRoutingModule,
@@ -102,6 +107,7 @@ import { SelectCountComponent } from './product-ordering-manager/dialog-windows/
   exports: [AngularMaterialModule],
   providers: [    
     Title,
+    DatePipe,
     HttpClient,
     CookieService,
     {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DepartmentList } from 'src/app/common/models/departmens';
 import { PriceTypeList } from 'src/app/common/models/price-type-list';
 import { StoreList } from 'src/app/common/models/store-list';
 import { ShopService } from 'src/app/common/services/shop/shop.service';
@@ -17,6 +18,7 @@ export class SelectShopComponent implements OnInit {
   cookie: CookieLogin;
   shops: StoreList[];
   types: PriceTypeList[];
+  departments: DepartmentList[];
   shopForm: FormGroup;
 
   constructor(
@@ -28,13 +30,15 @@ export class SelectShopComponent implements OnInit {
     this.cookie = this.tokenService.getCookie();
     this.shopForm = new FormGroup({ 
       "shop": new FormControl(this.cookie.shopId, Validators.required),
-      "type": new FormControl(this.cookie.type, Validators.required),
+      "type": new FormControl(this.cookie.typeId, Validators.required),
+      "department": new FormControl(this.cookie.departmentId, Validators.required),
     });
   }
 
   ngOnInit(): void {
     this.getShopList();
     this.getTypeList();
+    this.getDepartmensList();
   }
 
   getShopList() {
@@ -57,9 +61,20 @@ export class SelectShopComponent implements OnInit {
     });
   }
 
+  getDepartmensList() {
+    this.shopService.getDepartmentList().subscribe(response => {
+      if(response)
+        this.departments = response;
+    }, 
+    error => { 
+      console.log(error);
+    });
+  }
+
   submit() {
     this.cookie.shopId = this.shopForm.value.shop;
-    this.cookie.type = this.shopForm.value.type;
+    this.cookie.typeId = this.shopForm.value.type;
+    this.cookie.departmentId = this.shopForm.value.department;
     this.tokenService.setCookie(this.cookie);
     this.dialogRef.close();
   }

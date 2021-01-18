@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
 import { Subject } from 'rxjs';
 import { CookieLogin } from 'src/app/login-manager/models/cookie-login';
+import { LoginResponse } from 'src/app/login-manager/models/login-response';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class TokenService {
     return this._subject.asObservable();
   }
 
-  getToken() {
+  getToken() : string {
     try {
       if(this.cookieService.check(this.cookieName)){
         let fullData = this.cookieService.get(this.cookieName);
@@ -34,7 +35,7 @@ export class TokenService {
           return loginFromCookie.token;
         }
       }
-      else return false;
+      else return '';
     }
     catch(error) {
       console.error();
@@ -42,7 +43,7 @@ export class TokenService {
     }
   }
 
-  getLogin() {
+  getLogin() : string {
     try {
       if(this.cookieService.check(this.cookieName)){
         let fullData = this.cookieService.get(this.cookieName);
@@ -51,7 +52,7 @@ export class TokenService {
           return loginFromCookie.login;
         }
       }
-      else return false;
+      else return '';
     }
     catch(error) {
       console.error();
@@ -59,7 +60,7 @@ export class TokenService {
     }
   }
 
-  getShop() {
+  getShop() : string {
     try {
       if(this.cookieService.check(this.cookieName)){
         let fullData = this.cookieService.get(this.cookieName);
@@ -68,7 +69,7 @@ export class TokenService {
           return loginFromCookie.shopId;
         }
       }
-      else return false;
+      else return '';
     }
     catch(error) {
       console.error();
@@ -76,16 +77,16 @@ export class TokenService {
     }
   }
 
-  getType() {
+  getType() : string {
     try {
       if(this.cookieService.check(this.cookieName)){
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
         if(loginFromCookie) {
-          return loginFromCookie.type;
+          return loginFromCookie.typeId;
         }
       }
-      else return false;
+      else return '';
     }
     catch(error) {
       console.error();
@@ -93,7 +94,24 @@ export class TokenService {
     }
   }
 
-  getIsAdmin() {
+  getDepartment() : string {
+    try {
+      if(this.cookieService.check(this.cookieName)){
+        let fullData = this.cookieService.get(this.cookieName);
+        let loginFromCookie = JSON.parse(fullData);
+        if(loginFromCookie) {
+          return loginFromCookie.departmentId;
+        }
+      }
+      else return '';
+    }
+    catch(error) {
+      console.error();
+      alert('login error')
+    }
+  }
+
+  getIsAdmin() : string {
     try {
       if(this.cookieService.check(this.cookieName)){
         let fullData = this.cookieService.get(this.cookieName);
@@ -104,7 +122,7 @@ export class TokenService {
           else return '0';
         }
       }
-      else return false;
+      else return '';
     }
     catch(error) {
       console.error();
@@ -130,10 +148,10 @@ export class TokenService {
   }
 
   deleteCookie() {
-    if(this.cookieService.check(this.cookieName)){
-      // this.cookieService.delete(this.cookieName);
+    if(this.cookieService.check(this.cookieName)) {
       let cookie = this.getCookie();
-      this.setCookie(CookieLogin.setCookieLogin(cookie.shopId, cookie.type, null));
+      this.cookieService.delete(this.cookieName);
+      this.setCookie(CookieLogin.setCookieLogin(cookie.shopId, cookie.typeId, cookie.departmentId, new LoginResponse('', '', '', '', '', '')));
     }
   }
 
@@ -142,7 +160,7 @@ export class TokenService {
       if(this.cookieService.check(this.cookieName)) {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
-        if(loginFromCookie) {
+        if(loginFromCookie.token) {
           return true;
         }
       }

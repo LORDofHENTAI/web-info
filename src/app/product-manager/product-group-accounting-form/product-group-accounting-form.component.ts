@@ -11,6 +11,7 @@ import { AttentionFormComponent } from 'src/app/common/components/dialog-windows
 import { ProductCardComponent } from '../dialog-windows/product-card/product-card.component';
 import { TokenService } from 'src/app/common/services/token/token.service';
 import { ProductAnswer } from '../models/product-answer';
+import { PriceCheckerComponent } from '../dialog-windows/price-checker/price-checker.component';
 
 interface PoductNode {
   id: string;
@@ -99,6 +100,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   
   ngOnInit() {
+    let y = this.tokenService.getToken();
     this.productService.getList(new DownList(this.tokenService.getToken())).subscribe(response => {
       if(response)
         this.dataSource.data = response;
@@ -141,9 +143,9 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     if(response) {
       this.dataSourceProducts = response;
       this.countListProducts = this.dataSourceProducts.length;
-
-      let t = this.dataSourceProducts[0];
       this.onSelectRowClick(this.dataSourceProducts[0]);
+      if(this.searchValue.length >= 12)
+        this.onOpenPriceChecker(this.dataSourceProducts[0]);
     }
   }
 
@@ -216,24 +218,27 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     this.selectedSearchVar = 'article';
   }
 
-  onKeyuoSearchInput(event: KeyboardEvent) {
-    if(event.keyCode == 13) {
-      this.onSearch();
-    } else {
-      this.isEmptySearchValue = false;
-    }
-  }
-
   onSelectRowClick(row: ProductAnswer) {
     if(row.article) {
       this.selectedRow = row;
     }
   }
 
+  onOpenPriceChecker(row: ProductAnswer) {
+    const dialogRef = this.dialog.open(PriceCheckerComponent, {
+      width: "60%",
+      data: row
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result)
+        if(this.panelOpenStateOrdering) {
+          this.productArticleOrdering = '';
+        }
+    });
+  }
+
   onOpenProductCard(row: ProductAnswer) {
     const dialogRef = this.dialog.open(ProductCardComponent, {
-      // width: "70%",
-      // height: "70%",
       data: row.article
     });
     dialogRef.afterClosed().subscribe(result => {

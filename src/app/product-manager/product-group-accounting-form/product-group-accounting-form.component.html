@@ -13,7 +13,7 @@
                     <mat-panel-description>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <mat-divider></mat-divider>
+                <mat-divider class="ml-2 mr-3"></mat-divider>
                 <div class="mat-panel-overflow">
                     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
 
@@ -57,7 +57,7 @@
                     <mat-panel-description>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <mat-divider></mat-divider>
+                <mat-divider class="ml-2 mr-3"></mat-divider>
                 <div class="mat-panel-overflow">
                     <app-product-ordering-list-form [isOpen]="panelOpenStateOrdering" [article]="productArticleOrdering"></app-product-ordering-list-form>
                 </div>
@@ -72,9 +72,9 @@
                     <mat-panel-description>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <mat-divider></mat-divider>
+                <mat-divider class="ml-2 mr-3"></mat-divider>
                 <div class="mat-panel-overflow">
-                    <app-product-price-list-form [article]="productArticlePrice"></app-product-price-list-form>
+                    <app-product-price-list-form [isOpen]="panelOpenStatePrice"  [article]="productArticlePrice"></app-product-price-list-form>
                 </div>
             </mat-expansion-panel>
 
@@ -90,7 +90,8 @@
 
                 <mat-form-field id="input-search">
                     <input matInput placeholder="Поиск" id="searchValue" name="searchValue" [(ngModel)]="searchValue"
-                    (keyup)="onKeyuoSearchInput($event)">
+                    (keyup.enter)="onSearch()">
+    
                 </mat-form-field>  
 
                 <div class="w-100"></div>
@@ -121,20 +122,6 @@
 
                 <div class="w-100 col-padding"></div>
                 <div class="button-group">
-                    <mat-button-toggle-group class="bt-font-size" appearance="legacy" name="fontStyle" aria-label="Font Style" [(ngModel)]="selectedModeVar">
-                        <mat-button-toggle id="but" value="usual" data-toggle="tooltip" data-placement="bottom" title="Обычный" matTooltip="Режим обычный"
-                        (click)="onModeVar('usual')">
-                            Обычный
-                        </mat-button-toggle>
-                        <mat-button-toggle  value="scan" data-toggle="tooltip" data-placement="bottom" title="Сканирование" matTooltip="Режим сканирования"
-                        (click)="onModeVar('scan')">
-                            Сканирование
-                        </mat-button-toggle>
-                        <mat-button-toggle value="milecard" data-toggle="tooltip" data-placement="bottom" title="МиляКарта" matTooltip="Режим карты миля"
-                        (click)="onModeVar('milecard')">
-                            МиляКарта
-                        </mat-button-toggle>
-                    </mat-button-toggle-group>
                     <mat-checkbox class="m-3" [(ngModel)]="isOpenProductPits">Товарные ямы</mat-checkbox>
                 </div>
                 

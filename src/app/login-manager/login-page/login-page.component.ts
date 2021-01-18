@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ShopService } from 'src/app/common/services/shop/shop.service'
 import { StoreList } from 'src/app/common/models/store-list';
 import { PriceTypeList } from 'src/app/common/models/price-type-list';
+import { DepartmentList } from 'src/app/common/models/departmens';
 
 @Component({
   selector: 'app-login-page',
@@ -25,11 +26,13 @@ export class LoginPageComponent implements OnInit {
       "userPassword": new FormControl('', Validators.required),
       "userShop": new FormControl(null, Validators.required),
       "userType": new FormControl(null, Validators.required),
+      "userDepartment": new FormControl(null, Validators.required),
   });
 
   loginQuery: LoginQuery;
   shops: StoreList[];
   types: PriceTypeList[];
+  departments: DepartmentList[];
 
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   messageFailLogin = 'Вход не разрешен, имя или пароль неверны.';
@@ -51,6 +54,7 @@ export class LoginPageComponent implements OnInit {
     this.titleService.setTitle('Info'); 
     this.getShopList();
     this.getTypeList();
+    this.getDepartmentsList();
   }
 
   checkResponse(response: LoginResponse) : boolean {
@@ -64,7 +68,9 @@ export class LoginPageComponent implements OnInit {
     this.loginQuery = new LoginQuery(this.userForm.value.userName, this.userForm.value.userPassword);
     this.loginService.getLogin(this.loginQuery).subscribe(response => {
       if(this.checkResponse(response)) {
-        this.tokenService.setCookie(CookieLogin.setCookieLogin(this.userForm.value.userShop, this.userForm.value.userType, response));
+        this.tokenService.setCookie(
+          CookieLogin.setCookieLogin(this.userForm.value.userShop, this.userForm.value.userType, this.userForm.value.userDepartment, response)
+        );
         this.tokenService.logEvent(true);
         this.router.navigate(['/products']);
       }
@@ -91,6 +97,16 @@ export class LoginPageComponent implements OnInit {
     this.shopService.getTypes().subscribe(response => {
       if(response)
         this.types = response;
+    }, 
+    error => { 
+      console.log(error);
+    });
+  }
+
+  getDepartmentsList() {
+    this.shopService.getDepartmentList().subscribe(response => {
+      if(response)
+        this.departments = response;
     }, 
     error => { 
       console.log(error);

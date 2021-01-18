@@ -9,14 +9,16 @@ import { ProductGoods } from '../../models/product-goods';
 })
 export class LeavingsComponent implements OnInit {
 
+  shopId: string = '';
   @Input() data: ProductGoods[];
   displayedColumns = ['storeName', 'stock', 'reserve', 'onWay', 'supply', 'losses'];
 
   constructor(
     private tokenService: TokenService,
-  ) { }
+  ) {
+    this.shopId = this.tokenService.getShop();
+   }
 
   ngOnInit(): void {
-    this.data;
   }
 }

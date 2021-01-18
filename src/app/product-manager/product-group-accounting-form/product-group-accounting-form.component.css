@@ -340,8 +340,9 @@ mat-drawer-content button {
 	border-radius: 6px;
 }
 .mat-panel-overflow {
-    max-height: calc(100vh - 280px);
-    overflow: auto;
+    max-height: calc(100vh - 290px);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .mat-expansion-panel-header {

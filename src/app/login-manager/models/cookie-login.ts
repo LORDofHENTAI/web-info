@@ -10,7 +10,12 @@ export class CookieLogin implements LoginResponse {
         /// <summary>
         /// Price type
         /// </summary>
-        public type: string,
+        public typeId: string,
+
+        /// <summary>
+        /// Price type
+        /// </summary>
+        public departmentId: string,
         
         /// <summary>
         /// Логин пользователя в системе
@@ -43,7 +48,7 @@ export class CookieLogin implements LoginResponse {
         public adminCount: string, 
     ){}
 
-    static setCookieLogin(id: string, type: string, data: LoginResponse) : CookieLogin {
-        return new CookieLogin(id, type, data.login, data.token, data.cn, data.title, data.department, data.adminCount);
+    static setCookieLogin(id: string, type: string, department: string, data: LoginResponse) : CookieLogin {
+        return new CookieLogin(id, type, department, data.login, data.token, data.cn, data.title, data.department, data.adminCount);
     }
 }

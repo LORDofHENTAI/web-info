@@ -33,19 +33,18 @@ export class ProductOrderingListFormComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private tokenService: TokenService,
-    private productOrderingService: ProductOrderingService,
     private snackbarService: SnackbarService,
+    private productOrderingService: ProductOrderingService,
   ) { }
 
   ngOnInit(): void {
-    this.isOpen;
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.listVipiska;
     if(changes.article) {
       if(changes.article.currentValue && changes.article.previousValue !== changes.article.currentValue)
         this.addInExcerpt(changes.article.currentValue);
+      else this.getListVipiska()
     } else changes.isOpen.currentValue ? this.getListVipiska() : null;
   }
 
@@ -64,7 +63,7 @@ export class ProductOrderingListFormComponent implements OnInit {
 
   addInExcerpt(article: string) {
     const dialogRef = this.dialog.open(SelectCountComponent, {
-      width: "300px",
+      width: "400px",
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
@@ -99,7 +98,7 @@ export class ProductOrderingListFormComponent implements OnInit {
 
   onEditItem(vipiska: Vipiska) {
     const dialogRef = this.dialog.open(SelectCountComponent, {
-      width: "300px",
+      width: "400px",
       data: { count: vipiska.quantity },
     });
     dialogRef.afterClosed().subscribe(result => {

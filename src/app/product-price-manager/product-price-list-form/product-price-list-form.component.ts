@@ -3,14 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
 import { ProductPriceService } from 'src/app/product-price-manager/services/product-price.service';
-import { VipiskaEnd } from 'src/app/product-ordering-manager/models/vipiska-end';
-import { Vipiska } from 'src/app/product-ordering-manager/models/vipiska';
-import { VipiskaDelete } from 'src/app/product-ordering-manager/models/vipiska-delete';
-import { VipiskaQuery } from 'src/app/product-ordering-manager/models/vipiska-query';
-import { VipiskaEdit } from 'src/app/product-ordering-manager/models/vipiska-edit';
-import { AddToVipiska } from 'src/app/product-ordering-manager/models/add-to-vipiska';
 import { SimpleChanges } from '@angular/core';
 import { PrintWindowComponent } from 'src/app/price-tags/dialog-windows/print-window/print-window.component';
+import { Print } from '../models/print'
+import { PrintQuery } from '../models/print-query';
+import { AddToPrint } from '../models/add-to-print';
+import { PrintDelete } from '../models/print-delete';
 
 @Component({
   selector: 'app-product-price-list-form',
@@ -20,8 +18,9 @@ import { PrintWindowComponent } from 'src/app/price-tags/dialog-windows/print-wi
 export class ProductPriceListFormComponent implements OnInit {
 
   @Input() article: string;
+  @Input() isOpen: boolean;
 
-  listVipiska: VipiskaEnd;
+  listPrices: Print[];
   displayedColumnsPrint = ['name', 'quantity', 'mesname', 'price', 'summa', 'barcode'];
   imgSource = 'https://barcode.tec-it.com/barcode.ashx?data=';
   
@@ -32,23 +31,25 @@ export class ProductPriceListFormComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private tokenService: TokenService,
-    private productPriceService: ProductPriceService,
     private snackbarService: SnackbarService,
+    private productPriceService: ProductPriceService,
   ) { }
 
   ngOnInit(): void {
-    // this.getListVipiska();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.article.currentValue)    
-      this.addInExcerpt(changes.article.currentValue);  
+    if(changes.article) {
+      if(changes.article.currentValue && changes.article.previousValue !== changes.article.currentValue)    
+       this.addInList(changes.article.currentValue);  
+    } else changes.isOpen.currentValue ? this.getListPrices() : null;
   }
 
-  getListVipiska() {
-    this.productPriceService.getListVipiska(new VipiskaQuery(this.tokenService.getToken())).subscribe(response => {
+
+  getListPrices() {
+    this.productPriceService.getListPrices(new PrintQuery(this.tokenService.getToken())).subscribe(response => {
       if(response) {
-        this.listVipiska = response;
+        this.listPrices = response;
       }
     }, 
     error => { 
@@ -57,12 +58,12 @@ export class ProductPriceListFormComponent implements OnInit {
     }); 
   }
 
-  addInExcerpt(article) {
-    let addToVipiska = new AddToVipiska(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType(), '1');
-    this.productPriceService.addToVipiska(addToVipiska).subscribe(response => {
+  addInList(article: string) {
+    let addToPrint = new AddToPrint(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType());
+    this.productPriceService.addPrice(addToPrint).subscribe(response => {
       if(response.status.toLocaleLowerCase() === 'ok') {
-        this.snackbarService.openSnackBar('Товар добавлен в выписку.', this.action);
-        this.getListVipiska();
+        this.snackbarService.openSnackBar('Товар добавлен в список ценников.', this.action);
+        this.getListPrices();
       }
     }, 
     error => { 
@@ -71,11 +72,11 @@ export class ProductPriceListFormComponent implements OnInit {
     }); 
   }
 
-  onDeleteItem(vipiska: Vipiska) {
-    this.productPriceService.deleteItem(new VipiskaDelete(this.tokenService.getToken(), vipiska.id)).subscribe(response => {
+  onDeleteItem(price: Print) {
+    this.productPriceService.deleteItem(new PrintDelete(this.tokenService.getToken(), price.id)).subscribe(response => {
       if(response.status.toLocaleLowerCase() === 'ok') {
         this.snackbarService.openSnackBar('Позиция удалена.', this.action);
-        this.getListVipiska();
+        this.getListPrices();
       }
     }, 
     error => { 
@@ -84,24 +85,11 @@ export class ProductPriceListFormComponent implements OnInit {
     });
   }
 
-  onEditItem(vipiska: Vipiska) {
-    this.productPriceService.editItem(new VipiskaEdit(this.tokenService.getToken(), vipiska.id, '1')).subscribe(response => {
-      if(response.status.toLocaleLowerCase() === 'ok') {
-        this.snackbarService.openSnackBar('Количество изменено.', this.action);
-        this.getListVipiska();
-      }
-    }, 
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    }); 
-  }
-
   onClearList() {
-    this.productPriceService.clearList(new VipiskaQuery(this.tokenService.getToken())).subscribe(response => {
+    this.productPriceService.clearList(new PrintQuery(this.tokenService.getToken())).subscribe(response => {
       if(response.status.toLocaleLowerCase() === 'ok') {
-        this.snackbarService.openSnackBar('Выписка очищена.', this.action);
-        this.getListVipiska();
+        this.snackbarService.openSnackBar('Список ценников очищен.', this.action);
+        this.getListPrices();
       }
     }, 
     error => { 
@@ -114,7 +102,7 @@ export class ProductPriceListFormComponent implements OnInit {
     const dialogRef = this.dialog.open(PrintWindowComponent, {
       width: '800px', 
       height: '500px',
-      data: this.listVipiska,
+      data: this.listPrices,
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
