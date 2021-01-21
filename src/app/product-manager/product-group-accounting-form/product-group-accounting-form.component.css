@@ -39,27 +39,28 @@ mat-tree-node button:hover {
     background-color: rgba(185, 151, 218, 0.4);
     cursor: pointer;
 }
+:host ::ng-deep .mat-form-field-flex > .mat-form-field-infix { 
+    padding: 0.4em 0px !important;
+}
+:host ::ng-deep .mat-form-field-label-wrapper { 
+    top: -1.3em; 
+}
+:host ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+:host ::ng-deep .mat-form-field-wrapper {
+    padding: 0;
+}
 .select-row {
-    background: rgba(137, 43, 226, 0.5);
+    background-image: linear-gradient(to right, rgba(161, 106, 216, 0.5), rgba(240, 10, 228, 0.5));
 }
-mat-form-field#input-search {
-    width: 90%;
+mat-form-field {
+    width: 100%;
 }
-.search-container {
-    margin: 0 .2rem .5rem 0;
+.mat-stroked-button {
+    flex-grow: 1;
 }
-.search-group {
-    width: 15vw;
-    display: table-cell;
-}
-.search-group button {
-    margin-left: 0.4rem;
-}
-mat-spinner {
-    margin-left: 0.45em;
-    margin-right: 1em;
-}
-
 .mat-button-toggle-checked {
     color: black;
     background-color: rgba(137, 43, 226, 0.5);
@@ -67,6 +68,20 @@ mat-spinner {
 .mat-button-toggle {
     width: 10vw;
     min-width: 5rem;
+}
+.aligner-vertical-center {
+    display: flex;
+    align-items: flex-start;
+    align-self: center;
+}
+.check-bord {
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 4px;
+    margin-top: .3rem;
+    padding: .3rem .5rem 0 .5rem;
+}
+:host ::ng-deep .mat-checkbox-layout .mat-checkbox-label {
+    line-height: 21px;
 }
 .bt-font-size mat-button-toggle {
     font-size: calc(6px + .6vw);
@@ -95,34 +110,12 @@ mat-tree-node label {
 mat-tree-node label:hover  {
     cursor: pointer;
 }
-
-.button-group {
-    position: relative;
-    top: 1rem;
-}
-.col-padding {
-    margin-bottom: 0.5rem;
-}
-.search-panel {
-    padding-bottom: 0%;
-}
-
-.error-style {
-    color: red;
-}
-
 .table-container {
     width: 100%;
     overflow: auto;
 }
 table {
     width: 100%;
-}
-.list-prop {
-    height: 22vh;
-    width: 16vw;
-    border: 0.12em solid rgba(128, 128, 128, 0.4);
-    border-radius: 5px;
 }
 .mat-column-articl {
     word-wrap: break-word !important;
@@ -290,15 +283,12 @@ mat-icon#push:hover {
 #form-name {
     width: 90%;
 }
-mat-drawer-content button {
+/* mat-drawer-content button {
     width: 6vw;
     height: calc(26px + 1vh);
 
     font-size: calc(4px + .6vw);
-}
-.row-width {
-    width: 90%;
-}
+} */
 :host ::ng-deep .mat-tab-label {
     height: 32px !important;
 }

@@ -11,7 +11,6 @@ interface List{
 export class FilterlistPipe implements PipeTransform {
 
   transform(value: number, list: List[]): string {
-    let t = list.find(d => d.id == value).name;
-    return null;
+    return list ? list.find(x => x.id === value).name : null;
   }
 }

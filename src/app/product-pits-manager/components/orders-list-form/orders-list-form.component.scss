@@ -1,0 +1,16 @@
+.table-container {
+    height: 200px;
+}
+table {
+    width: 100%;
+}
+.select-row {
+    background-image: linear-gradient(to right, rgba(161, 106, 216, 0.5), rgba(240, 10, 228, 0.5));
+}
+tr.mat-header-row {
+    height: 26px;
+    background-color: rgb(230, 230, 230);
+}
+tr.mat-row {
+    height: 26px;
+}

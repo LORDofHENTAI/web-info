@@ -84,29 +84,25 @@
 
     <mat-drawer-content>
 
-        <div class="row row-width search-container">
+        <div class="row m-2 mt-1">
 
             <div class="col-3">
 
-                <mat-form-field id="input-search">
-                    <input matInput placeholder="Поиск" id="searchValue" name="searchValue" [(ngModel)]="searchValue"
-                    (keyup.enter)="onSearch()">
-    
-                </mat-form-field>  
-
-                <div class="w-100"></div>
-
-                <section class="search-group">
-                    <mat-spinner *ngIf="isLoading" strokeWidth="3" [diameter]="25"></mat-spinner>
-                    <div *ngIf="!isLoading" style="margin-left: 3em;">&emsp;</div>
-                    
-                    <button mat-stroked-button color="primary" (click)="onSearch()" data-placement="bottom" matTooltip="Применить поиск"> Поиск </button> 
-                    <button mat-stroked-button data-placement="bottom" (click)="searchValue = ''" matTooltip="Очистить поле ввода"> Очистить </button> 
-                </section>
+                <div class="row">
+                    <mat-form-field appearance="outline" data-placement="bottom" matTooltip="">
+                        <mat-label>Поиск</mat-label>
+                        <input matInput placeholder="Введите значение" id="searchValue" name="searchValue" [(ngModel)]="searchValue" (keyup.enter)="onSearch()">
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <button mat-stroked-button color="primary" class="mr-2" (click)="onSearch()" data-placement="bottom" matTooltip="Применить поиск"> Поиск </button> 
+                    <button mat-stroked-button (click)="searchValue = ''" data-placement="bottom" matTooltip="Очистить поле ввода"> Очистить </button> 
+                </div>
 
             </div>
             <div class="col-9">
-                <div class="button-group">
+
+                <div class="row pl-2 pt-1">
                     <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" [(ngModel)]="selectedSearchVar" class="bt-font-size">
                         <mat-button-toggle id="but" value="article" data-toggle="tooltip" data-placement="bottom" title="Артикул" matTooltip="Поиск по артикулю">
                             Артикул
@@ -120,13 +116,11 @@
                     </mat-button-toggle-group>
                 </div>
 
-                <div class="w-100 col-padding"></div>
-                <div class="button-group">
-                    <mat-checkbox class="m-3" [(ngModel)]="isOpenProductPits">Товарные ямы</mat-checkbox>
+                <div class="row pl-2">
+                    <mat-checkbox class="check-bord" [(ngModel)]="isOpenProductPits" data-placement="bottom" matTooltip="Отображение товарных ям">Товарные ямы</mat-checkbox>
                 </div>
                 
             </div>
-
         </div>
 
         <div class="table-container" (scroll)="onScroll($event)" [ngClass]="{'prod': !isOpenProductPits, 'prod-pits': isOpenProductPits }">
@@ -178,7 +172,7 @@
         </div>
         <div [hidden]="!isOpenProductPits">
             <mat-divider></mat-divider>
-            <app-product-pits></app-product-pits>
+            <app-product-pits [productToAdd]="productToAdd"></app-product-pits>
         </div>
     </mat-drawer-content>
    

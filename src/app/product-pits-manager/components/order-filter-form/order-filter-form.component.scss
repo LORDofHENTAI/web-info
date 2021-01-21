@@ -1,12 +1,16 @@
-.content > div {
-    display: inline-block;
-}
+// .content > div {
+//     display: inline-block;
+// }
 div > * {
-    margin-left: 4px;
+    margin-left: .5rem;
 }
-.row {
+.row, .col-2 {
     margin: 0;
 }
+form {
+    margin: 0;
+    padding: 0;
+} 
 :host ::ng-deep .mat-form-field-flex > .mat-form-field-infix { 
     padding: 0.4em 0px !important;
 }
@@ -22,26 +26,18 @@ div > * {
 }
 .mat-form-field {
     width: calc(7.5rem + 5vw); 
-    height: calc(26px + 1vh);
-    font-size: calc(8px + .3vw);
-    top: 3px;
 }
 mat-form-field#long {
     width: calc(15rem + 5vw); 
 }
-button {
-    width: calc(7.5rem + 5vw); 
-    font-size: calc(7px + .4vw);
-}
 .btn.btn-sm {
+    width: calc(7.5rem + 5vw); 
     font-size: 0.8rem;
     padding: .3rem .5rem;
+    flex-grow: 1;
 }
-.lable-text {
-    text-align: right;
-}
-label {
-    display: inline-block;
-    width: calc(7.5rem + 5vw); 
-    font-size: calc(7px + .4vw);
+.btn#form-btn {
+    margin: 0 0 0 .5rem;
+    position: relative;
+    top: -6px;
 }

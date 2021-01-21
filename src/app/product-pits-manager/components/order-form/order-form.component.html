@@ -1,0 +1,53 @@
+<div class="row">
+
+    <div>
+        <div *ngIf="orderId">Документ {{orderId}}</div>
+    </div>   
+
+    <div>
+        <div class="row bt-block">
+            <button mdbBtn type="button" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Редактировать заказ">
+                Редактировать
+            </button>
+            <button mdbBtn type="button" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Печать заказа">
+                Печать
+            </button>
+            <button mdbBtn type="button" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Закрыть заказ"
+                (click)="onCloseClick()">
+                Закрыть
+            </button>
+        </div>
+        <div class="row">
+            <button mdbBtn type="button" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Импорт из файла">
+                Импорт
+            </button>
+            <button mdbBtn type="button" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Скан заявки">
+                Скан заявки
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <div class="row bt-block">
+            <mat-form-field appearance="outline" data-placement="bottom" matTooltip="Выбор даты поставки">
+                <mat-label>Дата поставки</mat-label>
+                <input matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <button mdbBtn type="button" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Добавить дату поставки">
+                Добавить
+            </button>
+        </div>
+        <div class="row">
+            <mat-form-field appearance="outline" data-placement="bottom" matTooltip="Поле ввода поставщика">
+                <mat-label>Поставщик</mat-label>
+                <input matInput placeholder="Введите поставщика">
+            </mat-form-field>
+            <button mdbBtn type="button" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Добавить поставщика">
+                Добавить
+            </button>
+        </div>
+    </div>
+
+</div>

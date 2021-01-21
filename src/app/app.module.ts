@@ -48,6 +48,10 @@ import { SelectCountComponent } from './product-ordering-manager/dialog-windows/
 import { PriceCheckerComponent } from './product-manager/dialog-windows/price-checker/price-checker.component';
 import { DatePipe } from '@angular/common';
 import { FilterlistPipe } from './pipes/filterlist.pipe';
+import { OrderFormComponent } from './product-pits-manager/components/order-form/order-form.component';
+import { OrdersListFormComponent } from './product-pits-manager/components/orders-list-form/orders-list-form.component';
+import { OrderFilterFormComponent } from './product-pits-manager/components/order-filter-form/order-filter-form.component';
+import { OrderBodyListFormComponent } from './product-pits-manager/components/order-body-list-form/order-body-list-form.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +86,10 @@ import { FilterlistPipe } from './pipes/filterlist.pipe';
     SelectCountComponent,
     PriceCheckerComponent,
     FilterlistPipe,
+    OrderFormComponent,
+    OrdersListFormComponent,
+    OrderFilterFormComponent,
+    OrderBodyListFormComponent,
   ],
   imports: [
     AppRoutingModule,

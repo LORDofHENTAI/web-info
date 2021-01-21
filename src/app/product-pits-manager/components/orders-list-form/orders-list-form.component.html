@@ -1,0 +1,35 @@
+<div class="table-container">
+    <table class="table-hover" mat-table [dataSource]="orders">
+  
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> № </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="creationDate">
+          <th mat-header-cell *matHeaderCellDef> Дата </th>
+          <td mat-cell *matCellDef="let element"> {{element.creationDate | date:'dd.MM.yyyy'}} </td>
+      </ng-container>
+
+        <ng-container matColumnDef="statusCol">
+            <th mat-header-cell *matHeaderCellDef> Статус </th>
+            <td mat-cell *matCellDef="let element"> {{element.statusId | filterlist:statuses}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="departmentCol">
+            <th mat-header-cell *matHeaderCellDef> Отдел </th>
+            <td mat-cell *matCellDef="let element"> {{element.departmentId | filterlist:departments}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="storeCol">
+            <th mat-header-cell *matHeaderCellDef> Торговая точка </th>
+            <td mat-cell *matCellDef="let element"> {{element.storeId | filterlist:shops}} </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        (click)="onSelectOrder(row);"
+        (dblclick)="onOpenOrder(row)"
+        [ngClass]="{ 'select-row': selectedRow == row }"></tr>
+    </table>
+</div>

@@ -62,6 +62,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   scrollPosition = 5000;
   curentPositionTable = 200;
   isLoading: any;
+  productToAdd: ProductAnswer;
 
   panelOpenStateTree = true;
   panelOpenStateOrdering = false;
@@ -238,11 +239,15 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   onOpenProductCard(row: ProductAnswer) {
-    const dialogRef = this.dialog.open(ProductCardComponent, {
-      data: row.article
-    });
-    dialogRef.afterClosed().subscribe(result => {
-    });
+    if(this.isOpenProductPits) {
+      this.productToAdd = row;
+    } else {
+      const dialogRef = this.dialog.open(ProductCardComponent, {
+        data: row.article
+      });
+      dialogRef.afterClosed().subscribe(result => {
+      });
+    }
   }
 
   onScroll(event) {

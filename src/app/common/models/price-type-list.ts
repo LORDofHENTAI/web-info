@@ -1,6 +1,6 @@
 export class PriceTypeList{
     constructor(       
-        public id: string,
+        public id: number,
         public name: string,
     ){}
 }
