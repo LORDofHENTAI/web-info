@@ -172,7 +172,7 @@
         </div>
         <div [hidden]="!isOpenProductPits">
             <mat-divider></mat-divider>
-            <app-product-pits [productToAdd]="productToAdd"></app-product-pits>
+            <app-product-pits [productToAdd]="productToAdd" (clearProductEvent)="clearProduct($event)"></app-product-pits>
         </div>
     </mat-drawer-content>
    

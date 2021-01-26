@@ -1,5 +1,6 @@
 export class OrderBody{
     constructor(
+        public checked: boolean = false,
         public id: number,
         public docId: number,
         public group: string,
@@ -10,7 +11,7 @@ export class OrderBody{
         public goods: string,
         public average: string,
         public stockDay : string,
-        public deliveryDate: Date,
+        public deliveryDate: string,
         public managerСomment: string,
         public departmentComment: string,
     ){}

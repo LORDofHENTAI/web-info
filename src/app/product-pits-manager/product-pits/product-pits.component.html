@@ -1,30 +1,16 @@
-<app-order-filter-form *ngIf="!isOrderOpen"
-    [orderId]="orderId"
+<app-order-filter-form [hidden]="isOrderOpen"
     [statuses]="listOrderStatus"
     [departments]="listDepartment"
     [shops]="listShop"
-    (filterEvent)="filterData($event)"
-    (addNewOrderEvent)="addNewOrder($event)"
+    [orderChanged]="orderChanged"
     (openOrderEvent)="openOrder($event)">
 </app-order-filter-form>
 
 <app-order-form *ngIf="isOrderOpen" 
-    [orderId]="orderId"
-    (closeOrderEvent)="closeOrder($event)">
-</app-order-form>
-
-<mat-divider class="mt-1"></mat-divider>
-
-<app-orders-list-form *ngIf="!isOrderOpen"
-    [orders]="listOrder" 
-    [departments]="listDepartment" 
-    [statuses]="listOrderStatus" 
-    [shops]="listShop"
-    (selectOrderEvent)="selectOrder($event)"
-    (openOrderEvent)="openOrder($event)">
-</app-orders-list-form>
-
-<app-order-body-list-form *ngIf="isOrderOpen"
     [order]="order"
-    [orderBodyItems]="orderBodyItems">
-</app-order-body-list-form>
+    [statuses]="listOrderStatus"
+    [productToAdd]="productToAdd"
+    (closeOrderEvent)="closeOrder($event)"
+    (orderSaveEvent)="orderSave($event)"
+    (clearProductEvent)="clearProduct($event)">
+</app-order-form>

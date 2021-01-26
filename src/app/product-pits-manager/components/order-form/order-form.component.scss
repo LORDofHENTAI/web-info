@@ -25,3 +25,28 @@
 :host ::ng-deep .mat-form-field-wrapper {
     padding: 0;
 }
+.order {
+    align-items: center;
+    justify-content: center;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 4px;
+
+    min-width: 10rem;
+    height: 74px;
+    margin: .3rem;
+}
+.order-id {
+    text-align: center;
+    align-self: center;
+
+    font-size: 28px;
+    font-weight: 600;
+
+    color: rgba(42, 42, 233, 0.8);
+
+    margin: .5rem 0;
+}

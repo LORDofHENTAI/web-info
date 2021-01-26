@@ -130,6 +130,23 @@ export class TokenService {
     }
   }
 
+  getGroup() {
+    try {
+      if(this.cookieService.check(this.cookieName)){
+        let fullData = this.cookieService.get(this.cookieName);
+        let loginFromCookie = JSON.parse(fullData);
+        if(loginFromCookie) {
+          return loginFromCookie.title;
+        }
+      }
+      else return '';
+    }
+    catch(error) {
+      console.error();
+      alert('login error')
+    }
+  }
+
   getCookie() : CookieLogin {
     try {
       if(this.cookieService.check(this.cookieName)){

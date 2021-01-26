@@ -1,0 +1,16 @@
+<form [formGroup]="statusForm" (ngSubmit)="onSave()">
+    <h2>Сохраниение заказа</h2>
+    <mat-form-field style="width: 100%;" appearance="outline" data-placement="bottom" matTooltip="Выбор статуса заказа">
+        <mat-label>Статус заказа</mat-label>
+        <mat-select formControlName="status">
+            <mat-option *ngFor="let status of data.statuses" [value]="status.id">
+                {{status.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div mat-dialog-actions align="end">
+        <button mat-stroked-button type="button" (click)="onNoClick()">Закрыть</button>
+        <button mat-stroked-button type="submit">Сохранить</button>
+    </div>
+</form>

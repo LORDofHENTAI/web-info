@@ -7,22 +7,29 @@ import { TokenService } from 'src/app/common/services/token/token.service';
 import { CookieLogin } from 'src/app/login-manager/models/cookie-login';
 import { AddOrder } from '../../models/add-order';
 import { FindOrder } from '../../models/find-order';
+import { Order } from '../../models/order';
 import { OrderStatus } from '../../models/order-status';
+import { PitsService } from '../../services/pits.service';
 
 @Component({
   selector: 'app-order-filter-form',
   templateUrl: './order-filter-form.component.html',
-  styleUrls: ['./order-filter-form.component.scss']
+  styleUrls: ['./order-filter-form.component.scss'],
 })
 export class OrderFilterFormComponent implements OnInit {
 
-  @Input() orderId: number;
   @Input() departments: DepartmentList[];
   @Input() statuses: OrderStatus[];
   @Input() shops: StoreList[];
-  @Output() filterEvent = new EventEmitter<FindOrder>();
-  @Output() addNewOrderEvent = new EventEmitter<AddOrder>();
-  @Output() openOrderEvent = new EventEmitter<number>();
+  @Input() orderChanged: Order;
+
+  @Output() openOrderEvent = new EventEmitter<Order>();
+
+  orders: Order[] = [];
+  order: Order;
+  isOrderOpen = false;
+
+  findOrder: FindOrder;
   
   cookie: CookieLogin;
   filterForm: FormGroup;
@@ -32,6 +39,7 @@ export class OrderFilterFormComponent implements OnInit {
   
   constructor(
     private datePipe: DatePipe,
+    private pitsService: PitsService,
     private tokenService: TokenService,
   ) { 
     this.cookie = this.tokenService.getCookie();
@@ -48,28 +56,59 @@ export class OrderFilterFormComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if(this.departments.length && this.statuses.length && this.shops.length) {
+      if(!this.orderChanged)
+        this.getDefaultOrders();
+      else {
+        this.getOrders(this.findOrder);
+      }
+    }
+  }
+
+  getDefaultOrders() {
+    this.findOrder = new FindOrder(
+      this.tokenService.getToken(), 
+      -1, 
+      Number(this.tokenService.getDepartment()),
+      Number(this.tokenService.getShop()),
+      this.datePipe.transform(new Date, 'dd.MM.yyyy'), 
+      this.datePipe.transform(new Date, 'dd.MM.yyyy'));
+    this.getOrders(this.findOrder);
   }
 
   onSearch() {
-    let findOrder = new FindOrder(
+    this.findOrder = new FindOrder(
       this.tokenService.getToken(), 
       this.filterForm.value.status, 
       this.filterForm.value.department, 
       this.filterForm.value.shop, 
       this.datePipe.transform(this.filterForm.value.start, 'dd.MM.yyyy'), 
       this.datePipe.transform(this.filterForm.value.end, 'dd.MM.yyyy'));
-    this.filterEvent.emit(findOrder);
+    this.getOrders(this.findOrder);
   }
   
   onTakeAll() {
-    let findOrder = new FindOrder(
+    this.findOrder = new FindOrder(
       this.tokenService.getToken(), 
       this.filterForm.value.status, 
       this.filterForm.value.department, 
       this.filterForm.value.shop, 
       this.datePipe.transform(new Date(this.dateStartAll), 'dd.MM.yyyy'), 
       this.datePipe.transform(new Date(), 'dd.MM.yyyy'));
-    this.filterEvent.emit(findOrder);
+    this.getOrders(this.findOrder);
+  }
+
+  selectOrder(order: Order) {
+    this.order = order;
+  }
+
+  onOpenOrder() {
+    this.openOrder(this.order);
+  }
+
+  openOrder(order: Order) {
+    this.order = order;
+    this.openOrderEvent.emit(this.order);
   }
   
   onAddOrder() {
@@ -77,10 +116,35 @@ export class OrderFilterFormComponent implements OnInit {
       this.tokenService.getToken(), 
       Number(this.tokenService.getDepartment()), 
       Number(this.tokenService.getShop()));
-    this.addNewOrderEvent.emit(addOrder);
+    this.addNewOrder(addOrder);
   }
 
-  onOpenOrder() {
-    this.openOrderEvent.emit(this.orderId);
+  addNewOrder(addOrder: AddOrder) {
+    this.pitsService.addOrder(addOrder).subscribe(response => {
+      if(response) {
+        this.order = response;
+        this.orders = this.orders.concat(this.order);
+        setTimeout( () => { 
+          this.openOrderEvent.emit(this.order);
+        }, 300 );
+      }
+    }, 
+    error => { 
+      console.log(error);
+      // this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+    });
   }
+
+  getOrders(filter: FindOrder) {
+    this.pitsService.getOrderList(filter).subscribe(response => {
+      if(response) {
+        this.orders = response;
+      }
+    }, 
+    error => { 
+      console.log(error);
+      // this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+    });
+  }
+
 }

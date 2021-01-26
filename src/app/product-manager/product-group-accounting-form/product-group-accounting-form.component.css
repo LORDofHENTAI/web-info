@@ -117,7 +117,7 @@ mat-tree-node label:hover  {
 table {
     width: 100%;
 }
-.mat-column-articl {
+.mat-column-article {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;

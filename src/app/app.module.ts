@@ -52,6 +52,8 @@ import { OrderFormComponent } from './product-pits-manager/components/order-form
 import { OrdersListFormComponent } from './product-pits-manager/components/orders-list-form/orders-list-form.component';
 import { OrderFilterFormComponent } from './product-pits-manager/components/order-filter-form/order-filter-form.component';
 import { OrderBodyListFormComponent } from './product-pits-manager/components/order-body-list-form/order-body-list-form.component';
+import { OrderSaveFormComponent } from './product-pits-manager/components/order-save-form/order-save-form.component';
+import { StrToDataPipe } from './pipes/str-to-data.pipe';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,8 @@ import { OrderBodyListFormComponent } from './product-pits-manager/components/or
     OrdersListFormComponent,
     OrderFilterFormComponent,
     OrderBodyListFormComponent,
+    OrderSaveFormComponent,
+    StrToDataPipe,
   ],
   imports: [
     AppRoutingModule,
@@ -118,13 +122,13 @@ import { OrderBodyListFormComponent } from './product-pits-manager/components/or
     DatePipe,
     HttpClient,
     CookieService,
-    {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
+    // {
+    //   provide: DateAdapter,
+    //   useClass: MomentDateAdapter,
+    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    // },
+    // { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ],
   entryComponents: [
     AttentionFormComponent,

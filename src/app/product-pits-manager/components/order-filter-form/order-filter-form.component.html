@@ -8,7 +8,7 @@
         </div>
         <div class="row">
             <button mdbBtn type="button" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Просмотр" 
-                [disabled]="orderId ? null : true" (click)="onOpenOrder()">
+                [disabled]="order ? null : true" (click)="onOpenOrder()">
                 Просмотр
             </button>
         </div>
@@ -38,7 +38,8 @@
                         </mat-select>
                     </mat-form-field>
 
-                    <button mdbBtn id="form-btn" type="button" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Отобрать все заказы"
+                    <button mdbBtn id="form-btn" type="button" class="heavy-rain-gradient" size="sm" 
+                        data-placement="bottom" matTooltip="Отобрать все заказы"
                         (click)="onTakeAll()">
                         Отобрать все
                     </button>          
@@ -68,7 +69,8 @@
                         <mat-error *ngIf="filterForm.controls.end.hasError('matEndDateInvalid')">Ошибка конечной даты</mat-error>
                     </mat-form-field>
 
-                    <button mdbBtn id="form-btn" type="submit" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Отобрать заказы по фильтру"
+                    <button mdbBtn id="form-btn" type="submit" class="heavy-rain-gradient" size="sm" 
+                        data-placement="bottom" matTooltip="Отобрать заказы по фильтру"
                         [disabled]="filterForm.invalid">
                         Отобрать по фильтру
                     </button>
@@ -77,3 +79,12 @@
         </div>
     </div>
 </div>
+
+<app-orders-list-form
+    [orders]="orders" 
+    [departments]="departments" 
+    [statuses]="statuses" 
+    [shops]="shops"
+    (selectOrderEvent)="selectOrder($event)"
+    (openOrderEvent)="openOrder($event)">
+</app-orders-list-form>

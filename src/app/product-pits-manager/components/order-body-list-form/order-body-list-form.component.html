@@ -1,6 +1,25 @@
 <div class="table-container">
     <table class="table-hover" mat-table [dataSource]="orderBodyItems">
   
+        <ng-container matColumnDef="check">
+            <th mat-header-cell *matHeaderCellDef> 
+                <mat-checkbox [disabled]="!isEditMode" 
+                    [checked]="allChecked"
+                    [indeterminate]="someCheck()"
+                    [(ngModel)]="checkedColumn"
+                    (change)="setAll($event.checked)">
+                </mat-checkbox> 
+                <!-- [(ngModel)]="checkedColumn" -->
+            </th>
+            <td mat-cell *matCellDef="let element"> 
+                <mat-checkbox *ngIf="isEditMode" 
+                    (change)="selectOrder(element)"
+                    [(ngModel)]="element.checked"
+                    (ngModelChange)="updateAllChecked()">
+                </mat-checkbox>    
+            </td>
+        </ng-container>
+
         <ng-container matColumnDef="group">
             <th mat-header-cell *matHeaderCellDef> Группа </th>
             <td mat-cell *matCellDef="let element"> {{element.group}} </td>
@@ -23,7 +42,16 @@
   
         <ng-container matColumnDef="supplier">
             <th mat-header-cell *matHeaderCellDef> Поставщик </th>
-            <td mat-cell *matCellDef="let element"> {{element.supplier}} </td>
+            <td mat-cell *matCellDef="let element"> 
+                <ng-container *ngIf="!isEditMode">
+                    {{element.supplier}}
+                </ng-container>
+                <ng-container *ngIf="isSalesManager && isEditMode">
+                    <mat-form-field appearance="outline" data-placement="bottom" matTooltip="Поставщик">
+                        <input matInput placeholder="Введите значение" [(ngModel)]="element.supplier">
+                    </mat-form-field>
+                </ng-container>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="goods">
@@ -32,7 +60,7 @@
         </ng-container>
   
         <ng-container matColumnDef="average">
-            <th mat-header-cell *matHeaderCellDef> Ср. реализация </th>
+            <th mat-header-cell *matHeaderCellDef> Ср. реал. </th>
             <td mat-cell *matCellDef="let element"> {{element.average}} </td>
         </ng-container>
 
@@ -42,25 +70,57 @@
         </ng-container>
   
         <ng-container matColumnDef="deliveryDate">
-            <th mat-header-cell *matHeaderCellDef> Дата поставки </th>
-            <td mat-cell *matCellDef="let element"> {{element.deliveryDate | date:'dd.MM.yyyy'}} </td>
+            <th mat-header-cell *matHeaderCellDef> Дата пост. </th>
+            <td mat-cell *matCellDef="let element"> 
+                <ng-container *ngIf="!isEditMode">
+                    {{element.deliveryDate}}
+                </ng-container>
+                <ng-container *ngIf="isSalesManager && isEditMode">
+                    <mat-form-field appearance="outline" data-placement="bottom" matTooltip="Выбор даты поставки">
+                        <mat-label>{{element.deliveryDate}}</mat-label>
+                        <input matInput [matDatepicker]="picker" #selectedDate [disabled]="!isEditMode" (dateChange)="valueChange(element, selectedDate.value)">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <!-- [(ngModel)]="element.deliveryDate" -->
+                </ng-container>
+            </td>
         </ng-container>
-
         <ng-container matColumnDef="managerComment">
             <th mat-header-cell *matHeaderCellDef> Ком. рук. </th>
-            <td mat-cell *matCellDef="let element"> {{element.managerComment}} </td>
+            <td mat-cell *matCellDef="let element"> 
+                <ng-container *ngIf="!isEditMode">
+                    {{element.managerComment}}
+                </ng-container>
+                <ng-container *ngIf="isSalesManager && isEditMode">
+                    <mat-form-field appearance="outline" data-placement="bottom" matTooltip="Комментарий руководителя направлений">
+                        <input matInput placeholder="Введите значение" [(ngModel)]="element.managerComment">
+                    </mat-form-field>
+                </ng-container>
+            </td>
         </ng-container>
   
         <ng-container matColumnDef="departmentComment">
             <th mat-header-cell *matHeaderCellDef> Примечание </th>
-            <td mat-cell *matCellDef="let element"> {{element.departmentComment}} </td>
+            <td mat-cell *matCellDef="let element"> 
+                <ng-container *ngIf="!isEditMode">
+                    {{element.departmentComment}}
+                </ng-container>
+                <ng-container *ngIf="isAuthor && isEditMode">
+                    <mat-form-field appearance="outline" data-placement="bottom" matTooltip="Примечание">
+                        <input matInput placeholder="Введите значение" [(ngModel)]="element.departmentComment">
+                    </mat-form-field>
+                </ng-container>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Д </th>
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-icon id="push" matTooltip="Очистить заказ" *ngIf="isEditMode" (click)="onOrderClear()">delete_forever</mat-icon>
+            </th>
             <td mat-cell *matCellDef="let element; let i = index;"> 
-                <ng-container *ngIf="hoveredIndex == i">
-                    <mat-icon id="push" matTooltip="Удалить товар">delete</mat-icon>
+                <ng-container *ngIf="hoveredIndex == i && isEditMode">
+                    <mat-icon id="push" matTooltip="Удалить товар" (click)="onProductDelete(element)">delete</mat-icon>
                 </ng-container>
             </td>
         </ng-container>  
