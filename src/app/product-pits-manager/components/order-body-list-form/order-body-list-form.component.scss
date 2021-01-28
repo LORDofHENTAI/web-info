@@ -1,5 +1,6 @@
 .table-container {
-    height: 200px;
+    height: calc(40vh - 90px);
+    overflow: auto;
 }
 table {
     width: 100%;
@@ -35,10 +36,13 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 :host ::ng-deep label {
     margin-bottom: 0 !important;
 }
+mat-form-field {
+    width: 140px !important;
+}
 .mat-column-check {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 37% !important;
+    flex: 0 0 3% !important;
     width: 3% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -188,8 +192,8 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 .mat-column-managerComment {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 15% !important;
-    width: 15% !important;
+    flex: 0 0 14% !important;
+    width: 14% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
    
@@ -203,8 +207,8 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 .mat-column-departmentComment {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 15% !important;
-    width: 15% !important;
+    flex: 0 0 14% !important;
+    width: 14% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
    
@@ -218,8 +222,8 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 .mat-column-action {
     word-wrap: break-word !important;
     white-space: unset !important;
-    flex: 0 0 5% !important;
-    width: 5% !important;
+    flex: 0 0 4% !important;
+    width: 4% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
    
@@ -229,4 +233,22 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+}
+::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 6px;
+}
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #0ae;
+	border-radius: 6px;
+}
+.mat-panel-overflow {
+    max-height: calc(100vh - 290px);
+    overflow-y: auto;
+    overflow-x: hidden;
 }

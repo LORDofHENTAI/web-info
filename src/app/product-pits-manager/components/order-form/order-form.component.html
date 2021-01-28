@@ -38,7 +38,8 @@
                 Импорт
             </button>
             <button mdbBtn type="button" class="heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Печать заказа"
-                [disabled]="isEditMode">
+                [disabled]="true"
+                (click)="onExportExcel()">
                 Печать
             </button>
         </div>
@@ -73,7 +74,8 @@
 
 </div>
 
-<app-order-body-list-form
+<app-order-body-list-form 
+    class="table-container"
     [order]="order"
     [isEditMode]="isEditMode"
     [deliveryDate]="deliveryDateToOrder"
