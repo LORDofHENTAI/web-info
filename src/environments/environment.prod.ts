@@ -5,4 +5,5 @@ export const environment = {
   apiUrlPayment:'http://192.168.7.194:330/',
   apiUrlImg: 'https://mile.by/gtools/getImg/index.php',
   cookieName: 'user-ishope-mile',
+  positionHead: 'руководитель',
 };
