@@ -21,7 +21,8 @@ export class SelectCountComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.countItem = this.data.count;
+    if(this.data)
+      this.countItem = this.data.count;
   }
   
   onInputSearchData($event: string) {

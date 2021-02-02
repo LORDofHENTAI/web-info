@@ -155,7 +155,8 @@
                     <th mat-header-cell *matHeaderCellDef>  </th>
                     <td mat-cell *matCellDef="let element; let i = index;"> 
                         <ng-container *ngIf="hoveredIndex == i">
-                            <mat-icon id="push" matTooltip="Добавить в выписку" (click)="productArticleOrdering = element.article">add_circle_outline</mat-icon>
+                            <mat-icon id="push" matTooltip="Добавить в выписку" (click)="onClickAddArticleOrdering(element.article)">add_circle_outline</mat-icon> 
+                            <!-- productArticleOrdering = element.article -->
                             <mat-icon id="push" matTooltip="Добавить в ценники" (click)="productArticlePrice = element.article">local_atm</mat-icon>
                         </ng-container>
                     </td>

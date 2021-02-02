@@ -324,4 +324,11 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       this.valueModeVar = '';
     }
   }
+
+  onClickAddArticleOrdering(article: string) {
+    this.productArticleOrdering = article;
+    setTimeout(() => {
+      this.productArticleOrdering = '';
+    }, 500);
+  }
 }
