@@ -17,7 +17,6 @@ import { PrintDelete } from '../models/print-delete';
 })
 export class ProductPriceListFormComponent implements OnInit {
 
-  @Input() article: string;
   @Input() isOpen: boolean;
 
   listPrices: Print[];
@@ -39,23 +38,22 @@ export class ProductPriceListFormComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.article) {
-      if(changes.article.currentValue && changes.article.previousValue !== changes.article.currentValue)    
-       this.addInList(changes.article.currentValue);  
-    } else changes.isOpen.currentValue ? this.getListPrices() : null;
+    this.getListPrices();
   }
 
 
   getListPrices() {
-    this.productPriceService.getListPrices(new PrintQuery(this.tokenService.getToken())).subscribe(response => {
-      if(response) {
-        this.listPrices = response;
-      }
-    }, 
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    }); 
+    if(this.isOpen) {
+      this.productPriceService.getListPrices(new PrintQuery(this.tokenService.getToken())).subscribe(response => {
+        if(response) {
+          this.listPrices = response;
+        }
+      }, 
+      error => { 
+        console.log(error);
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      }); 
+    }
   }
 
   addInList(article: string) {

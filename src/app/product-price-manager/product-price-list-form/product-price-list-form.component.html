@@ -1,37 +1,42 @@
-<div class="card-item-list">
-    <ng-container *ngIf="listPrices">
-        <div class="card-item" *ngFor="let price of listPrices">
-            <div class="row">
-                <div class="col">
-                    <div class="row">
+<div class="content"  *ngIf="isOpen">
+    <ng-container *ngIf="listPrices.length > 0">
+        <div class="card-item-list">
+            <div class="card-item" *ngFor="let price of listPrices">
+                <div class="row align-items-center">
+                    <div class="col-1">
                         <img class="card-item-img" *ngIf="price.img" src="{{price.img | urlImg}}">
                         <img width="40px" height="40px" *ngIf="!price.img" src="../../../../../assets/no_photo.png">
                     </div>
-                    <div class="row">Артикул: {{price.article}}</div>
 
-                </div>
-                <div class="col">
-                    <div class="row card-item-name">{{price.name}}</div>
-                    <div class="row">  Цена / {{price.mesname}} : {{price.price}}</div>
-                    <div class="row">
-                        <div class="foot">
-                            <button
-                                class="bt-card-item"
-                                mat-icon-button>
-                                <mat-icon matTooltip="Удалить позицию" (click)="onDeleteItem(price)">delete</mat-icon>
-                            </button>
-                           
-                        </div>
+                    <div class="col-2">Артикул: {{price.article}}</div>
+
+                    <div class="col-8">
+                        <div class="row card-item-name">{{price.name}}</div>
+                        <div class="row">  Цена / {{price.mesname}} : {{price.price}}</div>
+                    </div>
+
+                    <div class="col-1 mx-auto">
+                        <button  mat-icon-button>
+                            <mat-icon matTooltip="Удалить позицию" (click)="onDeleteItem(price)">delete</mat-icon>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+        <mat-divider></mat-divider>
+        <div class="form-inline">
+            <div class="foot">
+    
+                <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Очистить"
+                    (click)="onPrintLable()" [disabled]="true">
+                    Печать 
+                </button>
+    
+                <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Очистить"
+                    (click)="onClearList()">
+                    Очистить 
+                </button>
+            </div>
+        </div>
     </ng-container>
-</div>
-<mat-divider></mat-divider>
-<div class="form-inline">
-    <div class="foot">
-        <button mat-stroked-button (click)="onPrintLable()">Печать</button>
-        <button mat-stroked-button class="m-1" (click)="onClearList()">Очистить</button>
-    </div>
 </div>

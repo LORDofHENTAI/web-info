@@ -1,11 +1,8 @@
 .prod {
-    height: calc(100vh - 204px);;
-}
-.prod-pits {
-    height: calc(100vh - 40vh - 204px);;
+    height: calc(70vh - 200px);
 }
 .mat-drawer-container {
-    height: calc(100vh - 98px);
+    height: calc(100vh - 46px);
     overflow: auto;
 }
 tr.mat-header-row  {
@@ -22,8 +19,14 @@ mat-drawer {
 .mat-tree-node {
     min-height: 2em;
 }
+.tree-group {
+    flex-direction: column;
+    overflow: auto;
+}
 mat-tree {
     cursor: pointer;
+    background-color: transparent;
+    height: calc(100vh - 100px);
 }
 mat-tree-node button {
     border: none;
@@ -33,6 +36,24 @@ mat-tree-node:hover {
     background-color: rgba(185, 151, 218, 0.4);
 }
 mat-tree-node button:hover {
+    cursor: pointer;
+}
+mat-tree-node mat-icon {
+    position: relative;
+    top: -0.8em;
+    right: 0.1em;
+    height: 18px;
+    width: 18px;
+}
+mat-tree-node button {
+    height: 18px;
+    width: 18px;
+}
+mat-tree-node label {
+    position: relative;
+    top: -0.8em;
+}
+mat-tree-node label:hover  {
     cursor: pointer;
 }
 ::ng-deep .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
@@ -74,12 +95,6 @@ mat-form-field {
     align-items: flex-start;
     align-self: center;
 }
-.check-bord {
-    border: 1px solid rgba(128, 128, 128, 0.3);
-    border-radius: 4px;
-    margin-top: .3rem;
-    padding: .3rem .5rem 0 .5rem;
-}
 :host ::ng-deep .mat-checkbox-layout .mat-checkbox-label {
     line-height: 21px;
 }
@@ -88,27 +103,6 @@ mat-form-field {
 }
 mat-button-toggle-group {
     height: 32px;
-}
-.mat-checkbox-label {
-    font-size: calc(6px + .6vw) !important;
-}
-mat-tree-node mat-icon {
-    position: relative;
-    top: -0.8em;
-    right: 0.1em;
-    height: 18px;
-    width: 18px;
-}
-mat-tree-node button {
-    height: 18px;
-    width: 18px;
-}
-mat-tree-node label {
-    position: relative;
-    top: -0.8em;
-}
-mat-tree-node label:hover  {
-    cursor: pointer;
 }
 .table-container {
     width: 100%;
@@ -222,51 +216,11 @@ table {
     -webkit-hyphens: auto;
     hyphens: auto;
 }
-
-mat-card  {
-    padding: 0% 1em;
-}
 .mat-card-borderr-bottom {
     border-bottom-color: rgba(128, 128, 128, 0.4); 
     border-bottom-style: double; 
     border-bottom-width: 0.08em;
     border-radius: 0%;
-    /* margin-bottom: 0.5em; */
-}
-.mat-card-margin {
-    padding-top: 0.5em;
-    width: 100%;
-}
-.card-overflow {
-    overflow: auto;
-}
-
-mat-nav-list {
-    margin: 0% !important;
-    padding: 0% !important;
-    border: 0.08em double rgba(128, 128, 128, 0.4);
-    border-radius: 5px;
-    height: 11em;
-    width: 15em;
-    overflow: auto;
-}
-table#table-prop {
-    width: 100%;
-}
-table#table-prop th td{
-    margin: 0%;
-    width: 20em;
-}
-mat-form-field#form-prop {
-    margin: 0% !important;
-    padding: 0% !important;
-}
-div#link {
-    margin: 0.1em !important;
-    padding: 0.1em !important;
-}
-p#common-count {
-   color: rgba(128, 128, 128);
 }
 mat-icon#push {
     padding: 0;
@@ -277,25 +231,12 @@ mat-icon#push:hover {
     font-size: 23px;
     color: blueviolet;
 }
-.ng-star-inserted {
-    margin-left: 0 !important;
-}
-#form-name {
-    width: 90%;
-}
-/* mat-drawer-content button {
-    width: 6vw;
-    height: calc(26px + 1vh);
-
-    font-size: calc(4px + .6vw);
-} */
 :host ::ng-deep .mat-tab-label {
     height: 32px !important;
 }
 :host ::ng-deep .mat-tab-header {
     height: 32px;
     border-top: 1px solid rgb(168, 168, 168);
-    /* background-color: rgb(230, 230, 230); */
 }
 :host ::ng-deep .mat-tab-label:hover {
     color: blueviolet;
@@ -309,13 +250,6 @@ mat-icon#push:hover {
 :host ::ng-deep .mat-tab-label, .mat-tab-link {
     font-size: 12px !important;
 }
-.lb-cost {
-    margin-left: .4rem;
-    font-size: calc(4px + .6vw);
-    border: 1px solid rgb(168, 168, 168);
-    border-radius: .2rem;
-    padding: .2rem .6rem;
-}
 ::-webkit-scrollbar-track {
     background-color: #F5F5F5;
     border-radius: 6px;
@@ -328,30 +262,6 @@ mat-icon#push:hover {
 ::-webkit-scrollbar-thumb {
 	background-color: #0ae;
 	border-radius: 6px;
-}
-.mat-panel-overflow {
-    max-height: calc(100vh - 290px);
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.mat-expansion-panel-header {
-    padding: 0px 4px;
-}
-:host ::ng-deep .mat-expansion-panel-body {
-    padding: 0;
-    margin: 0 0 5px 5px;
-}
-
-mat-expansion-panel {
-    margin-bottom: 0.4rem;
-}
-.mat-expansion-panel-header.mat-expanded {
-    height: 44px;
-}
-mat-panel-title {
-    font-size: 20px;
-    font-weight: 400;
 }
 .mat-divider {
     border-top-width: 4px;

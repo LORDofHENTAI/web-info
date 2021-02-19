@@ -1,4 +1,5 @@
-<app-order-filter-form [hidden]="isOrderOpen"
+<app-order-filter-form 
+    [hidden]="isOrderOpen"
     [statuses]="listOrderStatus"
     [departments]="listDepartment"
     [shops]="listShop"
@@ -6,11 +7,14 @@
     (openOrderEvent)="openOrder($event)">
 </app-order-filter-form>
 
-<app-order-form *ngIf="isOrderOpen" 
+<app-order-form
+    #orderForm
+    *ngIf="isOrderOpen" 
     [order]="order"
     [statuses]="listOrderStatus"
-    [productToAdd]="productToAdd"
     (closeOrderEvent)="closeOrder($event)"
     (orderSaveEvent)="orderSave($event)"
-    (clearProductEvent)="clearProduct($event)">
+    >
+    <!-- [productToAdd]="productToAdd" -->
+    <!-- (clearProductEvent)="clearProduct($event)" -->
 </app-order-form>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
@@ -10,7 +10,6 @@ import { VipiskaQuery } from 'src/app/product-ordering-manager/models/vipiska-qu
 import { VipiskaEdit } from 'src/app/product-ordering-manager/models/vipiska-edit';
 import { SelectCountComponent } from 'src/app/product-ordering-manager/dialog-windows/select-count/select-count.component';
 import { AddToVipiska } from 'src/app/product-ordering-manager/models/add-to-vipiska';
-import { SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-product-ordering-list-form',
@@ -19,10 +18,9 @@ import { SimpleChanges } from '@angular/core';
 })
 export class ProductOrderingListFormComponent implements OnInit {
 
-  @Input() article: string;
   @Input() isOpen: boolean;
 
-  listVipiska: VipiskaEnd;
+  listVipiska: VipiskaEnd = new VipiskaEnd([], '0');
   displayedColumnsPrint = ['name', 'quantity', 'mesname', 'price', 'summa', 'barcode'];
   imgSource = 'https://barcode.tec-it.com/barcode.ashx?data=';
   
@@ -41,15 +39,11 @@ export class ProductOrderingListFormComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.article) {
-      if(changes.article.currentValue && changes.article.previousValue !== changes.article.currentValue)
-        this.addInExcerpt(changes.article.currentValue);
-      else this.getListVipiska()
-    } else changes.isOpen.currentValue ? this.getListVipiska() : null;
+    this.getListVipiska();
   }
 
   getListVipiska() {
-    if(this.isOpen)
+    if(this.isOpen) {
       this.productOrderingService.getListVipiska(new VipiskaQuery(this.tokenService.getToken())).subscribe(response => {
         if(response) {
           this.listVipiska = response;
@@ -59,6 +53,7 @@ export class ProductOrderingListFormComponent implements OnInit {
         console.log(error);
         this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
       }); 
+    }
   }
 
   addInExcerpt(article: string) {
@@ -71,8 +66,7 @@ export class ProductOrderingListFormComponent implements OnInit {
         this.productOrderingService.addToVipiska(addToVipiska).subscribe(response => {
           if(response.status.toLocaleLowerCase() === 'ok') {
             this.snackbarService.openSnackBar('Товар добавлен в выписку.', this.action);
-            if(this.isOpen)
-              this.getListVipiska();
+            this.getListVipiska();
           }
         }, 
         error => { 

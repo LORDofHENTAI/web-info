@@ -23,20 +23,15 @@ import { StoragePlacesEditorComponent } from './product-manager/dialog-windows/s
 import { PrintLableFormComponent } from './product-manager/dialog-windows/print-lable-form/print-lable-form.component';
 import { ExtraCharacteristicComponent } from './product-manager/components/extra-characteristic/extra-characteristic.component';
 import { LeavingsComponent } from './product-manager/components/leavings/leavings.component';
-import { BarcodesComponent } from './product-manager/components/barcodes/barcodes.component';
-import { DischargeComponent } from './product-manager/components/discharge/discharge.component';
-import { RequestComponent } from './product-manager/components/request/request.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { CardComponent } from './product-manager/components/card/card.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { DischargePrintComponent } from './product-manager/print-forms/discharge-print/discharge-print.component';
 import { PricesComponent } from './product-manager/components/prices/prices.component';
 import { ProductPitsComponent } from './product-pits-manager/product-pits/product-pits.component';
-import { ZpcComponent } from './product-manager/components/zpc/zpc.component';
 import { SimpleTagComponent } from './price-tags/simple-tag/simple-tag.component';
 import { PrintWindowComponent } from './price-tags/dialog-windows/print-window/print-window.component';
 import { ProductCardComponent } from './product-manager/dialog-windows/product-card/product-card.component';
@@ -71,14 +66,10 @@ import { StrToDataPipe } from './pipes/str-to-data.pipe';
     PrintLableFormComponent,
     ExtraCharacteristicComponent,
     LeavingsComponent,
-    BarcodesComponent,
-    DischargeComponent,
-    RequestComponent,
     CardComponent,
     DischargePrintComponent,
     PricesComponent,
     ProductPitsComponent,
-    ZpcComponent,
     SimpleTagComponent,
     PrintWindowComponent,
     ProductCardComponent,
@@ -112,9 +103,6 @@ import { StrToDataPipe } from './pipes/str-to-data.pipe';
     MatDatepickerModule,
     NgxPrintModule,
     NgScrollbarModule,
-    // ConfirmationPopoverModule.forRoot({
-    //   confirmButtonType: 'danger', 
-    // }),
   ],
   exports: [AngularMaterialModule],
   providers: [    
@@ -123,12 +111,6 @@ import { StrToDataPipe } from './pipes/str-to-data.pipe';
     HttpClient,
     CookieService,
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
-    // {
-    //   provide: DateAdapter,
-    //   useClass: MomentDateAdapter,
-    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    // },
-    // { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ],
   entryComponents: [
     AttentionFormComponent,

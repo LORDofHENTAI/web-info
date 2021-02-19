@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
 import { DepartmentList } from '../../common/models/departmens';
@@ -7,6 +7,7 @@ import { OrderStatus } from '../models/order-status';
 import { PitsService } from '../services/pits.service'
 import { ShopService } from 'src/app/common/services/shop/shop.service';
 import { StoreList } from 'src/app/common/models/store-list';
+import { OrderFormComponent } from '../components/order-form/order-form.component';
 
 @Component({
   selector: 'app-product-pits',
@@ -15,8 +16,8 @@ import { StoreList } from 'src/app/common/models/store-list';
 })
 export class ProductPitsComponent implements OnInit {
 
-  @Input() productToAdd: string;
-  @Output() clearProductEvent = new EventEmitter<string>();
+  @ViewChild("orderForm", { static: false }) orderForm: OrderFormComponent;
+  @Input() isOpen: boolean;
 
   order: Order;
   orderChanged: Order;
@@ -92,7 +93,7 @@ export class ProductPitsComponent implements OnInit {
     this.orderChanged = order;
   }
 
-  clearProduct($event) {
-    this.clearProductEvent.emit('');
+  addProductToOrder(article: string) {
+    this.orderForm.addProductToOrder(article);
   }
 }

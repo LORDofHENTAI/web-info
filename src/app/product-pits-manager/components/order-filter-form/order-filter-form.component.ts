@@ -123,15 +123,14 @@ export class OrderFilterFormComponent implements OnInit {
     this.pitsService.addOrder(addOrder).subscribe(response => {
       if(response) {
         this.order = response;
-        this.orders = this.orders.concat(this.order);
+        this.orders = [...this.orders, this.order];
         setTimeout( () => { 
           this.openOrderEvent.emit(this.order);
-        }, 300 );
+        }, 250 );
       }
     }, 
     error => { 
       console.log(error);
-      // this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
     });
   }
 
@@ -143,8 +142,6 @@ export class OrderFilterFormComponent implements OnInit {
     }, 
     error => { 
       console.log(error);
-      // this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
     });
   }
-
 }
