@@ -14,6 +14,5 @@
 
 <div mat-dialog-actions align="end">
     <button mat-stroked-button (click)="onNoClick()">Отмена</button>
-    <button mat-stroked-button (click)="onOkClick()" *ngIf="inputData.value.length === 0" [disabled]="true">Принять</button>
-    <button mat-stroked-button (click)="onOkClick()" *ngIf="inputData.value.length > 0">Принять</button>
+    <button mat-stroked-button (click)="onOkClick()" [disabled]="inputData.value.length === 0">Принять</button>
 </div>
