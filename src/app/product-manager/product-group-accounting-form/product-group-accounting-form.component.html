@@ -105,13 +105,13 @@
 
         <mat-tab-group (selectedTabChange)="onSelectTab($event)">
             <mat-tab label="Карточка">
-                <app-card #productCard [isOpen]="isProductCard" [data]="productPropAnswer"></app-card>
+                <app-card #productCard [data]="productPropAnswer"></app-card>
             </mat-tab>
             <mat-tab label="Доп. характер.">
-                <app-extra-characteristic [isOpen]="isProductCard" *ngIf="tabIndex === 1" [data]="productPropAnswer.addon"></app-extra-characteristic>
+                <app-extra-characteristic *ngIf="tabIndex === 1" [data]="productPropAnswer.addon"></app-extra-characteristic>
             </mat-tab>
             <mat-tab label="Остатки">
-                <app-leavings [isOpen]="isProductCard" *ngIf="tabIndex === 2" [data]="productPropAnswer.goods"></app-leavings>
+                <app-leavings *ngIf="tabIndex === 2" [data]="productPropAnswer.goods"></app-leavings>
             </mat-tab>
             <mat-tab label="Выписка">
                 <app-product-ordering-list-form #orderingList *ngIf="tabIndex === 3" [isOpen]="isOpenOrdering"></app-product-ordering-list-form>
