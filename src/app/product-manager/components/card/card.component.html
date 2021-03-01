@@ -1,50 +1,42 @@
-<div class="card-contant">
-    <div class="row">
-        <div class="col-4">
+<div class="card-p">
+    <div class="card-info">
+        <div class="card-info-flex">
             <mat-form-field id="form-prop" appearance="outline">
                 <mat-label>Артикул</mat-label>
                 <input matInput placeholder="Артикул" [(ngModel)]="data.article" readonly>
             </mat-form-field>
-        </div>
 
-        <div class="col-4">
             <mat-form-field id="form-prop" appearance="outline">
                 <mat-label>Тип</mat-label>
                 <input matInput placeholder="Тип" [(ngModel)]="data.type" readonly>
             </mat-form-field>
-        </div>
 
-        <div class="col-4">
-            <mat-form-field id="form-prop" appearance="outline">
-                <mat-label>Страна</mat-label>
-                <input matInput placeholder="Страна" [(ngModel)]="data.country" readonly>
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-8">
-            <mat-form-field id="form-name" appearance="outline">
-                <mat-label>Наименование</mat-label>
-                <input matInput placeholder="Наименование" [(ngModel)]="data.name" readonly>
-            </mat-form-field>
-        </div>
-
-        <div class="col-2">
             <mat-form-field id="form-prop" appearance="outline">
                 <mat-label>Ед. измерения</mat-label>
                 <input matInput placeholder="Ед. измерения" [(ngModel)]="data.mesabbrev" readonly>
             </mat-form-field>
         </div>
+        <div class="card-info-flex">
+            <mat-form-field id="form-name" appearance="outline">
+                <mat-label>Наименование</mat-label>
+                <input matInput placeholder="Наименование" [(ngModel)]="data.name" readonly>
+            </mat-form-field>
+        </div>
+        <div class="card-info-flex">
 
-        <div class="col-2">
+            <mat-form-field id="form-prop" appearance="outline">
+                <mat-label>Страна</mat-label>
+                <input matInput placeholder="Страна" [(ngModel)]="data.country" readonly>
+            </mat-form-field>
+
             <mat-form-field id="form-prop" appearance="outline">
                 <mat-label>Группа</mat-label>
                 <input matInput placeholder="Группа" [(ngModel)]="data.group" readonly>
             </mat-form-field>
         </div>
-    </div>     
-    <div class="row">
-        <div class="col-6">
+    </div>
+    <div class="card-info">
+        <div class="card-info-flex">
             <div class="list-prop">
                 <table mat-table [dataSource]="data.delivers | split:splitElement" class="table-hover">
 
@@ -58,8 +50,11 @@
 
                 </table>
             </div>
-        </div>   
-        <div class="col-6" >
+        </div>
+    </div>
+
+    <div class="card-info">
+        <div class="card-info-flex">
             <div class="list-prop">
                 <table mat-table [dataSource]="data.barcode" class="table-hover">
 
@@ -73,6 +68,6 @@
 
                 </table>
             </div>
-        </div>   
+        </div>
     </div>
 </div>

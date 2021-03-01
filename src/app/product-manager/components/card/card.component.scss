@@ -1,17 +1,35 @@
-.card-contant {
-    margin: 15px;
+.card-p {
+    display: flex;
+}
+.card-info {
+    flex-grow: 1;
+    display: block;
+}
+.card-info-flex {
+    display: flex;
 }
 mat-form-field {
     width: 100%;
+    margin: .2rem .5rem;
 }
 table {
     width: 100%;
 }
 .list-prop {
-    max-height: 260px;
+    height: 30vh;
+    display: flex;
+    flex-grow: 1;
+    overflow: auto;
     border: 1px solid rgba(128, 128, 128, 0.4);
     border-radius: 5px;
-    overflow: auto;
+    margin: .2rem .5rem;
+}
+tr.mat-header-row  {
+    height: 32px !important;
+    background-color: rgb(230, 230, 230);
+}
+tr.mat-row, tr.mat-footer-row {
+    height: 30px;
 }
 .mat-column-place {
     word-wrap: break-word !important;

@@ -15,6 +15,8 @@ import { PriceCheckerComponent } from '../dialog-windows/price-checker/price-che
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ProductPriceListFormComponent } from 'src/app/product-price-manager/product-price-list-form/product-price-list-form.component';
 import { ProductPitsComponent } from 'src/app/product-pits-manager/product-pits/product-pits.component';
+import { ProductProp } from '../models/product-prop';
+import { ProductOrderingListFormComponent } from 'src/app/product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
 
 interface PoductNode {
   id: string;
@@ -36,6 +38,7 @@ interface ExampleFlatNode {
 })
 export class ProductGroupAccountingFormComponent implements OnInit {
 
+  @ViewChild("orderingList", {static: false }) orderingList: ProductOrderingListFormComponent;
   @ViewChild("priceList", {static: false }) priceList: ProductPriceListFormComponent;
   @ViewChild("orderPits", { static: false }) orderPits : ProductPitsComponent;
 
@@ -52,7 +55,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   valueModeVar: string;
 
   productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
-  displayedColumnsProducts = ['article', 'name', 'type', 'goods', 'price', 'action'];
+  displayedColumnsProducts = ['article', 'name', 'type', 'goods', 'price']; //, 'action'
   displayedColumnsPlaces = ['place', 'bt'];
   displayedColumnsDelivers = ['delivers'];
   treeData: any;
@@ -73,7 +76,8 @@ export class ProductGroupAccountingFormComponent implements OnInit {
 
   panelOpenStateTree = true;
 
-  isOpenOrdering = true;
+  isProductCard = false;
+  isOpenOrdering = false;
   isOpenPrices = false;
   isOpenProductPits = false;
   
@@ -283,19 +287,19 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   onSelectTab(event: MatTabChangeEvent) {
     this.tabIndex = event.index;
     switch(event.index) {
-      case 0:
+      case 3:
         this.isOpenOrdering = true;
         this.isOpenPrices = false;
         this.isOpenProductPits = false;
         break;
       
-      case 1:
+      case 4:
         this.isOpenOrdering = false;
         this.isOpenPrices = true;
         this.isOpenProductPits = false;
         break;  
 
-      case 2:
+      case 5:
         this.isOpenOrdering = false;
         this.isOpenPrices = false;
         this.isOpenProductPits = true;
@@ -303,12 +307,33 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     }
   } 
 
-  onAdInPriceList(article: string) {
-    this.priceList.addInList(article);
-  }
-
   onAddProductToOrder(article: string) {
     this.orderPits.addProductToOrder(article);
+  }
+
+  onAddProduct(article: string) {
+    switch(this.tabIndex) {
+      case 3:
+        this.orderingList.addInExcerpt(article)
+      break;
+
+      case 4:
+        this.priceList.addInList(article);
+      break;
+
+      case 5:
+        this.orderPits.addProductToOrder(article);
+      break;
+    }
+  }
+
+  getProductInfo(article: string) {
+    this.productService.getProductProp(new ProductProp(this.tokenService.getToken(), article)).subscribe(response => {
+      this.productPropAnswer = response; 
+    }, 
+    error => { 
+      console.log(error);
+    });
   }
 
   timerWakeUp() {
@@ -322,31 +347,4 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       lastTime = currentTime;
     }, 20000);
   }
-
-  // clearProduct(event) {
-  //   this.productToAdd = '';
-  // }
-
-  // onModeVar(value) {
-  //   if(this.valueModeVar !== value)
-  //     this.valueModeVar = value;
-  //   else {
-  //     this.selectedModeVar = '';
-  //     this.valueModeVar = '';
-  //   }
-  // }
-
-  // onDrop(event) {
-  //   event.preventDefault();
-  // }
-
-  // onDragOver(event) {
-  //     event.stopPropagation();
-  //     event.preventDefault();
-  //     let d = event.currentTarget.dragData;
-  // }
-
-  // muestraBotones($event) {
-
-  // }
 }

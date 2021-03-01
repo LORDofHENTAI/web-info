@@ -25,7 +25,6 @@ import { DatePipe } from '@angular/common';
 export class OrderFormComponent implements OnInit {
 
   @Input() order: Order;
-  @Input() productToAdd: string;
   @Input() statuses: OrderStatus[];
   
   @Output() orderSaveEvent = new EventEmitter<Order>();
@@ -70,8 +69,6 @@ export class OrderFormComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if(this.order) {}
       this.getOrder(this.order.id);
-    if(this.productToAdd)
-      this.addProductToOrder(this.productToAdd);
   }
 
   onCloseClick() {
@@ -96,8 +93,6 @@ export class OrderFormComponent implements OnInit {
         new ProductAdd(this.tokenService.getToken(), article, Number(this.tokenService.getShop()), this.order.id)).subscribe(response => {
         if(response) {
           this.orderBodyItems = this.orderBodyItems.concat(response);
-          this.productToAdd = '';
-          this.clearProductEvent.emit('');
         }
       }, 
       error => { 
