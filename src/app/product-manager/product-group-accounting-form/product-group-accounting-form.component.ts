@@ -17,6 +17,7 @@ import { ProductPriceListFormComponent } from 'src/app/product-price-manager/pro
 import { ProductPitsComponent } from 'src/app/product-pits-manager/product-pits/product-pits.component';
 import { ProductProp } from '../models/product-prop';
 import { ProductOrderingListFormComponent } from 'src/app/product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 interface PoductNode {
   id: string;
@@ -34,7 +35,7 @@ interface ExampleFlatNode {
 @Component({
   selector: 'app-product-group-accounting-form',
   templateUrl: './product-group-accounting-form.component.html',
-  styleUrls: ['./product-group-accounting-form.component.css']
+  styleUrls: ['./product-group-accounting-form.component.scss']
 })
 export class ProductGroupAccountingFormComponent implements OnInit {
 
@@ -55,7 +56,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   valueModeVar: string;
 
   productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
-  displayedColumnsProducts = ['article', 'name', 'type', 'goods', 'price']; //, 'action'
+  displayedColumnsProducts = ['article', 'name', 'type', 'goods', 'price', 'action']; //, 'action'
   displayedColumnsPlaces = ['place', 'bt'];
   displayedColumnsDelivers = ['delivers'];
   treeData: any;
@@ -80,6 +81,9 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   isOpenOrdering = false;
   isOpenPrices = false;
   isOpenProductPits = false;
+
+  color = 'accent';
+  isExcluded = false;
   
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   action = 'Ok';
@@ -131,7 +135,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     if(this.group) {
       this.dataSourceProducts = [];
       this.scrollPosition = 5000;
-      this.getProducts(new ProductQuery(this.tokenService.getToken(), this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), ''));
+      this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), ''));
     }
   }
 
@@ -143,24 +147,37 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       this.dataSourceProducts = [];
       console.log(this.searchValue);
       this.isEmptySearchValue = false;
-      if(this.selectedSearchVar === 'article') {
-        this.getProductsForSearch(
-          new ProductQuery(this.tokenService.getToken(), '', this.searchValue, '', '', this.tokenService.getShop(), this.tokenService.getType(), '')
-          );
-      }
-      if(this.selectedSearchVar === 'name') {
-        this.getProductsForSearch(
-          new ProductQuery(this.tokenService.getToken(), '', '', this.searchValue, '', this.tokenService.getShop(), this.tokenService.getType(), '')
-          );
-      }
-      if(this.selectedSearchVar === 'barcode') {
-        this.getProductsForSearch(
-          new ProductQuery(this.tokenService.getToken(), '', '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), '')
-          );
-      }
+      this.getProductsBySelectedSearchVar();
     } else {
       this.isEmptySearchValue = true;
     }
+  }
+
+  getProductsBySelectedSearchVar() {
+    if(this.selectedSearchVar === 'article') {
+      this.getProductsForSearch(
+        new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', this.searchValue, '', '', this.tokenService.getShop(), this.tokenService.getType(), '')
+        );
+    }
+    if(this.selectedSearchVar === 'name') {
+      this.getProductsForSearch(
+        new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', '', this.searchValue, '', this.tokenService.getShop(), this.tokenService.getType(), '')
+        );
+    }
+    if(this.selectedSearchVar === 'barcode') {
+      this.getProductsForSearch(
+        new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), '')
+        );
+    }
+  }
+
+  getProductsForSearch(query: ProductQuery) {
+    this.productService.getProducts(query).subscribe(response => {
+        this.assignResponseProductSearch(response); 
+    }, 
+    error => { 
+      console.log(error);
+    });
   }
 
   onClear() {
@@ -172,6 +189,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   onSelectRowClick(row: ProductAnswer) {
     if(row) {
       this.selectedRow = row;
+      this.getProductInfo(this.selectedRow.article);
     }
   }
 
@@ -199,16 +217,16 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       var pos = this.countListProducts + 200;
       if(pos % 200 == 0) {
         if(this.group && !this.searchValue) {
-          this.getProducts(new ProductQuery(this.tokenService.getToken(), this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
+          this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
         }
         if(this.selectedSearchVar === 'article' && this.searchValue) {
-          this.getProducts(new ProductQuery(this.tokenService.getToken(), '', this.searchValue, '', '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
+          this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', this.searchValue, '', '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
         }
         if(this.selectedSearchVar === 'name' && this.searchValue) {
-          this.getProducts(new ProductQuery(this.tokenService.getToken(), '', '', this.searchValue, '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
+          this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', '', this.searchValue, '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
         }
         if(this.selectedSearchVar === 'barcode' && this.searchValue) {
-          this.getProducts(new ProductQuery(this.tokenService.getToken(), '', '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
+          this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
         }
       }
     }
@@ -225,15 +243,6 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     this.productPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
     this.listPlaces = [];
     this.listDelivers = [];
-  }
-
-  getProductsForSearch(query: ProductQuery) {
-    this.productService.getProducts(query).subscribe(response => {
-        this.assignResponseProductSearch(response); 
-    }, 
-    error => { 
-      console.log(error);
-    });
   }
 
   getProducts(query: ProductQuery) {
@@ -310,6 +319,14 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   onAddProductToOrder(article: string) {
     this.orderPits.addProductToOrder(article);
   }
+  
+  onClickAddArticleOrdering(article: string) {
+    this.orderingList.addInExcerpt(article)
+  }
+
+  onAdInPriceList(article: string) {
+    this.priceList.addInList(article);
+  }
 
   onAddProduct(article: string) {
     switch(this.tabIndex) {
@@ -346,5 +363,22 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       }
       lastTime = currentTime;
     }, 20000);
+  }
+
+  onToggleChange(value: MatSlideToggleChange) {
+    this.isExcluded = value.checked;
+    if(this.searchValue) {
+      this.getProductsBySelectedSearchVar();
+    } else {
+      if(this.group) {
+        this.clearProp();
+        this.scrollPosition = 5000;
+        this.dataSourceProducts = [];
+        this.countListProducts = 0;
+        this.getProducts(new ProductQuery(
+          this.tokenService.getToken(), this.isExcluded, this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), '')
+        );
+      }
+    } 
   }
 }

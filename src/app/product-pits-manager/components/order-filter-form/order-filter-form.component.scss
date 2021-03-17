@@ -8,19 +8,7 @@ form {
     margin: 0;
     padding: 0;
 } 
-:host ::ng-deep .mat-form-field-flex > .mat-form-field-infix { 
-    padding: 0.4em 0px !important;
-}
-:host ::ng-deep .mat-form-field-label-wrapper { 
-    top: -1.3em; 
-}
-:host ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-    transform: translateY(-1.1em) scale(.75);
-    width: 133.33333%;
-}
-:host ::ng-deep .mat-form-field-wrapper {
-    padding: 0;
-}
+
 .mat-form-field {
     width: calc(7.5rem + 5vw); 
 }

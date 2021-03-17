@@ -1,3 +1,4 @@
+@import '../../common/css/scrollbar';
 .content {
     height: 32vh;
 }
@@ -49,17 +50,4 @@ mat-icon {
     mat-icon {
         opacity: .75;
     }
-}
-::-webkit-scrollbar-track {
-    background-color: #F5F5F5;
-    border-radius: 6px;
-}
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-	background-color: #F5F5F5;
-}
-::-webkit-scrollbar-thumb {
-	background-color: #0ae;
-	border-radius: 6px;
 }

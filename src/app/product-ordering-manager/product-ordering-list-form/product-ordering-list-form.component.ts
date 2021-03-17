@@ -21,7 +21,7 @@ export class ProductOrderingListFormComponent implements OnInit {
   @Input() isOpen: boolean;
 
   listVipiska: VipiskaEnd = new VipiskaEnd([], '0');
-  displayedColumnsPrint = ['name', 'quantity', 'mesname', 'price', 'summa', 'barcode'];
+  displayedColumnsPrint = ['photo', 'name', 'quantity', 'mesname', 'price', 'summa', 'barcode'];
   imgSource = 'https://barcode.tec-it.com/barcode.ashx?data=';
   
   messageNoConnect = 'Нет соединения, попробуйте позже.';

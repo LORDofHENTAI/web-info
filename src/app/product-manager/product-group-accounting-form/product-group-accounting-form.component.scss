@@ -1,3 +1,5 @@
+@import '../../common/css/scrollbar';
+@import '../../common/css/mat-form-field-outline';
 .prod {
     height: calc(70vh - 200px);
 }
@@ -28,30 +30,32 @@ mat-tree {
     background-color: transparent;
     height: calc(100vh - 100px);
 }
-mat-tree-node button {
-    border: none;
-    outline: none;
-}
+// mat-tree-node button {
+//     border: none;
+//     outline: none;
+// }
 mat-tree-node:hover {
     background-color: rgba(185, 151, 218, 0.4);
 }
 mat-tree-node button:hover {
     cursor: pointer;
 }
-mat-tree-node mat-icon {
-    position: relative;
-    top: -0.8em;
-    right: 0.1em;
-    height: 18px;
-    width: 18px;
-}
-mat-tree-node button {
-    height: 18px;
-    width: 18px;
-}
-mat-tree-node label {
-    position: relative;
-    top: -0.8em;
+mat-tree-node {
+    button {
+        height: 18px;
+        width: 18px;
+    }
+    mat-icon {
+        position: relative;
+        top: -0.8em;
+        right: 0.1em;
+        height: 18px;
+        width: 18px;
+    }
+    label {
+        position: relative;
+        top: -0.8em;
+    }
 }
 mat-tree-node label:hover  {
     cursor: pointer;
@@ -59,19 +63,6 @@ mat-tree-node label:hover  {
 ::ng-deep .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
     background-color: rgba(185, 151, 218, 0.4);
     cursor: pointer;
-}
-:host ::ng-deep .mat-form-field-flex > .mat-form-field-infix { 
-    padding: 0.4em 0px !important;
-}
-:host ::ng-deep .mat-form-field-label-wrapper { 
-    top: -1.3em; 
-}
-:host ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-    transform: translateY(-1.1em) scale(.75);
-    width: 133.33333%;
-}
-:host ::ng-deep .mat-form-field-wrapper {
-    padding: 0;
 }
 .select-row {
     background-image: linear-gradient(to right, rgba(161, 106, 216, 0.5), rgba(240, 10, 228, 0.5));
@@ -192,15 +183,6 @@ table {
     border-bottom-width: 0.08em;
     border-radius: 0%;
 }
-mat-icon#push {
-    padding: 0;
-    cursor: pointer;
-    font-size: 22px;
-}
-mat-icon#push:hover {
-    font-size: 23px;
-    color: blueviolet;
-}
 :host ::ng-deep .mat-tab-label {
     height: 32px !important;
 }
@@ -220,19 +202,32 @@ mat-icon#push:hover {
 :host ::ng-deep .mat-tab-label, .mat-tab-link {
     font-size: 12px !important;
 }
-::-webkit-scrollbar-track {
-    background-color: #F5F5F5;
-    border-radius: 6px;
-}
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-	background-color: #F5F5F5;
-}
-::-webkit-scrollbar-thumb {
-	background-color: #0ae;
-	border-radius: 6px;
-}
 .mat-divider {
     border-top-width: 4px;
+}
+.mat-icon-button#push {
+    width: 28px !important;
+    height: 28px !important;
+    line-height: 28px !important;
+
+    mat-icon {
+        padding: 0;
+        cursor: pointer;
+        font-size: 22px;
+    }
+} 
+.mat-icon-button#push:hover {
+    background-color: rgba(128, 128, 128, 0.25);
+
+    mat-icon {
+        font-size: 23px;
+        color: blueviolet;
+        opacity: .75;
+    }
+}
+.slide {
+    background-color: rgba(128, 128, 128, 0.1);
+    border: 1px solid rgba(128, 128, 128, 0.25);
+	border-radius: 12px;
+    padding: 4px;
 }

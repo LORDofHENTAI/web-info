@@ -58,6 +58,18 @@
                             Наименование
                         </mat-button-toggle>
                     </mat-button-toggle-group>
+
+                    <div class="slide ml-2">
+                        <mat-slide-toggle
+                            class=""
+                            [color]="color"
+                            [checked]="isExcluded"
+                            (change)="onToggleChange($event)"
+                            >
+                            <!-- [disabled]="disabled" -->
+                            Отображать исключенные
+                        </mat-slide-toggle>
+                    </div>
                 </div>              
             </div>
         </div>
@@ -90,6 +102,23 @@
                     <th mat-header-cell *matHeaderCellDef> Цена </th>
                     <td mat-cell *matCellDef="let element" > {{element.price}} </td>
                 </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>  </th>
+                    <td mat-cell *matCellDef="let element; let i = index;"> 
+                        <ng-container *ngIf="hoveredIndex == i">
+                            <button id="push" mat-icon-button (click)="onClickAddArticleOrdering(element.article)" matTooltip="Добавить в выписку">
+                                <mat-icon>add_circle_outline</mat-icon>
+                            </button>
+                            <button id="push" mat-icon-button (click)="onAdInPriceList(element.article)" matTooltip="Добавить в ценники">
+                                <mat-icon>local_atm</mat-icon>
+                            </button>
+                            <button id="push" mat-icon-button (click)="onAddProductToOrder(element.article)" matTooltip="Добавить в товарную яму">
+                                <mat-icon>move_to_inbox</mat-icon>
+                            </button>
+                        </ng-container>
+                    </td>
+                </ng-container>                          
         
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsProducts; sticky: true"></tr>
 
@@ -114,10 +143,12 @@
                 <app-leavings *ngIf="tabIndex === 2" [data]="productPropAnswer.goods"></app-leavings>
             </mat-tab>
             <mat-tab label="Выписка">
-                <app-product-ordering-list-form #orderingList *ngIf="tabIndex === 3" [isOpen]="isOpenOrdering"></app-product-ordering-list-form>
+                <!-- *ngIf="tabIndex === 3"  -->
+                <app-product-ordering-list-form #orderingList [isOpen]="isOpenOrdering"></app-product-ordering-list-form>
             </mat-tab>
             <mat-tab label="Ценники">
-                <app-product-price-list-form #priceList *ngIf="tabIndex === 4" [isOpen]="isOpenPrices"></app-product-price-list-form>
+                <!-- *ngIf="tabIndex === 4"  -->
+                <app-product-price-list-form #priceList [isOpen]="isOpenPrices"></app-product-price-list-form>
             </mat-tab>
             <mat-tab label="Товарные ямы"> 
                 <app-product-pits #orderPits *ngIf="tabIndex === 5" [isOpen]="isOpenProductPits"></app-product-pits>    

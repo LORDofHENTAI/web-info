@@ -1,3 +1,4 @@
+@import '../../../common/css/scrollbar';
 .table-container {
     height: calc(32vh - 90px);
     overflow: auto;
@@ -14,19 +15,6 @@ tr.mat-header-row {
 }
 tr.mat-row {
     height: 26px;
-}
-::-webkit-scrollbar-track {
-    background-color: #F5F5F5;
-    border-radius: 6px;
-}
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-	background-color: #F5F5F5;
-}
-::-webkit-scrollbar-thumb {
-	background-color: #0ae;
-	border-radius: 6px;
 }
 .mat-panel-overflow {
     max-height: calc(100vh - 290px);
