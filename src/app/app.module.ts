@@ -49,6 +49,7 @@ import { OrderFilterFormComponent } from './product-pits-manager/components/orde
 import { OrderBodyListFormComponent } from './product-pits-manager/components/order-body-list-form/order-body-list-form.component';
 import { OrderSaveFormComponent } from './product-pits-manager/components/order-save-form/order-save-form.component';
 import { StrToDataPipe } from './pipes/str-to-data.pipe';
+import { BarcodeImgPipe } from './pipes/barcode-img/barcode-img.pipe';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { StrToDataPipe } from './pipes/str-to-data.pipe';
     OrderBodyListFormComponent,
     OrderSaveFormComponent,
     StrToDataPipe,
+    BarcodeImgPipe,
   ],
   imports: [
     AppRoutingModule,

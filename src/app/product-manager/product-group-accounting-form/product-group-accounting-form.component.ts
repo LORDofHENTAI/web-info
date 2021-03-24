@@ -56,12 +56,12 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   valueModeVar: string;
 
   productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
-  displayedColumnsProducts = ['article', 'name', 'type', 'goods', 'price', 'action']; //, 'action'
+  displayedColumnsProducts = ['article', 'name', 'type', 'goods', 'price', 'stock_price', 'action']; //, 'action'
   displayedColumnsPlaces = ['place', 'bt'];
   displayedColumnsDelivers = ['delivers'];
   treeData: any;
 
-  selectedRow: ProductAnswer = new ProductAnswer('', '', '', '', '');
+  selectedRow: ProductAnswer = new ProductAnswer('', '', '', '', '', '');
   dataSourceProducts: ProductAnswer[] = [];
   tempDataSourceProducts: ProductAnswer[] = [];
   listPlaces: Array<string> = [];

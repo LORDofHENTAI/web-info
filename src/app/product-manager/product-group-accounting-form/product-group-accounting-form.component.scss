@@ -132,7 +132,7 @@ table {
     -webkit-hyphens: auto;
     hyphens: auto;
 }  
-.mat-column-status {
+.mat-column-type {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
@@ -146,8 +146,8 @@ table {
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
-}   
-.mat-column-balancestore {
+}
+.mat-column-goods {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;
@@ -162,7 +162,37 @@ table {
     -webkit-hyphens: auto;
     hyphens: auto;
 } 
-.mat-column-balancedefect {
+.mat-column-price {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+.mat-column-stock_price {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+} 
+.mat-column-action {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 10% !important;

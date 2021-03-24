@@ -5,5 +5,6 @@ export class ProductAnswer{
         public type: string,
         public goods: string,
         public price: string,
+        public newPrice: string,
     ){}
 }
