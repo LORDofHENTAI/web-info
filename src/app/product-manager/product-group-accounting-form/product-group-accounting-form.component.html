@@ -134,9 +134,9 @@
                 <tr mat-row 
                     *matRowDef="let row; columns: displayedColumnsProducts; let i = index;"
                     (mouseover)="hoveredIndex = i"
-                    (click)="getProductInfo(row.article); selectedRow.article = row.article"
+                    (click)="getProductInfo(row.article); selectedArticle = row.article"
                     (dblclick)="onAddProduct(row.article)"
-                    [ngClass]="{ 'select-row': selectedRow.article == row.article }">
+                    [ngClass]="{ 'select-row': selectedArticle == row.article }">
                 </tr>
             </table>
         </div>

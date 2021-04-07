@@ -61,7 +61,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   displayedColumnsDelivers = ['delivers'];
   treeData: any;
 
-  selectedRow: ProductAnswer = new ProductAnswer('', '', '', '', '', '');
+  selectedArticle = '';
   dataSourceProducts: ProductAnswer[] = [];
   tempDataSourceProducts: ProductAnswer[] = [];
   listPlaces: Array<string> = [];
@@ -188,8 +188,8 @@ export class ProductGroupAccountingFormComponent implements OnInit {
 
   onSelectRowClick(row: ProductAnswer) {
     if(row) {
-      this.selectedRow = row;
-      this.getProductInfo(this.selectedRow.article);
+      this.selectedArticle = row.article;
+      this.getProductInfo(this.selectedArticle);
     }
   }
 
