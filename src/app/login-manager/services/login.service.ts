@@ -12,16 +12,16 @@ import { LogoutStatus } from '../models/logout-status';
 })
 export class LoginService {
 
-  private urlLogin = environment.apiUrl + '/auth/?data';
-  private urlLogout = environment.apiUrl + '/logout/';
+  private urlLogin = environment.apiUrl + 'auth/?data';
+  private urlLogout = environment.apiUrl + 'logout/';
 
   constructor(private http: HttpClient) { }
-  
+
   getLogin(login: LoginQuery): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.urlLogin}`, login);
   }
 
-  postLogout(login: Logout): Observable<LogoutStatus> {
-    return this.http.post<LogoutStatus>(`${this.urlLogout}`, login);
+  postLogout(login: Logout): Observable<string> {
+    return this.http.post<string>(`${this.urlLogout}`, login);
   }
 }

@@ -29,15 +29,15 @@ export class NavbarComponent implements OnInit {
     private loginService: LoginService,
     private tokenService: TokenService,
     private snackbarService: SnackbarService,
-  ) { 
-    this.tokenService.events$.forEach(value => { this.eventLogin(value) } );
+  ) {
+    this.tokenService.events$.forEach(value => { this.eventLogin(value) });
   }
 
   ngOnInit(): void {
-    if(this.tokenService.isLoginUser()) {
+    if (this.tokenService.isLoginUser()) {
       this.isLoginUser = true;
       this.userName = this.tokenService.getLogin();
-    } 
+    }
     else {
       this.isLoginUser = false;
       this.router.navigate(['/login']);
@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit {
   }
 
   eventLogin(event: boolean) {
-    if(event === true) {
+    if (event === true) {
       this.isLoginUser = event;
       this.userName = this.tokenService.getLogin();
     }
@@ -57,18 +57,22 @@ export class NavbarComponent implements OnInit {
 
   onClickLogout() {
     this.loginService.postLogout(new Logout(this.tokenService.getLogin(), this.tokenService.getToken())).subscribe(response => {
-      if(response.status) {
+      console.log(response);
+      if (response = 'true') {
         this.tokenService.deleteCookie();
         this.isLoginUser = false;
         this.router.navigate(['/login']);
+        console.log('попал');
       }
-      else 
+      else {
+        console.log('непопал');
         this.snackbarService.openSnackBar(this.messageFailLogin, this.action, this.styleNoConnect);
+      }
     },
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
+      error => {
+        console.log(error);
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      });
   }
 
   openSelectShop() {

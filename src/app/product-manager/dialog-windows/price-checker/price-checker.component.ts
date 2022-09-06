@@ -22,11 +22,12 @@ export class PriceCheckerComponent implements OnInit {
   productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
   displayedColumns = ['storeName', 'stock', 'reserve', 'onWay', 'supply', 'losses'];
   displayedColumnsBarcodes = ['barcodes'];
+  addToVipiska: AddToVipiska;
 
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   action = 'Ok';
   styleNoConnect = 'red-snackbar';
-  
+
   constructor(
     public dialog: MatDialog,
     private tokenService: TokenService,
@@ -35,7 +36,7 @@ export class PriceCheckerComponent implements OnInit {
     private productOrderingService: ProductOrderingService,
     public dialogRef: MatDialogRef<PriceCheckerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProductAnswer,
-  ) { 
+  ) {
     this.shopId = this.tokenService.getShop();
   }
 
@@ -45,30 +46,33 @@ export class PriceCheckerComponent implements OnInit {
 
   getProductProp(): void {
     this.productService.getProductProp(new ProductProp(this.tokenService.getToken(), this.data.article)).subscribe(response => {
-      this.productPropAnswer = response; 
-    }, 
-    error => { 
-      console.log(error);
-    });
+      this.productPropAnswer = response;
+    },
+      error => {
+        console.log(error);
+      });
   }
-  
+
   addInExcerpt(article: string) {
     const dialogRef = this.dialog.open(SelectCountComponent, {
       width: "400px",
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        let addToVipiska = new AddToVipiska(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType(), result);
-        this.productOrderingService.addToVipiska(addToVipiska).subscribe(response => {
-          if(response.status.toLocaleLowerCase() === 'ok') {
+      if (result) {
+
+        this.addToVipiska = new AddToVipiska(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType(), result);
+
+        this.productOrderingService.addToVipiska(this.addToVipiska).subscribe(response => {
+          console.log('>>>>>>>>>>>>>>' + response);
+          if (response = 'OK') {
             this.snackbarService.openSnackBar('Товар добавлен в выписку.', this.action);
             this.article = article;
           }
-        }, 
-        error => { 
-          console.log(error);
-          this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-        }); 
+        },
+          error => {
+            console.log(error);
+            this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+          });
       }
     });
   }

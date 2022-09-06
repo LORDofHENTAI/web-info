@@ -1,4 +1,47 @@
-<div class="content"  *ngIf="isOpen">
+<div class="content" *ngIf="isOpen">
+    <div class="price-menu">
+        <div class="foot">
+            <button mat-stroked-button data-placement="bottom" matTooltip="Импорт из dat-файла">
+                Импорт
+            </button>
+            <button mat-stroked-button data-placement="bottom" matTooltip="Загрузка акционного файла">
+                Акции
+            </button>
+            <button mat-stroked-button data-placement="bottom" matTooltip="Загрузка акционного файла York">
+                Акции Y
+            </button>
+            <button mat-stroked-button data-placement="bottom" matTooltip="Напольные">
+                Напольные
+            </button>
+            <button mat-stroked-button data-placement="bottom" matTooltip="Печать ценников" (click)="onPrintLable()"
+                [disabled]="true">
+                <span class="material-icons">
+                    print
+                </span>
+                Печать
+            </button>
+            <mat-form-field appearance="outline">
+                <mat-label>Размер</mat-label>
+                <mat-select class="selecter" [(ngModel)]="selectedSize">
+                    <mat-option *ngFor="let size of sizes" [value]="size">{{size}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Тип</mat-label>
+                <mat-select>
+                    <mat-option> Стандартный </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button mat-mini-fab color='none' data-placement="bottom" matTooltip="Очистить список ценников"
+                (click)="onClearList()">
+                <span class="material-icons">
+                    delete
+                </span>
+            </button>
+        </div>
+    </div>
     <ng-container *ngIf="listPrices">
         <div class="card-item-list">
             <div class="card-item" *ngFor="let price of listPrices">
@@ -12,30 +55,15 @@
 
                     <div class="col-8">
                         <div class="row card-item-name">{{price.name}}</div>
-                        <div class="row">  Цена / {{price.mesname}} : {{price.price}}</div>
+                        <div class="row"> Цена / {{price.mesname}} : {{price.price}}</div>
                     </div>
 
                     <div class="col-1 mx-auto">
-                        <button  mat-icon-button>
+                        <button mat-icon-button>
                             <mat-icon matTooltip="Удалить позицию" (click)="onDeleteItem(price)">delete</mat-icon>
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <mat-divider></mat-divider>
-        <div class="form-inline">
-            <div class="foot">
-    
-                <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Очистить"
-                    (click)="onPrintLable()" [disabled]="true">
-                    Печать 
-                </button>
-    
-                <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" data-placement="bottom" matTooltip="Очистить"
-                    (click)="onClearList()">
-                    Очистить 
-                </button>
             </div>
         </div>
     </ng-container>

@@ -14,7 +14,7 @@ import { Status } from 'src/app/common/models/status';
 import { ProductClear } from '../models/product-clear'
 import { SaveOrderBody } from '../models/save-order-body'
 import { DatImport } from '../models/data-import'
- 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,7 +33,7 @@ export class PitsService {
   constructor(private http: HttpClient) { }
 
   getOrderStatus(): Observable<OrderStatus[]> {
-    return this.http.post<OrderStatus[]>(`${this.urlGetOrderStatus}`, '');
+    return this.http.get<OrderStatus[]>(`${this.urlGetOrderStatus}`);
   }
 
   getOrderList(data: FindOrder): Observable<Order[]> {

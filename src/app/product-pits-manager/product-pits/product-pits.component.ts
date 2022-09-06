@@ -29,7 +29,7 @@ export class ProductPitsComponent implements OnInit {
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   action = 'Ok';
   styleNoConnect = 'red-snackbar';
-  
+
   constructor(
     private shopService: ShopService,
     private pitsService: PitsService,
@@ -48,36 +48,37 @@ export class ProductPitsComponent implements OnInit {
 
   getOrderStatus() {
     this.pitsService.getOrderStatus().subscribe(response => {
-      if(response) {
+      console.log(response);
+      if (response) {
         this.listOrderStatus = response;
       }
-    }, 
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
+    },
+      error => {
+        console.log(error);
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      });
   }
 
   getDepartmentList() {
     this.shopService.getDepartmentList().subscribe(response => {
-      if(response) {
+      if (response) {
         this.listDepartment = response;
       }
-    }, 
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
+    },
+      error => {
+        console.log(error);
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      });
   }
 
   getShopList() {
     this.shopService.getShops().subscribe(response => {
-      if(response)
+      if (response)
         this.listShop = response;
-    }, 
-    error => { 
-      console.log(error);
-    });
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   openOrder(order: Order) {
@@ -94,6 +95,7 @@ export class ProductPitsComponent implements OnInit {
   }
 
   addProductToOrder(article: string) {
+    console.log(article);
     this.orderForm.addProductToOrder(article);
   }
 }

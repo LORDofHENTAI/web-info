@@ -1,33 +1,35 @@
 <mat-drawer-container class="tree-container">
-    
+
     <mat-drawer mode="side" opened class="rare-wind-gradient">
 
         <div class="tree-group">
-        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-            <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onSelectNode(node)"
-                [ngClass]="{ 'select-row': selectedRowTree == node.id }">
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onSelectNode(node)"
+                    [ngClass]="{ 'select-row': selectedRowTree == node.id }">
 
-                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" (click)="onSelectNode(node)">
-                    <mat-icon class="mat-icon-rtl-mirror" *ngIf="node.children">
-                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                    </mat-icon>
-                    <label> {{node.name}} </label>
-                </button>   
-            </mat-tree-node>
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
+                        (click)="onSelectNode(node)">
+                        <mat-icon class="mat-icon-rtl-mirror" *ngIf="node.children">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                        <label> {{node.name}} </label>
+                    </button>
+                </mat-tree-node>
 
-            <mat-tree-node  *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding (click)="onSelectNode(node)"  
-                [ngClass]="{ 'select-row': selectedRowTree == node.id }">
+                <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding (click)="onSelectNode(node)"
+                    [ngClass]="{ 'select-row': selectedRowTree == node.id }">
 
-                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" (click)="onSelectNode(node)">
-                    <mat-icon class="mat-icon-rtl-mirror">
-                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                    </mat-icon>
-                    <label> {{node.name}} </label>            
-                </button>
-                
-            </mat-tree-node>
-        </mat-tree>        
-    </div>
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
+                        (click)="onSelectNode(node)">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                        <label> {{node.name}} </label>
+                    </button>
+
+                </mat-tree-node>
+            </mat-tree>
+        </div>
     </mat-drawer>
 
     <mat-drawer-content>
@@ -37,46 +39,49 @@
                 <div class="row">
                     <mat-form-field appearance="outline" data-placement="bottom" matTooltip="">
                         <mat-label>Поиск</mat-label>
-                        <input matInput placeholder="Введите значение" id="searchValue" name="searchValue" [(ngModel)]="searchValue" (keyup.enter)="onSearch()">
+                        <input matInput placeholder="Введите значение" id="searchValue" name="searchValue"
+                            [(ngModel)]="searchValue" (keyup.enter)="onSearch()">
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <button mat-stroked-button color="primary" class="mr-2" (click)="onSearch()" data-placement="bottom" matTooltip="Применить поиск"> Поиск </button> 
-                    <button mat-stroked-button (click)="searchValue = ''" data-placement="bottom" matTooltip="Очистить поле ввода"> Очистить </button> 
+                    <button mat-stroked-button color="primary" class="mr-2" (click)="onSearch()" data-placement="bottom"
+                        matTooltip="Применить поиск"> Поиск </button>
+                    <button mat-stroked-button (click)="searchValue = ''" data-placement="bottom"
+                        matTooltip="Очистить поле ввода"> Очистить </button>
                 </div>
             </div>
             <div class="col-9">
                 <div class="row pl-2 pt-1">
-                    <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style" [(ngModel)]="selectedSearchVar" class="bt-font-size">
-                        <mat-button-toggle id="but" value="article" data-toggle="tooltip" data-placement="bottom" title="Артикул" matTooltip="Поиск по артикулю">
+                    <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                        [(ngModel)]="selectedSearchVar" class="bt-font-size">
+                        <mat-button-toggle id="but" value="article" data-toggle="tooltip" data-placement="bottom"
+                            title="Артикул" matTooltip="Поиск по артикулю">
                             Артикул
                         </mat-button-toggle>
-                        <mat-button-toggle value="barcode" data-toggle="tooltip" data-placement="bottom" title="Штрихкод" matTooltip="Поиск по штрихкоду">
+                        <mat-button-toggle value="barcode" data-toggle="tooltip" data-placement="bottom"
+                            title="Штрихкод" matTooltip="Поиск по штрихкоду">
                             Штрихкод
                         </mat-button-toggle>
-                        <mat-button-toggle value="name" data-toggle="tooltip" data-placement="bottom" title="Наименование" matTooltip="Поиск по наименованию">
+                        <mat-button-toggle value="name" data-toggle="tooltip" data-placement="bottom"
+                            title="Наименование" matTooltip="Поиск по наименованию">
                             Наименование
                         </mat-button-toggle>
                     </mat-button-toggle-group>
 
                     <div class="slide ml-2">
-                        <mat-slide-toggle
-                            class=""
-                            [color]="color"
-                            [checked]="isExcluded"
-                            (change)="onToggleChange($event)"
-                            >
+                        <mat-slide-toggle class="" [color]="color" [checked]="isExcluded"
+                            (change)="onToggleChange($event)">
                             <!-- [disabled]="disabled" -->
                             Отображать исключенные
                         </mat-slide-toggle>
                     </div>
-                </div>              
+                </div>
             </div>
         </div>
 
         <div class="table-container prod" (scroll)="onScroll($event)">
-              
-            <table mat-table [dataSource]="dataSourceProducts" class="table-hover" #productTable >
+
+            <table mat-table [dataSource]="dataSourceProducts" class="table-hover" #productTable>
 
                 <ng-container matColumnDef="article">
                     <th mat-header-cell *matHeaderCellDef> Артикул </th>
@@ -85,13 +90,13 @@
 
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Наименование </th>
-                    <td mat-cell *matCellDef="let element" > {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef> Тип </th>
                     <td mat-cell *matCellDef="let element"> {{element.type}} </td>
-                </ng-container>     
+                </ng-container>
 
                 <ng-container matColumnDef="goods">
                     <th mat-header-cell *matHeaderCellDef> Остаток </th>
@@ -100,12 +105,12 @@
 
                 <ng-container matColumnDef="price">
                     <th mat-header-cell *matHeaderCellDef> Цена </th>
-                    <td mat-cell *matCellDef="let element" > {{element.price}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="stock_price">
                     <th mat-header-cell *matHeaderCellDef> Акционная цена </th>
-                    <td mat-cell *matCellDef="let element" > 
+                    <td mat-cell *matCellDef="let element">
                         <ng-container *ngIf="element.newPrice !== '0'">{{element.newPrice}}</ng-container>
                         <ng-container *ngIf="element.newPrice === '0'"> - </ng-container>
                         <ng-container *ngIf="!element.newPrice"> - </ng-container>
@@ -113,30 +118,30 @@
                 </ng-container>
 
                 <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef>  </th>
-                    <td mat-cell *matCellDef="let element; let i = index;"> 
+                    <th mat-header-cell *matHeaderCellDef> </th>
+                    <td mat-cell *matCellDef="let element; let i = index;">
                         <ng-container *ngIf="hoveredIndex == i">
-                            <button id="push" mat-icon-button (click)="onClickAddArticleOrdering(element.article)" matTooltip="Добавить в выписку">
+                            <button id="push" mat-icon-button (click)="onClickAddArticleOrdering(element.article)"
+                                matTooltip="Добавить в выписку">
                                 <mat-icon>add_circle_outline</mat-icon>
                             </button>
-                            <button id="push" mat-icon-button (click)="onAdInPriceList(element.article)" matTooltip="Добавить в ценники">
+                            <button id="push" mat-icon-button (click)="onAdInPriceList(element.article)"
+                                matTooltip="Добавить в ценники">
                                 <mat-icon>local_atm</mat-icon>
                             </button>
-                            <button id="push" mat-icon-button (click)="onAddProductToOrder(element.article)" matTooltip="Добавить в товарную яму">
+                            <button id="push" mat-icon-button (click)="onAddProductToOrder(element.article)"
+                                matTooltip="Добавить в товарную яму">
                                 <mat-icon>move_to_inbox</mat-icon>
                             </button>
                         </ng-container>
                     </td>
-                </ng-container>                          
-        
+                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsProducts; sticky: true"></tr>
 
-                <tr mat-row 
-                    *matRowDef="let row; columns: displayedColumnsProducts; let i = index;"
-                    (mouseover)="hoveredIndex = i"
-                    (click)="getProductInfo(row.article); selectedArticle = row.article"
-                    (dblclick)="onAddProduct(row.article)"
-                    [ngClass]="{ 'select-row': selectedArticle == row.article }">
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsProducts; let i = index;"
+                    (mouseover)="hoveredIndex = i" (click)="getProductInfo(row.article); selectedArticle = row.article"
+                    (dblclick)="onAddProduct(row.article)" [ngClass]="{ 'select-row': selectedArticle == row.article }">
                 </tr>
             </table>
         </div>
@@ -146,23 +151,26 @@
                 <app-card #productCard [data]="productPropAnswer"></app-card>
             </mat-tab>
             <mat-tab label="Доп. характер.">
-                <app-extra-characteristic *ngIf="tabIndex === 1" [data]="productPropAnswer.addon"></app-extra-characteristic>
+                <app-extra-characteristic *ngIf="tabIndex === 1" [data]="productPropAnswer.addon">
+                </app-extra-characteristic>
             </mat-tab>
             <mat-tab label="Остатки">
                 <app-leavings *ngIf="tabIndex === 2" [data]="productPropAnswer.goods"></app-leavings>
             </mat-tab>
             <mat-tab label="Выписка">
                 <!-- *ngIf="tabIndex === 3"  -->
-                <app-product-ordering-list-form #orderingList [isOpen]="isOpenOrdering"></app-product-ordering-list-form>
+                <app-product-ordering-list-form #orderingList [isOpen]="isOpenOrdering">
+                </app-product-ordering-list-form>
             </mat-tab>
             <mat-tab label="Ценники">
-                <!-- *ngIf="tabIndex === 4"  -->
-                <app-product-price-list-form #priceList [isOpen]="isOpenPrices"></app-product-price-list-form>
+                <!-- *ngIf="tabIndex === 4" -->
+                <app-product-price-list-form #priceList [isOpen]="isOpenPrices">
+                </app-product-price-list-form>
             </mat-tab>
-            <mat-tab label="Товарные ямы"> 
-                <app-product-pits #orderPits *ngIf="tabIndex === 5" [isOpen]="isOpenProductPits"></app-product-pits>    
+            <mat-tab label="Товарные ямы">
+                <app-product-pits #orderPits *ngIf="tabIndex === 5" [isOpen]="isOpenProductPits"></app-product-pits>
             </mat-tab>
         </mat-tab-group>
     </mat-drawer-content>
-   
+
 </mat-drawer-container>

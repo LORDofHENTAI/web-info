@@ -18,7 +18,7 @@
                 <option [value]="null" disabled>Выберите отдел</option>
                 <option *ngFor="let department of departments" [value]="department.id">{{department.name}}</option>
             </select>
-            
+
             <select class="form-control" placeholder="Тип цены" formControlName="userType">
                 <option [value]="null" disabled>Выберите тип цены</option>
                 <option *ngFor="let type of types" [value]="type.id">{{type.name}}</option>

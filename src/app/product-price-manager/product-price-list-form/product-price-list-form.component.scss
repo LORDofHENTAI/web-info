@@ -3,7 +3,7 @@
     height: 32vh;
 }
 .card-item-list {
-    height: calc(31vh - 34px);
+    height: calc(29vh - 34px);
     overflow-y: auto;
 }
 .card-item {
@@ -18,8 +18,16 @@
     height: 32px;
 }
 .foot {
-    margin-left: auto;
-    margin-right: 20px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.price-menu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 1.5cm;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.26);
 }
 .col-1, .col-2, .col-3, .col-4 .col-5, .col-6 {
     margin: 0;

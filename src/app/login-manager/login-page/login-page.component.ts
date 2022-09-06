@@ -21,12 +21,12 @@ import { DepartmentList } from 'src/app/common/models/departmens';
 })
 export class LoginPageComponent implements OnInit {
 
-  userForm: FormGroup = new FormGroup({ 
-      "userName": new FormControl('', Validators.required),
-      "userPassword": new FormControl('', Validators.required),
-      "userShop": new FormControl(null, Validators.required),
-      "userType": new FormControl(null, Validators.required),
-      "userDepartment": new FormControl(null, Validators.required),
+  userForm: FormGroup = new FormGroup({
+    "userName": new FormControl('', Validators.required),
+    "userPassword": new FormControl('', Validators.required),
+    "userShop": new FormControl(null, Validators.required),
+    "userType": new FormControl(null, Validators.required),
+    "userDepartment": new FormControl(null, Validators.required),
   });
 
   loginQuery: LoginQuery;
@@ -51,65 +51,66 @@ export class LoginPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle('Info'); 
+    this.titleService.setTitle('Info');
     this.getShopList();
     this.getTypeList();
     this.getDepartmentsList();
   }
 
-  checkResponse(response: LoginResponse) : boolean {
-    if(response) 
-      if(response.token) 
-        if(response.token.length > 0) 
-          return true; 
+  checkResponse(response: LoginResponse): boolean {
+    if (response)
+      if (response.token)
+        if (response.token.length > 0)
+          return true;
   }
 
   submit() {
     this.loginQuery = new LoginQuery(this.userForm.value.userName, this.userForm.value.userPassword);
+    console.log('>>>' + this.loginQuery.login + this.loginQuery.password);
     this.loginService.getLogin(this.loginQuery).subscribe(response => {
-      if(this.checkResponse(response)) {
+      if (this.checkResponse(response)) {
         this.tokenService.setCookie(
           CookieLogin.setCookieLogin(this.userForm.value.userShop, this.userForm.value.userType, this.userForm.value.userDepartment, response)
         );
         this.tokenService.logEvent(true);
         this.router.navigate(['/products']);
       }
-      else 
+      else
         this.snackbarService.openSnackBar(this.messageFailLogin, this.action, this.styleNoConnect);
     },
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
+      error => {
+        console.log(error);
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      });
   }
 
   getShopList() {
     this.shopService.getShops().subscribe(response => {
-      if(response)
+      if (response)
         this.shops = response;
-    }, 
-    error => { 
-      console.log(error);
-    });
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   getTypeList() {
     this.shopService.getTypes().subscribe(response => {
-      if(response)
+      if (response)
         this.types = response;
-    }, 
-    error => { 
-      console.log(error);
-    });
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   getDepartmentsList() {
     this.shopService.getDepartmentList().subscribe(response => {
-      if(response)
+      if (response)
         this.departments = response;
-    }, 
-    error => { 
-      console.log(error);
-    });
+    },
+      error => {
+        console.log(error);
+      });
   }
 }

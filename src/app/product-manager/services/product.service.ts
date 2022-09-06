@@ -24,7 +24,7 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   getList(token: DownList): Observable<any> {
-    return this.http.post<any>(`${this.urlList}`, token);
+    return this.http.get<any>(`${this.urlList}?Token=${token.token}`);
   }
 
   getProducts(data: ProductQuery): Observable<ProductAnswer[]> {

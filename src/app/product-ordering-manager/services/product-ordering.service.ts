@@ -23,22 +23,26 @@ export class ProductOrderingService {
   constructor(private http: HttpClient) { }
 
   getListVipiska(data: VipiskaQuery): Observable<VipiskaEnd> {
+    console.log(data);
     return this.http.post<VipiskaEnd>(`${this.urlGet}`, data);
   }
-  
-  addToVipiska(data: AddToVipiska): Observable<Status> {
-    return this.http.post<Status>(`${this.urlAdd}`, data);
+
+  addToVipiska(data: AddToVipiska): Observable<string> {
+    console.log(data);
+    return this.http.post<string>(`${this.urlAdd}`, data);
   }
 
-  clearList(data: VipiskaQuery): Observable<Status> {
-    return this.http.post<Status>(`${this.urlClear}`, data);
+  clearList(data: VipiskaQuery): Observable<string> {
+    return this.http.post<string>(`${this.urlClear}`, data);
   }
 
-  deleteItem(data: VipiskaDelete): Observable<Status> {
-    return this.http.post<Status>(`${this.urlDelete}`, data);
+  deleteItem(data: VipiskaDelete): Observable<string> {
+    console.log(data);
+    return this.http.post<string>(`${this.urlDelete}`, data);
   }
 
-  editItem(data: VipiskaEdit): Observable<Status> {
-    return this.http.post<Status>(`${this.urlEdit}`, data);
+  editItem(data: VipiskaEdit): Observable<string> {
+    console.log(data);
+    return this.http.post<string>(`${this.urlEdit}`, data);
   }
 }

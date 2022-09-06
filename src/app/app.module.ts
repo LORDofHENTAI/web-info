@@ -51,6 +51,7 @@ import { OrderSaveFormComponent } from './product-pits-manager/components/order-
 import { StrToDataPipe } from './pipes/str-to-data.pipe';
 import { BarcodeImgPipe } from './pipes/barcode-img/barcode-img.pipe';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,7 +108,7 @@ import { BarcodeImgPipe } from './pipes/barcode-img/barcode-img.pipe';
     NgScrollbarModule,
   ],
   exports: [AngularMaterialModule],
-  providers: [    
+  providers: [
     Title,
     DatePipe,
     HttpClient,

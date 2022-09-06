@@ -17,22 +17,31 @@ export class ProductPriceService {
   private urlGet = environment.apiUrl + "printlist/get/";
   private urlClear = environment.apiUrl + "printlist/clear/";
   private urlDelete = environment.apiUrl + "printlist/delete/";
+  private urlUpload = environment.apiUrl + "printlist/upload/";
 
   constructor(private http: HttpClient) { }
 
   getListPrices(data: PrintQuery): Observable<Print[]> {
     return this.http.post<Print[]>(`${this.urlGet}`, data);
   }
-  
-  addPrice(data: AddToPrint): Observable<Status> {
-    return this.http.post<Status>(`${this.urlAdd}`, data);
+
+  addPrice(data: AddToPrint): Observable<string> {
+    return this.http.post<string>(`${this.urlAdd}`, data);
   }
 
-  clearList(data: PrintQuery): Observable<Status> {
-    return this.http.post<Status>(`${this.urlClear}`, data);
+  clearList(data: PrintQuery): Observable<string> {
+    return this.http.post<string>(`${this.urlClear}`, data);
   }
 
-  deleteItem(data: PrintDelete): Observable<Status> {
-    return this.http.post<Status>(`${this.urlDelete}`, data);
+  deleteItem(data: PrintDelete): Observable<string> {
+    console.log(data);
+    return this.http.post<string>(`${this.urlDelete}`, data);
+  }
+
+  uploadList(fileToUpload: File) {
+    let input = new FormData();
+    input.append("file", fileToUpload)
+    console.log(fileToUpload.name, fileToUpload.size)
+    return this.http.post(this.urlUpload, input);
   }
 }

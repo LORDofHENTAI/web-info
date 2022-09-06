@@ -23,11 +23,12 @@ export class ProductOrderingListFormComponent implements OnInit {
   listVipiska: VipiskaEnd = new VipiskaEnd([], '0');
   displayedColumnsPrint = ['photo', 'name', 'quantity', 'mesname', 'price', 'summa', 'barcode'];
   imgSource = 'https://barcode.tec-it.com/barcode.ashx?data=';
-  
+
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   action = 'Ok';
   styleNoConnect = 'red-snackbar';
-  
+
+  addToVipiska: AddToVipiska;
   constructor(
     public dialog: MatDialog,
     private tokenService: TokenService,
@@ -43,16 +44,16 @@ export class ProductOrderingListFormComponent implements OnInit {
   }
 
   getListVipiska() {
-    if(this.isOpen) {
+    if (this.isOpen) {
       this.productOrderingService.getListVipiska(new VipiskaQuery(this.tokenService.getToken())).subscribe(response => {
-        if(response) {
+        if (response) {
           this.listVipiska = response;
         }
-      }, 
-      error => { 
-        console.log(error);
-        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-      }); 
+      },
+        error => {
+          console.log(error);
+          this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+        });
     }
   }
 
@@ -61,33 +62,33 @@ export class ProductOrderingListFormComponent implements OnInit {
       width: "400px",
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        let addToVipiska = new AddToVipiska(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType(), result);
-        this.productOrderingService.addToVipiska(addToVipiska).subscribe(response => {
-          if(response.status.toLocaleLowerCase() === 'ok') {
+      if (result) {
+        this.addToVipiska = new AddToVipiska(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType(), String(result));
+        this.productOrderingService.addToVipiska(this.addToVipiska).subscribe(response => {
+          if (response = 'OK') {
             this.snackbarService.openSnackBar('Товар добавлен в выписку.', this.action);
             this.getListVipiska();
           }
-        }, 
-        error => { 
-          console.log(error);
-          this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-        }); 
+        },
+          error => {
+            console.log(error);
+            this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+          });
       }
     });
-  }  
+  }
 
   onDeleteItem(vipiska: Vipiska) {
-    this.productOrderingService.deleteItem(new VipiskaDelete(this.tokenService.getToken(), vipiska.id)).subscribe(response => {
-      if(response.status.toLocaleLowerCase() === 'ok') {
+    this.productOrderingService.deleteItem(new VipiskaDelete(this.tokenService.getToken(), String(vipiska.id))).subscribe(response => {
+      if (response = 'ok') {
         this.snackbarService.openSnackBar('Позиция удалена.', this.action);
         this.getListVipiska();
       }
-    }, 
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
+    },
+      error => {
+        console.log(error);
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      });
   }
 
   onEditItem(vipiska: Vipiska) {
@@ -96,31 +97,31 @@ export class ProductOrderingListFormComponent implements OnInit {
       data: { count: vipiska.quantity },
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        this.productOrderingService.editItem(new VipiskaEdit(this.tokenService.getToken(), vipiska.id, result)).subscribe(response => {
-          if(response.status.toLocaleLowerCase() === 'ok') {
+      if (result) {
+        this.productOrderingService.editItem(new VipiskaEdit(this.tokenService.getToken(), String(vipiska.id), String(result))).subscribe(response => {
+          if (response = 'true') {
             this.snackbarService.openSnackBar('Количество изменено.', this.action);
             this.getListVipiska();
           }
-        }, 
-        error => { 
-          console.log(error);
-          this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-        }); 
+        },
+          error => {
+            console.log(error);
+            this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+          });
       }
     });
   }
 
   onClearList() {
     this.productOrderingService.clearList(new VipiskaQuery(this.tokenService.getToken())).subscribe(response => {
-      if(response.status.toLocaleLowerCase() === 'ok') {
+      if (response = 'true') {
         this.snackbarService.openSnackBar('Выписка очищена.', this.action);
         this.getListVipiska();
       }
-    }, 
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
+    },
+      error => {
+        console.log(error);
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      });
   }
 }

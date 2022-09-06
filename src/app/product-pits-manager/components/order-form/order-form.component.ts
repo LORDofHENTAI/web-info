@@ -26,7 +26,7 @@ export class OrderFormComponent implements OnInit {
 
   @Input() order: Order;
   @Input() statuses: OrderStatus[];
-  
+
   @Output() orderSaveEvent = new EventEmitter<Order>();
   @Output() closeOrderEvent = new EventEmitter<boolean>();
   @Output() clearProductEvent = new EventEmitter<string>();
@@ -59,16 +59,16 @@ export class OrderFormComponent implements OnInit {
   ngOnInit(): void {
     this.isSalesManager = this.tokenService.getGroup().toLowerCase().includes(environment.positionHead);
     this.isAuthor = this.tokenService.getLogin().toLowerCase().includes(this.order.author);
-    if(this.order.statusId === 0 && this.isAuthor)
+    if (this.order.statusId === 0 && this.isAuthor)
       this.isCanBeEdit = true;
-    else 
-      if(this.order.statusId === 1 && this.isSalesManager)
+    else
+      if (this.order.statusId === 1 && this.isSalesManager)
         this.isCanBeEdit = true;
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(this.order) {}
-      this.getOrder(this.order.id);
+    if (this.order) { }
+    this.getOrder(this.order.id);
   }
 
   onCloseClick() {
@@ -77,28 +77,28 @@ export class OrderFormComponent implements OnInit {
 
   getOrder(orderId: number) {
     this.pitsService.getOrder(new ViewOrder(this.tokenService.getToken(), orderId)).subscribe(response => {
-      if(response) {
+      if (response) {
         this.orderBodyItems = response;
       }
-    }, 
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
-  }
-
-  addProductToOrder(article: string) {
-    if(this.isEditMode)
-      this.pitsService.putProductToOrder(
-        new ProductAdd(this.tokenService.getToken(), article, Number(this.tokenService.getShop()), this.order.id)).subscribe(response => {
-        if(response) {
-          this.orderBodyItems = this.orderBodyItems.concat(response);
-        }
-      }, 
-      error => { 
+    },
+      error => {
         console.log(error);
         this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
       });
+  }
+
+  addProductToOrder(article: string) {
+    if (this.isEditMode)
+      this.pitsService.putProductToOrder(
+        new ProductAdd(this.tokenService.getToken(), article, Number(this.tokenService.getShop()), this.order.id)).subscribe(response => {
+          if (response) {
+            this.orderBodyItems = this.orderBodyItems.concat(response);
+          }
+        },
+          error => {
+            console.log(error);
+            this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+          });
   }
 
   onEditMode() {
@@ -107,29 +107,29 @@ export class OrderFormComponent implements OnInit {
 
   productDelete(productId: number) {
     this.pitsService.deleteProductFromOrder(new ProductDelete(this.tokenService.getToken(), productId)).subscribe(response => {
-      if(response.status.toLocaleLowerCase() === 'ok') {
+      if (response.status.toLocaleLowerCase() === 'ok') {
         this.orderBodyItems = this.orderBodyItems.filter(item => item.id !== productId);
         this.snackbarService.openSnackBar('Товар удален из заказа', this.action);
       }
-    }, 
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
-  }
-
-  orderClear(isOrderClear: boolean) {
-    if(isOrderClear)
-      this.pitsService.clearOrder(new ProductClear(this.tokenService.getToken(), this.order.id)).subscribe(response => {
-        if(response.status.toLocaleLowerCase() === 'ok') {
-          this.getOrder(this.order.id);
-          this.snackbarService.openSnackBar('Список товаров удален', this.action);
-        }
-      }, 
-      error => { 
+    },
+      error => {
         console.log(error);
         this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
       });
+  }
+
+  orderClear(isOrderClear: boolean) {
+    if (isOrderClear)
+      this.pitsService.clearOrder(new ProductClear(this.tokenService.getToken(), this.order.id)).subscribe(response => {
+        if (response.status.toLocaleLowerCase() === 'ok') {
+          this.getOrder(this.order.id);
+          this.snackbarService.openSnackBar('Список товаров удален', this.action);
+        }
+      },
+        error => {
+          console.log(error);
+          this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+        });
   }
 
   onOpenOrderSaveForm() {
@@ -140,7 +140,7 @@ export class OrderFormComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.isEditMode = !this.isEditMode;
-      if(result >= 0) {
+      if (result >= 0) {
         this.saveOrder(result);
       }
     });
@@ -149,18 +149,18 @@ export class OrderFormComponent implements OnInit {
   saveOrder(statusId: number) {
     this.pitsService.saveOrder(
       new SaveOrderBody(this.tokenService.getToken(), this.order.id, this.orderBodyItems, statusId)).subscribe(response => {
-      if(response) {
-        this.order = response;
-        this.orderSaveEvent.emit(this.order);
-        this.order.statusId === statusId ? 
-        this.snackbarService.openSnackBar('Заказ сохранен', this.action) :
-        this.snackbarService.openSnackBar('Заказ сохранен с новым статусом', this.action);
-      }
-    }, 
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
+        if (response) {
+          this.order = response;
+          this.orderSaveEvent.emit(this.order);
+          this.order.statusId === statusId ?
+            this.snackbarService.openSnackBar('Заказ сохранен', this.action) :
+            this.snackbarService.openSnackBar('Заказ сохранен с новым статусом', this.action);
+        }
+      },
+        error => {
+          console.log(error);
+          this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+        });
   }
 
   postFileMethod(event) {
@@ -175,32 +175,32 @@ export class OrderFormComponent implements OnInit {
       this.importProtuctList(new DatImport(this.tokenService.getToken(), this.order.id, Number(this.tokenService.getShop()), this.importList));
     }
     fileReader.readAsText(file);
-  } 
+  }
 
   importProtuctList(data: DatImport) {
     this.pitsService.postDataImport(data).subscribe(response => {
-      if(response) {
+      if (response) {
         this.orderBodyItems = response;
         this.snackbarService.openSnackBar('Товары импортированны', this.action);
       }
-    }, 
-    error => { 
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
+    },
+      error => {
+        console.log(error);
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      });
   }
 
   onAddDateToOrder() {
-    this.deliveryDateToOrder = this.datePipe.transform(new Date(this.deliveryDate), 'dd.MM.yyyy'); 
+    this.deliveryDateToOrder = this.datePipe.transform(new Date(this.deliveryDate), 'dd.MM.yyyy');
     setTimeout(() => {
-      this.deliveryDateToOrder = ''; 
+      this.deliveryDateToOrder = '';
     }, 500);
   }
 
   onAddSupplierToOrder() {
     this.supplierToOrder = this.supplier;
     setTimeout(() => {
-      this.supplierToOrder = ''; 
+      this.supplierToOrder = '';
     }, 500);
   }
 
@@ -209,6 +209,6 @@ export class OrderFormComponent implements OnInit {
     this.getOrder(this.order.id);
   }
 
-  onExportExcel(): void {  
-  }  
+  onExportExcel(): void {
+  }
 }

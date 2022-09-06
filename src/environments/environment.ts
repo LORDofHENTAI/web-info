@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.7.190:466/',
+  // apiUrl: 'http://192.168.7.190:466/',
+  apiUrl: 'http://192.168.1.51:7293/',
   apiUrlImg: 'https://mile.by/gtools/getImg/index.php',
   cookieName: 'user-info-mile',
   positionHead: 'руководитель',

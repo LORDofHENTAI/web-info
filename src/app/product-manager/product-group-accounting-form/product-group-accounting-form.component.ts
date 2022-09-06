@@ -19,6 +19,7 @@ import { ProductProp } from '../models/product-prop';
 import { ProductOrderingListFormComponent } from 'src/app/product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
+
 interface PoductNode {
   id: string;
   name: string;
@@ -39,14 +40,14 @@ interface ExampleFlatNode {
 })
 export class ProductGroupAccountingFormComponent implements OnInit {
 
-  @ViewChild("orderingList", {static: false }) orderingList: ProductOrderingListFormComponent;
-  @ViewChild("priceList", {static: false }) priceList: ProductPriceListFormComponent;
-  @ViewChild("orderPits", { static: false }) orderPits : ProductPitsComponent;
+  @ViewChild("orderingList", { static: false }) orderingList: ProductOrderingListFormComponent;
+  @ViewChild("priceList", { static: false }) priceList: ProductPriceListFormComponent;
+  @ViewChild("orderPits", { static: false }) orderPits: ProductPitsComponent;
 
   productArticlePrice: string;
   group: string = '';
   selectedRowTree: string = '';
-  
+
   searchValue: string = '';
 
   selectedSearchVar: string = 'article';
@@ -72,7 +73,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   curentPositionTable = 200;
   isLoading: any;
   productToAdd: string;
-  
+
   tabIndex: number = 0;
 
   panelOpenStateTree = true;
@@ -84,7 +85,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
 
   color = 'accent';
   isExcluded = false;
-  
+
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   action = 'Ok';
   styleNoConnect = 'red-snackbar';
@@ -105,34 +106,33 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     this._transformer, node => node.level, node => node.expandable, node => node.children);
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-  
+
   constructor(
     public dialog: MatDialog,
     private tokenService: TokenService,
     private productService: ProductService,
-    private snackbarService: SnackbarService,) 
-    { }
+    private snackbarService: SnackbarService,) { }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
-  
+
   ngOnInit() {
     // this.timerWakeUp();
     this.productService.getList(new DownList(this.tokenService.getToken())).subscribe(response => {
-      if(response)
+      if (response)
         this.dataSource.data = response;
-    }, 
-    error => { 
-      console.log(new Date().toString());
-      console.log(error);
-      this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-    });
+    },
+      error => {
+        console.log(new Date().toString());
+        console.log(error);
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      });
   }
 
   onSelectNode(node) {
     this.clearProp();
     this.selectedRowTree = node.id;
     this.group = node.name.split(" ")[0];
-    if(this.group) {
+    if (this.group) {
       this.dataSourceProducts = [];
       this.scrollPosition = 5000;
       this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), ''));
@@ -141,7 +141,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
 
   onSearch() {
     this.clearProp();
-    if(this.searchValue) {
+    if (this.searchValue) {
       this.scrollPosition = 5000;
       this.group = '';
       this.dataSourceProducts = [];
@@ -154,30 +154,30 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   getProductsBySelectedSearchVar() {
-    if(this.selectedSearchVar === 'article') {
+    if (this.selectedSearchVar === 'article') {
       this.getProductsForSearch(
         new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', this.searchValue, '', '', this.tokenService.getShop(), this.tokenService.getType(), '')
-        );
+      );
     }
-    if(this.selectedSearchVar === 'name') {
+    if (this.selectedSearchVar === 'name') {
       this.getProductsForSearch(
         new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', '', this.searchValue, '', this.tokenService.getShop(), this.tokenService.getType(), '')
-        );
+      );
     }
-    if(this.selectedSearchVar === 'barcode') {
+    if (this.selectedSearchVar === 'barcode') {
       this.getProductsForSearch(
         new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), '')
-        );
+      );
     }
   }
 
   getProductsForSearch(query: ProductQuery) {
     this.productService.getProducts(query).subscribe(response => {
-        this.assignResponseProductSearch(response); 
-    }, 
-    error => { 
-      console.log(error);
-    });
+      this.assignResponseProductSearch(response);
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   onClear() {
@@ -187,7 +187,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   onSelectRowClick(row: ProductAnswer) {
-    if(row) {
+    if (row) {
       this.selectedArticle = row.article;
       this.getProductInfo(this.selectedArticle);
     }
@@ -199,7 +199,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       data: row
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {}
+      if (result) { }
     });
   }
 
@@ -208,24 +208,24 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       data: row.article
     });
     dialogRef.afterClosed().subscribe(result => {
-    });   
+    });
   }
 
   onScroll(event) {
-    if(event.target.scrollTop > this.scrollPosition) {
+    if (event.target.scrollTop > this.scrollPosition) {
       this.scrollPosition += 5000;
       var pos = this.countListProducts + 200;
-      if(pos % 200 == 0) {
-        if(this.group && !this.searchValue) {
+      if (pos % 200 == 0) {
+        if (this.group && !this.searchValue) {
           this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
         }
-        if(this.selectedSearchVar === 'article' && this.searchValue) {
+        if (this.selectedSearchVar === 'article' && this.searchValue) {
           this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', this.searchValue, '', '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
         }
-        if(this.selectedSearchVar === 'name' && this.searchValue) {
+        if (this.selectedSearchVar === 'name' && this.searchValue) {
           this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', '', this.searchValue, '', this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
         }
-        if(this.selectedSearchVar === 'barcode' && this.searchValue) {
+        if (this.selectedSearchVar === 'barcode' && this.searchValue) {
           this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), pos.toString()));
         }
       }
@@ -236,7 +236,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     const dialogRef = this.dialog.open(AttentionFormComponent, {
       data: { status: status },
     });
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => { });
   }
 
   clearProp() {
@@ -247,67 +247,67 @@ export class ProductGroupAccountingFormComponent implements OnInit {
 
   getProducts(query: ProductQuery) {
     this.productService.getProducts(query).subscribe(response => {
-        this.assignResponseProduct(response); 
-    }, 
-    error => { 
-      console.log(error);
-    });
+      this.assignResponseProduct(response);
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   assignResponseProduct(response) {
-    if(response) {
+    if (response) {
       this.dataSourceProducts = this.dataSourceProducts.concat(response);
       this.countListProducts = this.dataSourceProducts.length;
     }
   }
 
   assignResponseProductSearch(response) {
-    if(response) {
+    if (response) {
       this.dataSourceProducts = response;
       this.countListProducts = this.dataSourceProducts.length;
       this.onSelectRowClick(this.dataSourceProducts[0]);
-      if(response.length > 0) {
-        if(this.searchValue.length >= 12)
+      if (response.length > 0) {
+        if (this.searchValue.length >= 12)
           this.onOpenPriceChecker(this.dataSourceProducts[0]);
-          this.searchValue = '';
-        }
+        this.searchValue = '';
+      }
     }
   }
 
   assignResponseProductProp(response: ProductPropAnswer) {
-    if(response) {
+    if (response) {
       this.listPlaces = [];
       this.listDelivers = [];
-      this.productPropAnswer = response;  
-      if(this.productPropAnswer.delivers) {
+      this.productPropAnswer = response;
+      if (this.productPropAnswer.delivers) {
         var splitDelivers = this.productPropAnswer.delivers.split("; ");
         splitDelivers.forEach(element => {
           this.listDelivers.push(element);
         });
       }
-      if(this.listPlaces.length > 0)
-        if(this.listPlaces[this.listPlaces.length - 1].length == 0)
+      if (this.listPlaces.length > 0)
+        if (this.listPlaces[this.listPlaces.length - 1].length == 0)
           this.listPlaces.pop();
-      if(this.listDelivers.length > 0)    
-        if(this.listDelivers[this.listDelivers.length - 1].length == 0)
+      if (this.listDelivers.length > 0)
+        if (this.listDelivers[this.listDelivers.length - 1].length == 0)
           this.listDelivers.pop();
     }
   }
 
   onSelectTab(event: MatTabChangeEvent) {
     this.tabIndex = event.index;
-    switch(event.index) {
+    switch (event.index) {
       case 3:
         this.isOpenOrdering = true;
         this.isOpenPrices = false;
         this.isOpenProductPits = false;
         break;
-      
+
       case 4:
         this.isOpenOrdering = false;
         this.isOpenPrices = true;
         this.isOpenProductPits = false;
-        break;  
+        break;
 
       case 5:
         this.isOpenOrdering = false;
@@ -315,12 +315,12 @@ export class ProductGroupAccountingFormComponent implements OnInit {
         this.isOpenProductPits = true;
         break;
     }
-  } 
+  }
 
   onAddProductToOrder(article: string) {
     this.orderPits.addProductToOrder(article);
   }
-  
+
   onClickAddArticleOrdering(article: string) {
     this.orderingList.addInExcerpt(article)
   }
@@ -330,35 +330,35 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   onAddProduct(article: string) {
-    switch(this.tabIndex) {
+    switch (this.tabIndex) {
       case 3:
         this.orderingList.addInExcerpt(article)
-      break;
+        break;
 
       case 4:
         this.priceList.addInList(article);
-      break;
+        break;
 
       case 5:
         this.orderPits.addProductToOrder(article);
-      break;
+        break;
     }
   }
 
   getProductInfo(article: string) {
     this.productService.getProductProp(new ProductProp(this.tokenService.getToken(), article)).subscribe(response => {
-      this.productPropAnswer = response; 
-    }, 
-    error => { 
-      console.log(error);
-    });
+      this.productPropAnswer = response;
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   timerWakeUp() {
     var lastTime = (new Date()).getTime();
-    setInterval(()=> {
+    setInterval(() => {
       var currentTime = (new Date()).getTime();
-      if (currentTime > (lastTime + 20000*2)) { 
+      if (currentTime > (lastTime + 20000 * 2)) {
         window.location.reload();
         console.log('reload');
       }
@@ -368,10 +368,10 @@ export class ProductGroupAccountingFormComponent implements OnInit {
 
   onToggleChange(value: MatSlideToggleChange) {
     this.isExcluded = value.checked;
-    if(this.searchValue) {
+    if (this.searchValue) {
       this.getProductsBySelectedSearchVar();
     } else {
-      if(this.group) {
+      if (this.group) {
         this.clearProp();
         this.scrollPosition = 5000;
         this.dataSourceProducts = [];
@@ -380,6 +380,6 @@ export class ProductGroupAccountingFormComponent implements OnInit {
           this.tokenService.getToken(), this.isExcluded, this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), '')
         );
       }
-    } 
+    }
   }
 }
