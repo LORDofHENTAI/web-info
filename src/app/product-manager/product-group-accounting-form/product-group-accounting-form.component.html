@@ -5,7 +5,7 @@
         <div class="tree-group">
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onSelectNode(node)"
-                    [ngClass]="{ 'select-row': selectedRowTree == node.id }">
+                    [ngClass]="{ 'select-row': selectedRowTree == node.name }">
 
                     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
                         (click)="onSelectNode(node)">
@@ -17,7 +17,7 @@
                 </mat-tree-node>
 
                 <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding (click)="onSelectNode(node)"
-                    [ngClass]="{ 'select-row': selectedRowTree == node.id }">
+                    [ngClass]="{ 'select-row': selectedRowTree == node.name }">
 
                     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
                         (click)="onSelectNode(node)">
@@ -33,7 +33,6 @@
     </mat-drawer>
 
     <mat-drawer-content>
-
         <div class="row m-2 mt-1">
             <div class="col-3">
                 <div class="row">

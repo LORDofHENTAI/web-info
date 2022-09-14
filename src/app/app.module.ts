@@ -50,7 +50,8 @@ import { OrderBodyListFormComponent } from './product-pits-manager/components/or
 import { OrderSaveFormComponent } from './product-pits-manager/components/order-save-form/order-save-form.component';
 import { StrToDataPipe } from './pipes/str-to-data.pipe';
 import { BarcodeImgPipe } from './pipes/barcode-img/barcode-img.pipe';
-
+import { PricePrintDialog } from './product-price-manager/product-price-list-form/product-price-list-form.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { BarcodeImgPipe } from './pipes/barcode-img/barcode-img.pipe';
     OrderSaveFormComponent,
     StrToDataPipe,
     BarcodeImgPipe,
+    PricePrintDialog,
   ],
   imports: [
     AppRoutingModule,
@@ -106,6 +108,7 @@ import { BarcodeImgPipe } from './pipes/barcode-img/barcode-img.pipe';
     MatDatepickerModule,
     NgxPrintModule,
     NgScrollbarModule,
+    MatToolbarModule
   ],
   exports: [AngularMaterialModule],
   providers: [

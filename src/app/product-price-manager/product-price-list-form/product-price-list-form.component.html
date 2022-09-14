@@ -1,16 +1,17 @@
 <div class="content" *ngIf="isOpen">
     <div class="price-menu">
         <div class="foot">
-            <button mat-stroked-button data-placement="bottom" matTooltip="Импорт из dat-файла">
+            <!-- <button mat-stroked-button data-placement="bottom" matTooltip="Импорт из dat-файла">
                 Импорт
-            </button>
-            <button mat-stroked-button data-placement="bottom" matTooltip="Загрузка акционного файла">
+            </button> -->
+            <button mat-stroked-button data-placement="bottom" matTooltip="Загрузка акционного файла"
+                (click)="openPrintDialog()">
                 Акции
             </button>
-            <button mat-stroked-button data-placement="bottom" matTooltip="Загрузка акционного файла York">
+            <!-- <button mat-stroked-button data-placement="bottom" matTooltip="Загрузка акционного файла York">
                 Акции Y
-            </button>
-            <button mat-stroked-button data-placement="bottom" matTooltip="Напольные">
+            </button> -->
+            <button mat-stroked-button data-placement="bottom" matTooltip="Напольные" (click)="napolSwitch()">
                 Напольные
             </button>
             <button mat-stroked-button data-placement="bottom" matTooltip="Печать ценников" (click)="onPrintLable()"

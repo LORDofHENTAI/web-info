@@ -1,0 +1,93 @@
+<div class="header">
+    <h2>Загрузка акционного файла</h2>
+    <mat-slide-toggle [(ngModel)]="filterShow" [disabled]="showLoadingBar === true">
+        Фильтрация
+    </mat-slide-toggle>
+</div>
+<mat-dialog-content class="mat-typography">
+    <div class="dialog-conteiner">
+        <div class="print-conteiner">
+            <div class="upload-box">
+                <div *ngIf="showLoadingBar === false">
+                    <mat-form-field style="width: 409px;">
+                        <div>
+                            <mat-toolbar>
+                                <input matInput [value]="selectedFileNames ? selectedFileNames : 'Select File'" />
+                            </mat-toolbar>
+                            <mat-label>Выберите файл</mat-label>
+                            <input type="file" id="fileInput" name="fileInputMile"
+                                accept=".csv, .dat, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                (change)="selectFile($event)" />
+                        </div>
+                    </mat-form-field>
+                </div>
+                <div class="loader-conteiner" *ngIf="showLoadingBar === true">
+                    <div class="loader">
+                        <span style="--i:0;"></span>
+                        <span style="--i:1;"></span>
+                        <span style="--i:2;"></span>
+                        <span style="--i:3;"></span>
+                        <span style="--i:4;"></span>
+                        <span style="--i:5;"></span>
+                        <span style="--i:6;"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="print-conteiner-box">
+                <div class="pic-box">
+                    <img src="../../../../assets/mile.png" alt="">
+                </div>
+                <button mat-stroked-button matTooltip="Загрузка акционного Excel файла для Mile"
+                    (click)="uploadFiles(type='mile')" [disabled]="showLoadingBar === true">Загрузить</button>
+            </div>
+            <div class="print-conteiner-box">
+                <div class="pic-box">
+                    <img src="../../../../assets/york.jpg" alt="">
+                </div>
+                <button mat-stroked-button matTooltip="Загрузка акционного Excel файла для York"
+                    (click)="uploadFiles(type='york')" [disabled]="showLoadingBar === true">Загрузить</button>
+            </div>
+            <div class="print-conteiner-box">
+                <div class="pic-box">
+                    <img src="../../../../assets/dat.png" alt="" class="dat">
+                </div>
+                <button mat-stroked-button class="dat" matTooltip="Загрузка акционного DAT файла"
+                    (click)="uploadFiles(type='dat')" [disabled]="showLoadingBar === true">Загрузить</button>
+            </div>
+        </div>
+        <div *ngIf="filterShow === true" class="filter-conteiner-show">
+            <div class="filter-conteiner">
+                <div class="filter-box">
+                    <span>Категории ценников:</span>
+                    <div class="parice-category-check">
+                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                            [(ngModel)]="selectedPriceCategory">
+                            <mat-radio-button class="example-radio-button" *ngFor="let category of priceCategoryList"
+                                [value]="category">
+                                {{category}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="filter-box">
+                    <span>Формат ценников:</span>
+                    <div class="parice-format-check">
+                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                            [(ngModel)]="selectedPriceFormat">
+                            <mat-radio-button class="example-radio-button" *ngFor="let format of priceFormatList"
+                                [value]="format">
+                                {{format}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+            <div class="price-from-file-box">
+                <mat-checkbox class="example-margin" [(ngModel)]="priceFromFile">Взять цену из файла</mat-checkbox>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+</mat-dialog-actions>

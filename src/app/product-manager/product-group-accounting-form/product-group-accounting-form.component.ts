@@ -128,9 +128,10 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       });
   }
 
-  onSelectNode(node) {
+  onSelectNode(node: PoductNode) {
     this.clearProp();
-    this.selectedRowTree = node.id;
+    this.selectedRowTree = node.name;
+    console.log(node);
     this.group = node.name.split(" ")[0];
     if (this.group) {
       this.dataSourceProducts = [];
