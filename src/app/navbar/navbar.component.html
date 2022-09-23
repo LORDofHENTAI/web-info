@@ -1,23 +1,26 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark blue-gradient" [containerInside]="false" *ngIf="isLoginUser">
 
-    <mdb-navbar-brand><a class="navbar-brand" href="#">Info</a></mdb-navbar-brand>
-    <links>
-  
-      <ul class="navbar-nav ml-auto">
+  <mdb-navbar-brand><a class="navbar-brand" href="#">Info</a></mdb-navbar-brand>
+  <links>
 
-        <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-            <mdb-icon fas icon="user"></mdb-icon> Профиль <span class="caret"></span></a>
-          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-            <a> {{userName}} </a>
-            <mat-divider></mat-divider>
-            <a class="dropdown-item waves-light" mdbWavesEffect (click)="openSelectShop()">Настрройки</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect (click)="onClickLogout()">Выйти</a>
-          </div>
-        </li>
-  
-      </ul>
+    <ul class="navbar-nav ml-auto">
 
-    </links>
-  
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <mdb-icon fas icon="user"></mdb-icon> Профиль <span class="caret"></span>
+        </a>
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+          <a> {{userName}} </a>
+          <mat-divider></mat-divider>
+          <a class="dropdown-item waves-light" mdbWavesEffect (click)="openSelectShop()">Настрройки</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect *ngIf="isAdmin === '1'"
+            (click)="openPriceSettingsDialog()">Настройка ценников</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect (click)="onClickLogout()">Выйти</a>
+        </div>
+      </li>
+
+    </ul>
+
+  </links>
+
 </mdb-navbar>

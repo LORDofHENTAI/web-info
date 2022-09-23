@@ -52,6 +52,8 @@ import { StrToDataPipe } from './pipes/str-to-data.pipe';
 import { BarcodeImgPipe } from './pipes/barcode-img/barcode-img.pipe';
 import { PricePrintDialog } from './product-price-manager/product-price-list-form/product-price-list-form.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { PriceSettingsDialogComponent } from './common/components/dialog-windows/price-settings-dialog/price-settings-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -90,6 +92,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     StrToDataPipe,
     BarcodeImgPipe,
     PricePrintDialog,
+    PriceSettingsDialogComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -116,6 +119,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     DatePipe,
     HttpClient,
     CookieService,
+    NavbarComponent,
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
   ],
   entryComponents: [

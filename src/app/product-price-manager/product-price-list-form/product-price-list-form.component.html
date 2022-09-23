@@ -1,18 +1,9 @@
 <div class="content" *ngIf="isOpen">
     <div class="price-menu">
         <div class="foot">
-            <!-- <button mat-stroked-button data-placement="bottom" matTooltip="Импорт из dat-файла">
-                Импорт
-            </button> -->
             <button mat-stroked-button data-placement="bottom" matTooltip="Загрузка акционного файла"
                 (click)="openPrintDialog()">
                 Акции
-            </button>
-            <!-- <button mat-stroked-button data-placement="bottom" matTooltip="Загрузка акционного файла York">
-                Акции Y
-            </button> -->
-            <button mat-stroked-button data-placement="bottom" matTooltip="Напольные" (click)="napolSwitch()">
-                Напольные
             </button>
             <button mat-stroked-button data-placement="bottom" matTooltip="Печать ценников" (click)="onPrintLable()"
                 [disabled]="true">
@@ -23,15 +14,15 @@
             </button>
             <mat-form-field appearance="outline">
                 <mat-label>Размер</mat-label>
-                <mat-select class="selecter" [(ngModel)]="selectedSize">
-                    <mat-option *ngFor="let size of sizes" [value]="size">{{size}}</mat-option>
+                <mat-select class="selecter" [(value)]="idFormat" (selectionChange)="getPriceStyleList()">
+                    <mat-option *ngFor="let size of priceFormat" [value]="size.id">{{size.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>Тип</mat-label>
-                <mat-select>
-                    <mat-option> Стандартный </mat-option>
+                <mat-select [(value)]="idStyle">
+                    <mat-option *ngFor="let style of priceStyle" [value]="style.id"> {{style.name_style}} </mat-option>
                 </mat-select>
             </mat-form-field>
 

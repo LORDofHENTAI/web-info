@@ -1,58 +1,45 @@
-<div class="header">
+<div class="header" *ngIf="showLoadingBar === false">
     <h2>Загрузка акционного файла</h2>
-    <mat-slide-toggle [(ngModel)]="filterShow" [disabled]="showLoadingBar === true">
+    <mat-slide-toggle [(ngModel)]="filterShow">
         Фильтрация
     </mat-slide-toggle>
 </div>
 <mat-dialog-content class="mat-typography">
-    <div class="dialog-conteiner">
+    <div class="dialog-conteiner" *ngIf="showLoadingBar === false">
         <div class="print-conteiner">
-            <div class="upload-box">
-                <div *ngIf="showLoadingBar === false">
-                    <mat-form-field style="width: 409px;">
-                        <div>
-                            <mat-toolbar>
-                                <input matInput [value]="selectedFileNames ? selectedFileNames : 'Select File'" />
-                            </mat-toolbar>
-                            <mat-label>Выберите файл</mat-label>
-                            <input type="file" id="fileInput" name="fileInputMile"
-                                accept=".csv, .dat, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                                (change)="selectFile($event)" />
-                        </div>
-                    </mat-form-field>
-                </div>
-                <div class="loader-conteiner" *ngIf="showLoadingBar === true">
-                    <div class="loader">
-                        <span style="--i:0;"></span>
-                        <span style="--i:1;"></span>
-                        <span style="--i:2;"></span>
-                        <span style="--i:3;"></span>
-                        <span style="--i:4;"></span>
-                        <span style="--i:5;"></span>
-                        <span style="--i:6;"></span>
-                    </div>
-                </div>
+            <div class="input__wrapper">
+                <input name="file" type="file" name="file" id="input__file" class="input input__file"
+                    (change)="selectFile($event)"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                <label for="input__file" class="input__file-button">
+                    <span class="input__file-icon-wrapper">
+                        <span class="material-icons">
+                            file_download
+                        </span>
+                    </span>
+                    <span class="input__file-button-text">{{selectedFileName}}</span>
+                </label>
             </div>
             <div class="print-conteiner-box">
                 <div class="pic-box">
                     <img src="../../../../assets/mile.png" alt="">
                 </div>
                 <button mat-stroked-button matTooltip="Загрузка акционного Excel файла для Mile"
-                    (click)="uploadFiles(type='mile')" [disabled]="showLoadingBar === true">Загрузить</button>
+                    (click)="upload(type='mile')">Загрузить</button>
             </div>
             <div class="print-conteiner-box">
                 <div class="pic-box">
                     <img src="../../../../assets/york.jpg" alt="">
                 </div>
                 <button mat-stroked-button matTooltip="Загрузка акционного Excel файла для York"
-                    (click)="uploadFiles(type='york')" [disabled]="showLoadingBar === true">Загрузить</button>
+                    (click)="upload(type='york')">Загрузить</button>
             </div>
             <div class="print-conteiner-box">
                 <div class="pic-box">
                     <img src="../../../../assets/dat.png" alt="" class="dat">
                 </div>
                 <button mat-stroked-button class="dat" matTooltip="Загрузка акционного DAT файла"
-                    (click)="uploadFiles(type='dat')" [disabled]="showLoadingBar === true">Загрузить</button>
+                    (click)="upload(type='dat')">Загрузить</button>
             </div>
         </div>
         <div *ngIf="filterShow === true" class="filter-conteiner-show">
@@ -87,7 +74,12 @@
             </div>
         </div>
     </div>
+    <div class="loader" *ngIf="showLoadingBar === true">
+        <div class="box">
+            <span data-text="LOADING...">LOADING...</span>
+        </div>
+    </div>
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Close</button>
+<mat-dialog-actions align="end" *ngIf="showLoadingBar === false">
+    <button mat-button cdkFocusInitial [mat-dialog-close]="null">Close</button>
 </mat-dialog-actions>

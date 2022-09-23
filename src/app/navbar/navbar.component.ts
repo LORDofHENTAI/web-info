@@ -7,6 +7,7 @@ import { CookieLogin } from '../login-manager/models/cookie-login';
 import { Logout } from '../login-manager/models/logout';
 import { SelectShopComponent } from '../login-manager/select-shop/select-shop.component';
 import { LoginService } from '../login-manager/services/login.service';
+import { PriceSettingsDialogComponent } from '../common/components/dialog-windows/price-settings-dialog/price-settings-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,7 @@ export class NavbarComponent implements OnInit {
 
   isLoginUser = false;
   userName = '';
-
+  isAdmin = '';
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   messageFailLogin = 'Нет соединения, попробуйте позже.';
   action = 'Ok';
@@ -37,6 +38,8 @@ export class NavbarComponent implements OnInit {
     if (this.tokenService.isLoginUser()) {
       this.isLoginUser = true;
       this.userName = this.tokenService.getLogin();
+      this.isAdmin = this.tokenService.getIsAdmin();
+      console.log(this.isAdmin);
     }
     else {
       this.isLoginUser = false;
@@ -86,4 +89,14 @@ export class NavbarComponent implements OnInit {
       //   }
     });
   }
+
+  openPriceSettingsDialog() {
+    const dialogRef = this.dialog.open(PriceSettingsDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+
+
 }

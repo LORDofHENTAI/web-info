@@ -14,6 +14,11 @@ import { HttpEventType } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PrintUpload } from '../models/print-upload';
+import { TileStyler } from '@angular/material/grid-list/tile-styler';
+import { PriceFormat } from '../models/price-settings-models/price-format';
+import { GetPriceTemp } from '../models/price-settings-models/get-price-temp';
+import { PriceStyle } from '../models/price-settings-models/price-style';
+import { FindStyle } from '../models/price-settings-models/find-price-style';
 
 @Component({
   selector: 'app-product-price-list-form',
@@ -38,6 +43,8 @@ export class ProductPriceListFormComponent implements OnInit {
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   action = 'Ok';
   styleNoConnect = 'red-snackbar';
+  styleSucceses = 'green-snackbar';
+  styleStandart = 'standart-snackbar';
 
   constructor(
     public dialog: MatDialog,
@@ -47,7 +54,11 @@ export class ProductPriceListFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getListPrices();
+    this.getPriceFormatList();
   }
+
+
 
   ngOnChanges(changes: SimpleChanges) {
     this.getListPrices();
@@ -59,6 +70,7 @@ export class ProductPriceListFormComponent implements OnInit {
       this.productPriceService.getListPrices(new PrintQuery(this.tokenService.getToken())).subscribe(response => {
         if (response) {
           this.listPrices = response;
+          console.log(response);
         }
       },
         error => {
@@ -121,16 +133,44 @@ export class ProductPriceListFormComponent implements OnInit {
     });
   }
 
-  napolSwitch() {
-    this.snackbarService.openSnackBar('Преобразование выполнено', this.action, this.action);
-  }
-
   openPrintDialog() {
     const dialogRef = this.dialog.open(PricePrintDialog);
     dialogRef.afterClosed().subscribe(result => {
-      this.getListPrices();
-      console.log(`${result}`);
+      if (result === true) {
+        this.snackbarService.openSnackBar("Загрузка завершена", this.action, this.styleStandart);
+        this.getListPrices();
+      }
+      else
+        if (result === false)
+          this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
     });
+  }
+
+  priceFormat: PriceFormat;
+  idFormat: number;
+  idStyle: number;
+  priceStyle: PriceStyle;
+
+  getPriceFormatList() {
+    this.productPriceService.getPriceFormat(new GetPriceTemp(this.tokenService.getToken())).subscribe(response => {
+      console.log(response);
+      if (response)
+        this.priceFormat = response;
+    },
+      error => {
+        console.log(error);
+      });
+  }
+
+  getPriceStyleList() {
+    let priceStyleList = new FindStyle(this.idFormat, this.tokenService.getToken());
+    this.productPriceService.findStyleById(priceStyleList).subscribe(response => {
+      if (response)
+        this.priceStyle = response;
+    },
+      error => {
+        console.log(error);
+      });
   }
 }
 
@@ -141,85 +181,45 @@ export class ProductPriceListFormComponent implements OnInit {
 })
 export class PricePrintDialog {
 
-  type: string;
-  selectedFiles?: FileList;
-  selectedFileNames?: string[] = [];
-  progressInfos: any[] = [];
-  message: string[] = [];
-  previews: string[] = [];
-  imageInfos?: Observable<any>;
-
-  form!: FormGroup;
-  public datas: any;
-
-  priceFormatList = ['none', 'А3', 'А4 верт.', 'А4 гор.', 'А5 верт.', 'А5 гор.', 'А6 верт.', 'А6 гор.'];
+  priceFormatList = ['none', 'А3', 'А4', 'А4 гор', 'А5', 'А5 гор', 'А6', 'А6 гор'];
   priceCategoryList = ['none', 'Акция', 'Ликвидация', 'Скидка', 'Новинка', 'Товар недели', 'Черная пятница', "Акт переоценки"];
   selectedPriceFormat: string = 'none';
   selectedPriceCategory: string = 'none';
   priceFromFile = false;
-
-
   filterShow = false;
-
   showLoadingBar = false;
-
+  type: string;
   constructor(private router: Router, private productPriceService: ProductPriceService, private tokenService: TokenService, public dialogRef: MatDialogRef<ProductPriceListFormComponent>) { }
 
+  selectedFiles: File;
+  selectedFile: File;
+  selectedFileName: string = 'Выберите файл';
+
   selectFile(event: any): void {
-    this.message = [];
-    this.progressInfos = [];
-    this.selectedFileNames = [];
+    this.selectedFileName = '';
     this.selectedFiles = event.target.files;
-    this.previews = [];
-    if (this.selectedFiles && this.selectedFiles[0]) {
-      const numberOfFiles = this.selectedFiles.length;
-      for (let i = 0; i < numberOfFiles; i++) {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.previews.push(e.target.result);
-        };
-        reader.readAsDataURL(this.selectedFiles[i]);
-        this.selectedFileNames.push(this.selectedFiles[i].name);
-      }
-    }
+    this.selectedFileName = this.selectedFiles[0].name;
+    this.selectedFile = this.selectedFiles[0];
+    console.log(this.selectedFile);
   }
 
-  uploadFiles(type: string): void {
-    this.message = [];
-    if (this.selectedFiles) {
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.upload(i, this.selectedFiles[i], type);
-      }
-    }
-  }
-
-  upload(idx: number, file: File, type: string): void {
-    this.progressInfos[idx] = { value: 0, filesName: file.name };
-    if (file) {
-      this.showLoadingBar = true;
-      this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), file, this.priceFromFile, this.selectedPriceCategory, this.selectedPriceFormat, this.tokenService.getShop(), this.tokenService.getType()), type).subscribe(
-        responce => {
-          this.showLoadingBar = false;
-          if (responce = "true") {
-            this.dialogRef.close();
-          }
-        },
-        error => {
-          this.showLoadingBar = false;
-          console.log(error);
-        });
-      // this.productPriceService.uploadMile(file, type, this.tokenService.getToken()).subscribe((event: any) => {
-      //   if (event.type === HttpEventType.UploadProgress) {
-      //     const msg = "Upload this file successfully: " + file.name;
-      //     this.message.push(msg);
-      //   }
-      // },
-      //   (err: any) => {
-      //     this.progressInfos[idx].value = 0;
-      //     const msg = 'Could not upload the file: ' + file.name;
-      //     this.message.push(msg);
-      //   });
-    }
+  upload(type: string): void {
+    this.showLoadingBar = true;
+    this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.selectedPriceCategory, this.selectedPriceFormat, this.tokenService.getShop(), this.tokenService.getType()), type).subscribe(
+      responce => {
+        console.log(responce);
+        this.showLoadingBar = false;
+        if (responce = 'true') {
+          this.dialogRef.close(true);
+        }
+        else {
+          this.dialogRef.close(false);
+        }
+      },
+      error => {
+        this.showLoadingBar = false;
+        console.log(error);
+      });
   }
 
 }

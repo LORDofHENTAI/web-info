@@ -66,9 +66,10 @@ export class LoginPageComponent implements OnInit {
 
   submit() {
     this.loginQuery = new LoginQuery(this.userForm.value.userName, this.userForm.value.userPassword);
-    console.log('>>>' + this.loginQuery.login + this.loginQuery.password);
     this.loginService.getLogin(this.loginQuery).subscribe(response => {
+      console.log(response);
       if (this.checkResponse(response)) {
+
         this.tokenService.setCookie(
           CookieLogin.setCookieLogin(this.userForm.value.userShop, this.userForm.value.userType, this.userForm.value.userDepartment, response)
         );

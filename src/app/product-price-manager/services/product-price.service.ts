@@ -8,7 +8,13 @@ import { PrintQuery } from '../models/print-query'
 import { AddToPrint } from '../models/add-to-print'
 import { PrintDelete } from '../models/print-delete'
 import { PrintUpload } from '../models/print-upload'
-
+import { PriceFormat } from '../models/price-settings-models/price-format'
+import { GetPriceTemp } from '../models/price-settings-models/get-price-temp'
+import { AddPriceFormat } from '../models/price-settings-models/add-price-format'
+import { DeletePriceTemp } from '../models/price-settings-models/delete-price-temp'
+import { PriceStyle } from '../models/price-settings-models/price-style'
+import { AddPriceStyle } from '../models/price-settings-models/add-price-style'
+import { FindStyle } from '../models/price-settings-models/find-price-style'
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +27,13 @@ export class ProductPriceService {
   private urlUploadMile = environment.apiUrl + "printlist/uploadMile/";
   private urlUploadYork = environment.apiUrl + "printlist/uploadYork/";
   private urlUploadDat = environment.apiUrl + "printlist/uploadDat/";
+  private urlGetPriceFormat = environment.apiUrl + "printlist/getPriceFormat/";
+  private urlAddPriceFormat = environment.apiUrl + "printlist/addPriceFormat/";
+  private urlDeletePriceFormat = environment.apiUrl + "printlist/deletePriceFormat/";
+  private urlGetPriceStyle = environment.apiUrl + "printlist/getPriceStyle/";
+  private urlAddPriceStyle = environment.apiUrl + "printlist/addPriceStyle/";
+  private urlDeletePriceStyle = environment.apiUrl + "printlist/deletePriceStyle/";
+  private urlStyleByFormat = environment.apiUrl + "printlist/findIdFormat/";
 
   constructor(private http: HttpClient) { }
 
@@ -42,6 +55,7 @@ export class ProductPriceService {
   }
 
   uploadList(fileToUpload: PrintUpload, type: string): Observable<string> {
+    console.log(fileToUpload);
     let input = new FormData();
     input.append("token", fileToUpload.token);
     input.append("file", fileToUpload.file);
@@ -51,50 +65,54 @@ export class ProductPriceService {
     input.append("shop", fileToUpload.shop);
     input.append("priceType", fileToUpload.priceType);
     console.log(fileToUpload);
-    // const req = new HttpRequest('POST', `${this.urlUploadMile}`, input, {
-    //   reportProgress: true,
-    //   responseType: 'json'
-    // });
-    // return this.http.request(req);
     if (type === 'mile')
-      return this.http.post<string>(`${this.urlUploadMile}`, input,);
+      return this.http.post<string>(`${this.urlUploadMile}`, input);
     else
-      if (type === 'york')
+      if (type === 'york') {
         return this.http.post<string>(`${this.urlUploadYork}`, input);
+      }
       else
         if (type === 'dat')
           return this.http.post<string>(`${this.urlUploadDat}`, input);
   }
 
-  uploadMile(file: File, type: string): Observable<HttpEvent<any>> {
-    const formaData: FormData = new FormData();
-    formaData.append('file', file);
-    if (type === 'mile') {
-      console.log(type);
-      const req = new HttpRequest('POST', `${this.urlUploadMile}`, formaData, {
-        reportProgress: true,
-        responseType: 'json'
-      });
-      return this.http.request(req);
-    }
-    else
-      if (type === 'york') {
-        console.log(type);
-        const req = new HttpRequest('POST', `${this.urlUploadYork}`, formaData, {
-          reportProgress: true,
-          responseType: 'json'
-        });
-        return this.http.request(req);
-      }
-      else
-        if (type === 'dat') {
-          console.log(type);
-          const req = new HttpRequest('POST', `${this.urlUploadDat}`, formaData, {
-            reportProgress: true,
-            responseType: 'json'
-          });
-          return this.http.request(req);
-        }
+  getPriceFormat(data: GetPriceTemp): Observable<PriceFormat> {
+    console.log(data);
+    return this.http.post<PriceFormat>(`${this.urlGetPriceFormat}`, data);
+  }
+
+  addPriceFormat(data: AddPriceFormat): Observable<string> {
+    console.log(data);
+    return this.http.post<string>(`${this.urlAddPriceFormat}`, data);
+  }
+
+  deletePriceFormat(data: DeletePriceTemp): Observable<string> {
+    console.log(data);
+    return this.http.post<string>(`${this.urlDeletePriceFormat}`, data);
+  }
+
+  getPriceStyle(data: GetPriceTemp): Observable<PriceStyle> {
+    console.log(data);
+    return this.http.post<PriceStyle>(`${this.urlGetPriceStyle}`, data);
+  }
+
+  addPriceStyle(data: AddPriceStyle): Observable<string> {
+    console.log(data);
+    let input = new FormData();
+    input.append("token", data.token);
+    input.append("file", data.file);
+    input.append("idFormat", String(data.idFormat));
+    input.append("styleName", data.styleName);
+    return this.http.post<string>(`${this.urlAddPriceStyle}`, input);
+  }
+
+  deletePriceStyle(data: DeletePriceTemp): Observable<string> {
+    console.log(data);
+    return this.http.post<string>(`${this.urlDeletePriceStyle}`, data);
+  }
+
+  findStyleById(data: FindStyle): Observable<PriceStyle> {
+    return this.http.post<PriceStyle>(`${this.urlStyleByFormat}`, data);
   }
 
 }

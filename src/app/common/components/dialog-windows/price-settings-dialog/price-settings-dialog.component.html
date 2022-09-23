@@ -1,0 +1,76 @@
+<h2>Настройка ценника</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="price-format">
+        <div class="price-input">
+            <div>
+                <mat-form-field appearance="outline" data-placement="bottom" matTooltip="">
+                    <mat-label>Наименование формата</mat-label>
+                    <input matInput placeholder="Введите наименование формата" [(ngModel)]="formatName">
+                </mat-form-field>
+            </div>
+            <button mat-raised-button (click)="addPriceFormat()">Добавить</button>
+            <button mat-raised-button class="delete-button" (click)="deletePriceFormat()">Удалить</button>
+        </div>
+        <div class="price-table">
+            <table>
+                <tr>
+                    <th>
+                        Формат
+                    </th>
+                </tr>
+                <tr *ngFor="let format of priceFormat" (click)="chooseFormat(format.id)"
+                    [ngClass]="{active: idFormat == format.id}">
+                    <td>
+                        {{format.name}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="price-format">
+        <div class="price-input">
+            <div class="input__wrapper">
+                <input name="file" type="file" name="file" id="input__file" class="input input__file"
+                    (change)="selectFile($event)">
+                <label for="input__file" class="input__file-button">
+                    <span class="input__file-icon-wrapper">
+                        <span class="material-icons">
+                            file_download
+                        </span>
+                    </span>
+                    <span class="input__file-button-text">{{selectedFileName}}</span>
+                </label>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" data-placement="bottom" matTooltip="">
+                    <mat-label>Наименование стиля</mat-label>
+                    <input matInput placeholder="Введите наименование стиля" [(ngModel)]="styleName">
+                </mat-form-field>
+                <button mat-raised-button (click)="addPriceStyle()">Добавить</button>
+            </div>
+            <button mat-raised-button class="delete-button" (click)="deletePriceStyle()">Удалить</button>
+        </div>
+
+        <div class="price-table">
+            <table>
+                <tr>
+                    <th *ngFor="let styleHeader of tableStyleHeader">
+                        {{styleHeader}}
+                    </th>
+                </tr>
+                <tr *ngFor="let style of priceStyle" (click)="chooseStyle(style.id)"
+                    [ngClass]="{active: idStyle == style.id}">
+                    <td>
+                        {{style.name_style}}
+                    </td>
+                    <td>
+                        {{style.name_file}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button cdkFocusInitial [mat-dialog-close]="null">Close</button>
+</mat-dialog-actions>
