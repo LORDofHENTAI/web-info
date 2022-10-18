@@ -114,8 +114,8 @@ export class PriceSettingsDialogComponent implements OnInit {
     let deletePriceStyle = new DeletePriceTemp(this.tokenService.getToken(), this.idStyle);
     this.productPriceService.deletePriceStyle(deletePriceStyle).subscribe(result => {
       console.log(result)
-      if (result === 'true') {
-
+      if (result = 'true') {
+        this.getPriceStyleByFormat();
       }
     },
       error => {
@@ -139,7 +139,7 @@ export class PriceSettingsDialogComponent implements OnInit {
   addPriceStyle() {
     let addPriceStyle = new AddPriceStyle(this.tokenService.getToken(), this.selectedFile, this.idFormat, this.styleName);
     this.productPriceService.addPriceStyle(addPriceStyle).subscribe(response => {
-      if (response === 'true') {
+      if (response = 'true') {
         this.getPriceStyleByFormat();
       }
     },

@@ -1,5 +1,5 @@
 <h2>Настройка ценника</h2>
-<mat-dialog-content class="mat-typography">
+<mat-dialog-content class="mat-typography" style="overflow: hidden;">
     <div class="price-format">
         <div class="price-input">
             <div>
@@ -30,7 +30,7 @@
     <div class="price-format">
         <div class="price-input">
             <div class="input__wrapper">
-                <input name="file" type="file" name="file" id="input__file" class="input input__file"
+                <input name="file" type="file" name="file" id="input__file" accept=".frx" class="input input__file"
                     (change)="selectFile($event)">
                 <label for="input__file" class="input__file-button">
                     <span class="input__file-icon-wrapper">

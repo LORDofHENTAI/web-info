@@ -80,7 +80,8 @@
 
         <div class="table-container prod" (scroll)="onScroll($event)">
 
-            <table mat-table [dataSource]="dataSourceProducts" class="table-hover" #productTable>
+            <table mat-table [dataSource]="dataSourceProducts" class="table-hover" #productTable
+                *ngIf="showLoader === false">
 
                 <ng-container matColumnDef="article">
                     <th mat-header-cell *matHeaderCellDef> Артикул </th>
@@ -143,6 +144,10 @@
                     (dblclick)="onAddProduct(row.article)" [ngClass]="{ 'select-row': selectedArticle == row.article }">
                 </tr>
             </table>
+            <div class="loader-box" *ngIf="showLoader === true">
+                <div class="loader">
+                </div>
+            </div>
         </div>
 
         <mat-tab-group (selectedTabChange)="onSelectTab($event)">

@@ -19,6 +19,7 @@ import { PriceFormat } from '../models/price-settings-models/price-format';
 import { GetPriceTemp } from '../models/price-settings-models/get-price-temp';
 import { PriceStyle } from '../models/price-settings-models/price-style';
 import { FindStyle } from '../models/price-settings-models/find-price-style';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product-price-list-form',
@@ -29,13 +30,6 @@ export class ProductPriceListFormComponent implements OnInit {
 
   @Input() isOpen: boolean;
 
-  selectedSize: string = 'Бейдж';
-  sizes: Array<string> = ['Бейдж', 'Средний', 'Маленький',
-    'А6 Альбом', 'А6 Портрет', 'А5 Портрет',
-    'А5 Альбом', 'А4 Портрет', 'А4 Альбом',
-    'Цветной', 'Этикетка', 'Напольный',
-    'Акция', 'Акция напольный', 'Микро', 'А3'];
-
   listPrices: Print[];
   displayedColumnsPrint = ['name', 'quantity', 'mesname', 'price', 'summa', 'barcode'];
   imgSource = 'https://barcode.tec-it.com/barcode.ashx?data=';
@@ -45,6 +39,12 @@ export class ProductPriceListFormComponent implements OnInit {
   styleNoConnect = 'red-snackbar';
   styleSucceses = 'green-snackbar';
   styleStandart = 'standart-snackbar';
+
+  priceFormat: PriceFormat;
+  idFormat: number;
+  styleFileName: string = null;
+  priceStyle: PriceStyle;
+
 
   constructor(
     public dialog: MatDialog,
@@ -121,10 +121,11 @@ export class ProductPriceListFormComponent implements OnInit {
   }
 
   onPrintLable() {
+    console.log(this.styleFileName);
     const dialogRef = this.dialog.open(PrintWindowComponent, {
-      width: '800px',
-      height: '500px',
-      data: this.listPrices,
+      width: '900px',
+      height: '1000px',
+      data: { priceName: this.styleFileName, idFormat: this.idFormat }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -146,10 +147,7 @@ export class ProductPriceListFormComponent implements OnInit {
     });
   }
 
-  priceFormat: PriceFormat;
-  idFormat: number;
-  idStyle: number;
-  priceStyle: PriceStyle;
+
 
   getPriceFormatList() {
     this.productPriceService.getPriceFormat(new GetPriceTemp(this.tokenService.getToken())).subscribe(response => {
@@ -172,6 +170,11 @@ export class ProductPriceListFormComponent implements OnInit {
         console.log(error);
       });
   }
+
+  // printPriceList() {
+  //   window.open('path');
+  // }
+
 }
 
 @Component({

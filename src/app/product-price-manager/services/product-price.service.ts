@@ -35,6 +35,7 @@ export class ProductPriceService {
   private urlDeletePriceStyle = environment.apiUrl + "printlist/deletePriceStyle/";
   private urlStyleByFormat = environment.apiUrl + "printlist/findIdFormat/";
 
+
   constructor(private http: HttpClient) { }
 
   getListPrices(data: PrintQuery): Observable<Print[]> {
@@ -114,5 +115,6 @@ export class ProductPriceService {
   findStyleById(data: FindStyle): Observable<PriceStyle> {
     return this.http.post<PriceStyle>(`${this.urlStyleByFormat}`, data);
   }
+
 
 }

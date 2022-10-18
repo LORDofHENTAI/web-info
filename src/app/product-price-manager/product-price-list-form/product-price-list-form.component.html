@@ -6,7 +6,7 @@
                 Акции
             </button>
             <button mat-stroked-button data-placement="bottom" matTooltip="Печать ценников" (click)="onPrintLable()"
-                [disabled]="true">
+                [disabled]="listPrices.length === 0 || styleFileName === null">
                 <span class="material-icons">
                     print
                 </span>
@@ -21,8 +21,9 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Тип</mat-label>
-                <mat-select [(value)]="idStyle">
-                    <mat-option *ngFor="let style of priceStyle" [value]="style.id"> {{style.name_style}} </mat-option>
+                <mat-select [(value)]="styleFileName">
+                    <mat-option *ngFor="let style of priceStyle" [value]="style.name_file"> {{style.name_style}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
 

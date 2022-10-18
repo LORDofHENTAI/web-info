@@ -90,6 +90,8 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   action = 'Ok';
   styleNoConnect = 'red-snackbar';
 
+  showLoader: boolean = false;
+
   private _transformer = (node: PoductNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -173,11 +175,14 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   getProductsForSearch(query: ProductQuery) {
+    this.showLoader = true;
     this.productService.getProducts(query).subscribe(response => {
       this.assignResponseProductSearch(response);
+      this.showLoader = false;
     },
       error => {
         console.log(error);
+        this.showLoader = false;
       });
   }
 
@@ -247,11 +252,14 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   getProducts(query: ProductQuery) {
+    this.showLoader = true;
     this.productService.getProducts(query).subscribe(response => {
       this.assignResponseProduct(response);
+      this.showLoader = false;
     },
       error => {
         console.log(error);
+        this.showLoader = false;
       });
   }
 
