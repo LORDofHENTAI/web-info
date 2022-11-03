@@ -19,7 +19,7 @@ export class PriceCheckerComponent implements OnInit {
 
   article: string = ''
   shopId: string;
-  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
+  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], [], '');
   displayedColumns = ['storeName', 'stock', 'reserve', 'onWay', 'supply', 'losses'];
   displayedColumnsBarcodes = ['barcodes'];
   addToVipiska: AddToVipiska;

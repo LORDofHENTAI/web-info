@@ -11,13 +11,13 @@ export class LeavingsComponent implements OnInit {
 
   shopId: string = '';
   @Input() data: ProductGoods[];
-  displayedColumns = ['storeName', 'stock', 'reserve', 'onWay', 'supply', 'losses'];
+  displayedColumns = ['storeName', 'stock', 'reserve', 'onWay', 'supply', 'losses', 'operImplement', 'operStock'];
 
   constructor(
     private tokenService: TokenService,
   ) {
     this.shopId = this.tokenService.getShop();
-   }
+  }
 
   ngOnInit(): void {
   }

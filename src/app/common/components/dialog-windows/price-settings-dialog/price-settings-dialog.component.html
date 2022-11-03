@@ -8,8 +8,9 @@
                     <input matInput placeholder="Введите наименование формата" [(ngModel)]="formatName">
                 </mat-form-field>
             </div>
-            <button mat-raised-button (click)="addPriceFormat()">Добавить</button>
-            <button mat-raised-button class="delete-button" (click)="deletePriceFormat()">Удалить</button>
+            <button mat-raised-button (click)="addPriceFormat()" [disabled]="formatName.length === 0">Добавить</button>
+            <button mat-raised-button class="delete-button" (click)="deletePriceFormat()"
+                [disabled]="deleteFormat === false">Удалить</button>
         </div>
         <div class="price-table">
             <table>
@@ -46,9 +47,11 @@
                     <mat-label>Наименование стиля</mat-label>
                     <input matInput placeholder="Введите наименование стиля" [(ngModel)]="styleName">
                 </mat-form-field>
-                <button mat-raised-button (click)="addPriceStyle()">Добавить</button>
+                <button mat-raised-button (click)="addPriceStyle()"
+                    [disabled]="styleName.length === 0">Добавить</button>
             </div>
-            <button mat-raised-button class="delete-button" (click)="deletePriceStyle()">Удалить</button>
+            <button mat-raised-button class="delete-button" (click)="deletePriceStyle()"
+                [disabled]="deleteStyle === false">Удалить</button>
         </div>
 
         <div class="price-table">
@@ -72,5 +75,5 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button cdkFocusInitial [mat-dialog-close]="null">Close</button>
+    <button mat-button cdkFocusInitial [mat-dialog-close]="null">Закрыть</button>
 </mat-dialog-actions>

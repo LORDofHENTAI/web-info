@@ -25,6 +25,11 @@ export class PriceSettingsDialogComponent implements OnInit {
   idFormat: any;
   idStyle: any;
 
+
+  deleteFormat: boolean = false;
+  deleteStyle: boolean = false;
+
+
   tableStyleHeader = ["Название стиля", "Имя файла"];
 
   constructor(
@@ -52,11 +57,13 @@ export class PriceSettingsDialogComponent implements OnInit {
     this.idFormat = element;
     console.log(this.idFormat);
     this.getPriceStyleByFormat();
+    this.deleteFormat = true;
   }
 
   chooseStyle(element) {
     this.idStyle = element;
     console.log(this.idStyle);
+    this.deleteStyle = true;
   }
 
   getPriceStyleByFormat() {
@@ -137,15 +144,16 @@ export class PriceSettingsDialogComponent implements OnInit {
   }
 
   addPriceStyle() {
-    let addPriceStyle = new AddPriceStyle(this.tokenService.getToken(), this.selectedFile, this.idFormat, this.styleName);
-    this.productPriceService.addPriceStyle(addPriceStyle).subscribe(response => {
-      if (response = 'true') {
-        this.getPriceStyleByFormat();
-      }
-    },
-      error => {
-        console.log(error);
-      })
+    if (!this.selectFile) {
+      let addPriceStyle = new AddPriceStyle(this.tokenService.getToken(), this.selectedFile, this.idFormat, this.styleName);
+      this.productPriceService.addPriceStyle(addPriceStyle).subscribe(response => {
+        if (response = 'true') {
+          this.getPriceStyleByFormat();
+        }
+      },
+        error => {
+          console.log(error);
+        })
+    }
   }
-
 }

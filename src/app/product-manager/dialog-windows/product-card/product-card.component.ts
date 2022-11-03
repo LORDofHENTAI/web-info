@@ -12,8 +12,8 @@ import { ProductService } from '../../services/product.service';
 })
 export class ProductCardComponent implements OnInit {
 
-  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
-  
+  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], [], '');
+
   constructor(
     private tokenService: TokenService,
     private productService: ProductService,
@@ -23,11 +23,11 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.productService.getProductProp(new ProductProp(this.tokenService.getToken(), this.data)).subscribe(response => {
-      this.productPropAnswer = response; 
-    }, 
-    error => { 
-      console.log(error);
-    });
+      this.productPropAnswer = response;
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   onNoClick() {

@@ -53,7 +53,8 @@ import { BarcodeImgPipe } from './pipes/barcode-img/barcode-img.pipe';
 import { PricePrintDialog } from './product-price-manager/product-price-list-form/product-price-list-form.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { PriceSettingsDialogComponent } from './common/components/dialog-windows/price-settings-dialog/price-settings-dialog.component';
-import { SafeUrlPipe } from './pipes/safeUrl.pipe'
+import { SafeUrlPipe } from './pipes/safeUrl.pipe';
+import { LoadActionComponent } from './common/components/dialog-windows/load-action/load-action.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -92,7 +93,8 @@ import { SafeUrlPipe } from './pipes/safeUrl.pipe'
     BarcodeImgPipe,
     PricePrintDialog,
     PriceSettingsDialogComponent,
-    SafeUrlPipe
+    SafeUrlPipe,
+    LoadActionComponent
   ],
   imports: [
     AppRoutingModule,

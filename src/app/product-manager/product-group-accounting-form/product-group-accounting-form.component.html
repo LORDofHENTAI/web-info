@@ -80,8 +80,7 @@
 
         <div class="table-container prod" (scroll)="onScroll($event)">
 
-            <table mat-table [dataSource]="dataSourceProducts" class="table-hover" #productTable
-                *ngIf="showLoader === false">
+            <table mat-table [dataSource]="dataSourceProducts" class="table-hover" #productTable>
 
                 <ng-container matColumnDef="article">
                     <th mat-header-cell *matHeaderCellDef> Артикул </th>

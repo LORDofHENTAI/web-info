@@ -56,7 +56,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   hoveredIndex: any;
   valueModeVar: string;
 
-  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
+  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], [], '');
   displayedColumnsProducts = ['article', 'name', 'type', 'goods', 'price', 'stock_price', 'action']; //, 'action'
   displayedColumnsPlaces = ['place', 'bt'];
   displayedColumnsDelivers = ['delivers'];
@@ -246,7 +246,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   clearProp() {
-    this.productPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], []);
+    this.productPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], [], '');
     this.listPlaces = [];
     this.listDelivers = [];
   }
@@ -357,6 +357,10 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   getProductInfo(article: string) {
     this.productService.getProductProp(new ProductProp(this.tokenService.getToken(), article)).subscribe(response => {
       this.productPropAnswer = response;
+      if (this.productPropAnswer.cashLoad === '1')
+        this.productPropAnswer.cashLoad = 'ДА'
+      if (this.productPropAnswer.cashLoad === '0')
+        this.productPropAnswer.cashLoad = 'НЕТ'
     },
       error => {
         console.log(error);

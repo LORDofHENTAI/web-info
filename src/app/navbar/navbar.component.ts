@@ -8,7 +8,7 @@ import { Logout } from '../login-manager/models/logout';
 import { SelectShopComponent } from '../login-manager/select-shop/select-shop.component';
 import { LoginService } from '../login-manager/services/login.service';
 import { PriceSettingsDialogComponent } from '../common/components/dialog-windows/price-settings-dialog/price-settings-dialog.component';
-
+import { LoadActionComponent } from '../common/components/dialog-windows/load-action/load-action.component';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -97,6 +97,12 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  openLoadAction() {
+    const dialogRef = this.dialog.open(LoadActionComponent);
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
 
 
 }

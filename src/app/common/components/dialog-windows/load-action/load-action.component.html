@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>Загрузка акционных цен</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="input__wrapper">
+        <input name="file" type="file" name="file" id="input__file" class="input input__file"
+            (change)="selectFile($event)"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        <label for="input__file" class="input__file-button">
+            <span class="input__file-icon-wrapper">
+                <span class="material-icons">
+                    file_download
+                </span>
+            </span>
+            <span class="input__file-button-text">{{selectedFileName}}</span>
+        </label>
+    </div>
+    <div class="radio-button-container">
+        <mat-radio-group [(ngModel)]="selectedLoadType">
+            <mat-radio-button value="1">Поартикульная загрузка</mat-radio-button>
+            <mat-radio-button value="2">Загрузка групп</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <button mat-raised-button (clisk)="upload()">Загрузить</button>
+    <div class="tables-container">
+        <div class="table-box">
+            <h3>Контрольная таблица</h3>
+            <table>
+                <tr>
+                    <th *ngFor="let t of columnTempName">
+                        {{t}}
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                </tr>
+            </table>
+            <div class="control-box">
+                <button mat-raised-button style="color:red">Очистить</button>
+                <button mat-raised-button style="color: green;">Запустить акцию</button>
+            </div>
+        </div>
+        <div class="table-box">
+            <h3>Акционная таблица</h3>
+            <table>
+                <tr>
+                    <th *ngFor="let i of columnName">
+                        {{i}}
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                </tr>
+            </table>
+            <div class="control-box">
+                <button mat-raised-button style="color:red">Очистить</button>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Закрыть</button>
+</mat-dialog-actions>
