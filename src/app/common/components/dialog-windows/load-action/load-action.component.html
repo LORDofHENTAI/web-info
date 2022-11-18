@@ -21,41 +21,75 @@
     </div>
     <button mat-raised-button (clisk)="upload()">Загрузить</button>
     <div class="tables-container">
-        <div class="table-box">
+        <div>
             <h3>Контрольная таблица</h3>
-            <table>
-                <tr>
-                    <th *ngFor="let t of columnTempName">
-                        {{t}}
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-
-                    </td>
-                </tr>
-            </table>
+            <div class="table-box">
+                <table>
+                    <tr>
+                        <th *ngFor="let t of columnTempName">
+                            {{t}}
+                        </th>
+                    </tr>
+                    <tr *ngFor="let itemTemp of tempTable">
+                        <td>
+                            {{itemTemp.article}}
+                        </td>
+                        <td>
+                            {{itemTemp.storeLock}}
+                        </td>
+                        <td>
+                            {{itemTemp.storeLock}}
+                        </td>
+                        <td>
+                            {{itemTemp.price}}
+                        </td>
+                        <td>
+                            {{itemTemp.priceType}}
+                        </td>
+                        <td>
+                            {{itemTemp.percent}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div class="control-box">
-                <button mat-raised-button style="color:red">Очистить</button>
-                <button mat-raised-button style="color: green;">Запустить акцию</button>
+                <button mat-raised-button style="color:red" (click)="clearTempTable()">Очистить</button>
+                <button mat-raised-button style="color: green;" (click)="startAction()">Запустить акцию</button>
             </div>
         </div>
-        <div class="table-box">
+        <div>
             <h3>Акционная таблица</h3>
-            <table>
-                <tr>
-                    <th *ngFor="let i of columnName">
-                        {{i}}
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-
-                    </td>
-                </tr>
-            </table>
+            <div class="table-box">
+                <table>
+                    <tr>
+                        <th *ngFor="let i of columnName">
+                            {{i}}
+                        </th>
+                    </tr>
+                    <tr *ngFor="let itemAction of actionTable">
+                        <td>
+                            {{itemAction.article}}
+                        </td>
+                        <td>
+                            {{itemAction.storelock}}
+                        </td>
+                        <td>
+                            {{itemAction.price}}
+                        </td>
+                        <td>
+                            {{itemAction.priceType}}
+                        </td>
+                        <td>
+                            {{itemAction.percent}}
+                        </td>
+                        <td>
+                            {{itemAction.preValue}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div class="control-box">
-                <button mat-raised-button style="color:red">Очистить</button>
+                <button mat-raised-button style="color:red" (click)="clearTeble()">Очистить</button>
             </div>
         </div>
     </div>

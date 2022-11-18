@@ -1,3 +1,5 @@
 export class GetLoadPrice {
-    public token: string
+    constructor(
+        public token: string
+    ) { }
 }

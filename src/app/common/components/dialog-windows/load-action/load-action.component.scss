@@ -1,3 +1,25 @@
+mat-dialog-content{
+    min-width: 55vw!important;
+    height: 600px;
+}
+::ng-deep .mat-form-field-wrapper{
+    padding: 0!important;
+}
+*::-webkit-scrollbar,
+html *::-webkit-scrollbar {
+    height: 5px;
+    width: 4px;
+}
+*::-webkit-scrollbar-track,
+html *::-webkit-scrollbar-track {
+    background: inherit;
+    margin: 8px;
+}
+*::-webkit-scrollbar-thumb,
+html *::-webkit-scrollbar-thumb {
+    background-color: #324CA8;
+    border-radius: 5px;
+}
 .tables-container{
     display:flex;
     width: 100%;
@@ -67,6 +89,42 @@
     margin-left: 10px;
     }
 }
+
+.table-box{
+    height: 330px;
+    border: 1px solid black;
+    border-radius: 20px;
+    overflow: auto;
+    width: 98%;
+    margin-top: 5px;
+    font-size: 1.25em;
+    overflow: auto;
+    &:first-child{
+        margin-right: 10px;
+    }
+    table{
+        width: 100%;
+        tr{
+            &:first-child{
+                color: #fff;
+                background-color: #324CA8;
+                border-bottom: 1px solid black;
+
+            }
+            th{
+                padding-left: 10px;
+                padding-top: 5px;
+            }
+            &.active{
+                background-color: #42B3ED;
+            }
+            td{
+                padding-left: 10px;
+            }
+        }
+    }
+}
+
 .control-box{
     width: 100%;
     display: flex;
@@ -77,4 +135,7 @@
         width: 100%;
         margin-top: 10px;
     }
+}
+h3{
+    margin: 0;
 }
