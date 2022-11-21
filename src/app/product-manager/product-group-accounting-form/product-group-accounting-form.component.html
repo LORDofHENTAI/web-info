@@ -39,7 +39,7 @@
                     <mat-form-field appearance="outline" data-placement="bottom" matTooltip="">
                         <mat-label>Поиск</mat-label>
                         <input matInput placeholder="Введите значение" id="searchValue" name="searchValue"
-                            [(ngModel)]="searchValue" (keyup.enter)="onSearch()">
+                            [(ngModel)]="searchValue" (keyup.enter)="onSearch()" (input)="inputHandle($event)">
                     </mat-form-field>
                 </div>
                 <div class="row">

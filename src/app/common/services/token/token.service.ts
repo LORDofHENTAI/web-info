@@ -11,9 +11,9 @@ import { LoginResponse } from 'src/app/login-manager/models/login-response';
 export class TokenService {
 
   cookieName = environment.cookieName;
-  
+
   public _subject = new Subject<any>();
-  
+
   constructor(
     private cookieService: CookieService,
   ) { }
@@ -22,109 +22,109 @@ export class TokenService {
     this._subject.next(event);
   }
 
-  get events$ () {
+  get events$() {
     return this._subject.asObservable();
   }
 
-  getToken() : string {
+  getToken(): string {
     try {
-      if(this.cookieService.check(this.cookieName)){
+      if (this.cookieService.check(this.cookieName)) {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
-        if(loginFromCookie) {
+        if (loginFromCookie) {
           return loginFromCookie.token;
         }
       }
       else return '';
     }
-    catch(error) {
+    catch (error) {
       console.error();
       alert('login error')
     }
   }
 
-  getLogin() : string {
+  getLogin(): string {
     try {
-      if(this.cookieService.check(this.cookieName)){
+      if (this.cookieService.check(this.cookieName)) {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
-        if(loginFromCookie) {
+        if (loginFromCookie) {
           return loginFromCookie.login;
         }
       }
       else return '';
     }
-    catch(error) {
+    catch (error) {
       console.error();
       alert('login error')
     }
   }
 
-  getShop() : string {
+  getShop(): string {
     try {
-      if(this.cookieService.check(this.cookieName)){
+      if (this.cookieService.check(this.cookieName)) {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
-        if(loginFromCookie) {
+        if (loginFromCookie) {
           return loginFromCookie.shopId;
         }
       }
       else return '';
     }
-    catch(error) {
+    catch (error) {
       console.error();
       alert('login error')
     }
   }
 
-  getType() : string {
+  getType(): string {
     try {
-      if(this.cookieService.check(this.cookieName)){
+      if (this.cookieService.check(this.cookieName)) {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
-        if(loginFromCookie) {
+        if (loginFromCookie) {
           return loginFromCookie.typeId;
         }
       }
       else return '';
     }
-    catch(error) {
+    catch (error) {
       console.error();
       alert('login error')
     }
   }
 
-  getDepartment() : string {
+  getDepartment(): string {
     try {
-      if(this.cookieService.check(this.cookieName)){
+      if (this.cookieService.check(this.cookieName)) {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
-        if(loginFromCookie) {
+        if (loginFromCookie) {
           return loginFromCookie.departmentId;
         }
       }
       else return '';
     }
-    catch(error) {
+    catch (error) {
       console.error();
       alert('login error')
     }
   }
 
-  getIsAdmin() : string {
+  getIsAdmin(): string {
     try {
-      if(this.cookieService.check(this.cookieName)){
+      if (this.cookieService.check(this.cookieName)) {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
-        if(loginFromCookie) {
-          if(loginFromCookie.adminCount)
+        if (loginFromCookie) {
+          if (loginFromCookie.adminCount)
             return loginFromCookie.adminCount;
           else return '0';
         }
       }
       else return '';
     }
-    catch(error) {
+    catch (error) {
       console.error();
       alert('login error')
     }
@@ -132,58 +132,58 @@ export class TokenService {
 
   getGroup() {
     try {
-      if(this.cookieService.check(this.cookieName)){
+      if (this.cookieService.check(this.cookieName)) {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
-        if(loginFromCookie) {
+        if (loginFromCookie) {
           return loginFromCookie.title;
         }
       }
       else return '';
     }
-    catch(error) {
+    catch (error) {
       console.error();
       alert('login error')
     }
   }
 
-  getCookie() : CookieLogin {
+  getCookie(): CookieLogin {
     try {
-      if(this.cookieService.check(this.cookieName)){
+      if (this.cookieService.check(this.cookieName)) {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
-        if(loginFromCookie) {
+        if (loginFromCookie) {
           return loginFromCookie;
         }
       }
       else return null;
     }
-    catch(error) {
+    catch (error) {
       console.error();
       alert('login error')
     }
   }
 
   deleteCookie() {
-    if(this.cookieService.check(this.cookieName)) {
+    if (this.cookieService.check(this.cookieName)) {
       let cookie = this.getCookie();
       this.cookieService.delete(this.cookieName);
       this.setCookie(CookieLogin.setCookieLogin(cookie.shopId, cookie.typeId, cookie.departmentId, new LoginResponse('', '', '', '', '', '')));
     }
   }
 
-  isLoginUser() : boolean {
+  isLoginUser(): boolean {
     try {
-      if(this.cookieService.check(this.cookieName)) {
+      if (this.cookieService.check(this.cookieName)) {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
-        if(loginFromCookie.token) {
+        if (loginFromCookie.token) {
           return true;
         }
       }
       else return false;
     }
-    catch(error) {
+    catch (error) {
       console.error();
       alert('login error')
     }

@@ -395,4 +395,13 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       }
     }
   }
+
+  inputHandle(event) {
+    var number = event.target.value;
+    if (number.length >= 12) {
+      this.onSearch()
+    }
+  }
+
+
 }

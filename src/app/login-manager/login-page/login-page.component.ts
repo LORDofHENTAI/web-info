@@ -69,7 +69,7 @@ export class LoginPageComponent implements OnInit {
     this.loginService.getLogin(this.loginQuery).subscribe(response => {
       console.log(response);
       if (this.checkResponse(response)) {
-
+        console.log('>>>>>>>>>>>>>>' + this.userForm.value.userShop, this.userForm.value.userType, this.userForm.value.userDepartment, response)
         this.tokenService.setCookie(
           CookieLogin.setCookieLogin(this.userForm.value.userShop, this.userForm.value.userType, this.userForm.value.userDepartment, response)
         );

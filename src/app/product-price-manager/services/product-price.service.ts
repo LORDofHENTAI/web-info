@@ -25,7 +25,7 @@ export class ProductPriceService {
   private urlClear = environment.apiUrl + "printlist/clear/";
   private urlDelete = environment.apiUrl + "printlist/delete/";
   private urlUploadMile = environment.apiUrl + "printlist/uploadMile/";
-  private urlUploadYork = environment.apiUrl + "printlist/uploadYork/";
+  private urlUploadActs = environment.apiUrl + "printlist/uploadActs/";
   private urlUploadDat = environment.apiUrl + "printlist/uploadDat/";
   private urlGetPriceFormat = environment.apiUrl + "printlist/getPriceFormat/";
   private urlAddPriceFormat = environment.apiUrl + "printlist/addPriceFormat/";
@@ -62,15 +62,18 @@ export class ProductPriceService {
     input.append("file", fileToUpload.file);
     input.append("filterCategory", fileToUpload.filterCategory);
     input.append("filterFormat", fileToUpload.filterFormat);
-    input.append("priceFromFile", String(fileToUpload.priceFromFile));
+    if (type === 'act')
+      input.append("priceFromFile", 'true');
+    else
+      input.append("priceFromFile", String(fileToUpload.priceFromFile));
     input.append("shop", fileToUpload.shop);
     input.append("priceType", fileToUpload.priceType);
     console.log(fileToUpload);
     if (type === 'mile')
       return this.http.post<string>(`${this.urlUploadMile}`, input);
     else
-      if (type === 'york') {
-        return this.http.post<string>(`${this.urlUploadYork}`, input);
+      if (type === 'act') {
+        return this.http.post<string>(`${this.urlUploadActs}`, input);
       }
       else
         if (type === 'dat')
