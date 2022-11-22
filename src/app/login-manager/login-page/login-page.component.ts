@@ -25,7 +25,7 @@ export class LoginPageComponent implements OnInit {
     "userName": new FormControl('', Validators.required),
     "userPassword": new FormControl('', Validators.required),
     "userShop": new FormControl(null, Validators.required),
-    "userType": new FormControl(null, Validators.required),
+    // "userType": new FormControl(null, Validators.required),
     "userDepartment": new FormControl(null, Validators.required),
   });
 
@@ -66,12 +66,12 @@ export class LoginPageComponent implements OnInit {
 
   submit() {
     this.loginQuery = new LoginQuery(this.userForm.value.userName, this.userForm.value.userPassword);
+    console.log('>>>>>>>>>>>>>>' + this.userForm.value.userShop.id)
     this.loginService.getLogin(this.loginQuery).subscribe(response => {
-      console.log(response);
       if (this.checkResponse(response)) {
-        console.log('>>>>>>>>>>>>>>' + this.userForm.value.userShop, this.userForm.value.userType, this.userForm.value.userDepartment, response)
+        console.log('>>>>>>>>>>>>>>' + this.userForm.value.userShop.id, this.userForm.value.userShop.priceType, this.userForm.value.userDepartment, response)
         this.tokenService.setCookie(
-          CookieLogin.setCookieLogin(this.userForm.value.userShop, this.userForm.value.userType, this.userForm.value.userDepartment, response)
+          CookieLogin.setCookieLogin(String(this.userForm.value.userShop.id), this.userForm.value.userShop.priceType, this.userForm.value.userDepartment, response)
         );
         this.tokenService.logEvent(true);
         this.router.navigate(['/products']);
@@ -87,6 +87,7 @@ export class LoginPageComponent implements OnInit {
 
   getShopList() {
     this.shopService.getShops().subscribe(response => {
+      console.log(response)
       if (response)
         this.shops = response;
     },

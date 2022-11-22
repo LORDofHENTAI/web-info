@@ -28,6 +28,7 @@ export class ProductService {
   }
 
   getProducts(data: ProductQuery): Observable<ProductAnswer[]> {
+    console.log(data)
     return this.http.post<ProductAnswer[]>(`${this.urlProduct}`, data);
   }
 
