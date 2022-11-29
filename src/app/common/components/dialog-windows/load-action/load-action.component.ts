@@ -39,7 +39,9 @@ export class LoadActionComponent implements OnInit {
   }
 
   upload() {
+    console.log('qweqwe');
     const loadPriceQuery = new LoadPriceQuery(this.tokenService.getToken(), this.selectedFile, this.selectedLoadType, this.tokenService.getShop(), this.tokenService.getType());
+    console.log(loadPriceQuery);
     this.loadActionPriceService.loadTempAction(loadPriceQuery).subscribe(response => {
       if (response)
         this.getActionTempTable()
@@ -48,10 +50,10 @@ export class LoadActionComponent implements OnInit {
         console.log(error)
       })
   }
-
   getActionTempTable() {
     this.loadActionPriceService.getTempActonTable(new GetLoadPrice(this.tokenService.getToken())).subscribe(response => {
       this.tempTable = response
+      console.log(this.tempTable)
     },
       error => {
         console.log(error);

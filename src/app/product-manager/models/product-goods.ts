@@ -7,7 +7,7 @@ export class ProductGoods {
         public onWay: string,
         public supply: string,
         public losses: string,
-        public implementation: string[],
+        public implementation: string,
         public balance: string,
     ) { }
 }

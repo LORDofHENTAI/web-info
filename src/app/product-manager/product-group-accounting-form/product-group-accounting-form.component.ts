@@ -254,6 +254,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   getProducts(query: ProductQuery) {
     this.showLoader = true;
     this.productService.getProducts(query).subscribe(response => {
+
       this.assignResponseProduct(response);
       this.showLoader = false;
     },

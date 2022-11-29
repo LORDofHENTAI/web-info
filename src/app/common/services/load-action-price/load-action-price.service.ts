@@ -37,7 +37,7 @@ export class LoadActionPriceService {
   }
 
   loadTempAction(data: LoadPriceQuery): Observable<string> {
-    console.log(data);
+    console.log('>>>>>>' + data);
     let input = new FormData();
     input.append("token", data.token);
     input.append("file", data.file);

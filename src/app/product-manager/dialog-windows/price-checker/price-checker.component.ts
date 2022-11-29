@@ -60,7 +60,7 @@ export class PriceCheckerComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
 
-        this.addToVipiska = new AddToVipiska(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType(), result);
+        this.addToVipiska = new AddToVipiska(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType(), String(result));
 
         this.productOrderingService.addToVipiska(this.addToVipiska).subscribe(response => {
           console.log('>>>>>>>>>>>>>>' + response);
