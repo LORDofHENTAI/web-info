@@ -135,7 +135,11 @@ export class ProductPriceListFormComponent implements OnInit {
   }
 
   openPrintDialog() {
-    const dialogRef = this.dialog.open(PricePrintDialog);
+    const dialogRef = this.dialog.open(PricePrintDialog,
+      {
+        disableClose: true,
+      }
+    );
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.snackbarService.openSnackBar("Загрузка завершена", this.action, this.styleStandart);

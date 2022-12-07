@@ -18,7 +18,7 @@ import { ProductPitsComponent } from 'src/app/product-pits-manager/product-pits/
 import { ProductProp } from '../models/product-prop';
 import { ProductOrderingListFormComponent } from 'src/app/product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-
+import { RequestProductManagerFormComponent } from 'src/app/request-product-manager/request-product-manager-form/request-product-manager-form.component';
 
 interface PoductNode {
   id: string;
@@ -43,6 +43,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   @ViewChild("orderingList", { static: false }) orderingList: ProductOrderingListFormComponent;
   @ViewChild("priceList", { static: false }) priceList: ProductPriceListFormComponent;
   @ViewChild("orderPits", { static: false }) orderPits: ProductPitsComponent;
+  @ViewChild("requestList", { static: false }) requestList: RequestProductManagerFormComponent
 
   productArticlePrice: string;
   group: string = '';
@@ -82,6 +83,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   isOpenOrdering = false;
   isOpenPrices = false;
   isOpenProductPits = false;
+  isOpenProductRequest = false;
 
   color = 'accent';
   isExcluded = false;
@@ -317,13 +319,20 @@ export class ProductGroupAccountingFormComponent implements OnInit {
         this.isOpenOrdering = false;
         this.isOpenPrices = true;
         this.isOpenProductPits = false;
+        this.isOpenProductRequest = false;
         break;
 
       case 5:
         this.isOpenOrdering = false;
         this.isOpenPrices = false;
         this.isOpenProductPits = true;
+        this.isOpenProductRequest = false;
         break;
+      case 6:
+        this.isOpenOrdering = false;
+        this.isOpenPrices = false;
+        this.isOpenProductPits = false;
+        this.isOpenProductRequest = true;
     }
   }
 

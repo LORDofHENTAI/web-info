@@ -1,0 +1,49 @@
+<div class="conteiner">
+    <div class="control-conteiner">
+        <button mat-stroked-button matTooltip="Загрузка акционного файла">
+            Создать новую заявку
+        </button>
+        <div class="date-picker">
+            <span>С:</span>
+            <mat-form-field appearance="fill">
+                <input matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="date-picker">
+            <span>По:</span>
+            <mat-form-field appearance="fill">
+                <input matInput [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Отдел</mat-label>
+            <mat-select class="selecter">
+                <mat-option>Отдел</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Заявки</mat-label>
+            <mat-select class="selecter">
+                <mat-option>Все заявки</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="list-container">
+        <table>
+            <tr>
+                <th *ngFor="let h of tableHeader">
+                    {{h}}
+                </th>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

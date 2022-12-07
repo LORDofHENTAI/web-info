@@ -7,8 +7,7 @@
                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (dblclick)="onSelectNode(node)"
                     [ngClass]="{ 'select-row': selectedRowTree == node.name }">
 
-                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
-                        (dblclick)="onSelectNode(node)">
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
                         <mat-icon class="mat-icon-rtl-mirror" *ngIf="node.children">
                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                         </mat-icon>
@@ -19,8 +18,7 @@
                 <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
                     (dblclick)="onSelectNode(node)" [ngClass]="{ 'select-row': selectedRowTree == node.name }">
 
-                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
-                        (dblclick)="onSelectNode(node)">
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
                         <mat-icon class="mat-icon-rtl-mirror">
                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                         </mat-icon>
@@ -172,6 +170,10 @@
             </mat-tab>
             <mat-tab label="Товарные ямы">
                 <app-product-pits #orderPits *ngIf="tabIndex === 5" [isOpen]="isOpenProductPits"></app-product-pits>
+            </mat-tab>
+            <mat-tab label="Заявка">
+                <app-request-product-manager-form #requestList *ngIf="tabIndex === 6" [isOpen]="isOpenProductRequest">
+                </app-request-product-manager-form>
             </mat-tab>
         </mat-tab-group>
     </mat-drawer-content>

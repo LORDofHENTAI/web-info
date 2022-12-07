@@ -54,7 +54,8 @@ import { PricePrintDialog } from './product-price-manager/product-price-list-for
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { PriceSettingsDialogComponent } from './common/components/dialog-windows/price-settings-dialog/price-settings-dialog.component';
 import { SafeUrlPipe } from './pipes/safeUrl.pipe';
-import { LoadActionComponent } from './common/components/dialog-windows/load-action/load-action.component'
+import { LoadActionComponent } from './common/components/dialog-windows/load-action/load-action.component';
+import { RequestProductManagerFormComponent } from './request-product-manager/request-product-manager-form/request-product-manager-form.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,7 +95,8 @@ import { LoadActionComponent } from './common/components/dialog-windows/load-act
     PricePrintDialog,
     PriceSettingsDialogComponent,
     SafeUrlPipe,
-    LoadActionComponent
+    LoadActionComponent,
+    RequestProductManagerFormComponent
   ],
   imports: [
     AppRoutingModule,
