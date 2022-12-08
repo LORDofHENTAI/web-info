@@ -22,12 +22,19 @@ export class PrintWindowComponent implements OnInit {
   ) { }
   @Input() priceName: string = this.data.priceName
   @Input() idFormat: number = this.data.idFormat
+  @Input() article: string = this.data.article
+  @Input() printType: string = this.data.printType
   ngOnInit(): void {
-    this.showIFrame()
+    if (this.printType === 'etiketka')
+      this.showPrintableLable()
+    else
+      this.showIFrame()
   }
 
   showIFrame() {
     this.url = `${environment.apiUrl}api/FastReport/ShowReport?idFormat=${this.idFormat}&token=${this.tokenService.getToken()}&name=${this.priceName}&storeLoc=${this.tokenService.getShop()}&priceType=${this.tokenService.getType()}`;
-
+  }
+  showPrintableLable() {
+    this.url = `${environment.apiUrl}api/FastReport/ReportEtiketka?Token=${this.tokenService.getToken()}&Article=${this.article}`;
   }
 }

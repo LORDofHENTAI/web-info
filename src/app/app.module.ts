@@ -56,6 +56,7 @@ import { PriceSettingsDialogComponent } from './common/components/dialog-windows
 import { SafeUrlPipe } from './pipes/safeUrl.pipe';
 import { LoadActionComponent } from './common/components/dialog-windows/load-action/load-action.component';
 import { RequestProductManagerFormComponent } from './request-product-manager/request-product-manager-form/request-product-manager-form.component'
+import { OrderingDialog } from './product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -96,7 +97,8 @@ import { RequestProductManagerFormComponent } from './request-product-manager/re
     PriceSettingsDialogComponent,
     SafeUrlPipe,
     LoadActionComponent,
-    RequestProductManagerFormComponent
+    RequestProductManagerFormComponent,
+    OrderingDialog
   ],
   imports: [
     AppRoutingModule,

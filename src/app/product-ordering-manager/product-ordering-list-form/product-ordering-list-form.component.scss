@@ -18,8 +18,14 @@
     height: 32px;
 }
 .foot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-left: auto;
     margin-right: 20px;
+}
+mat-slide-toggle{
+    user-select: none;
 }
 .card-summ {
     margin: 10px;
@@ -50,4 +56,11 @@ mat-icon {
     mat-icon {
         opacity: .75;
     }
+}
+.slide {
+    background-color: rgba(128, 128, 128, 0.1);
+    border: 1px solid rgba(128, 128, 128, 0.25);
+	border-radius: 12px;
+    padding: 4px;
+    margin-right: 5px;
 }

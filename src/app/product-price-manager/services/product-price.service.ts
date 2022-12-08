@@ -56,7 +56,6 @@ export class ProductPriceService {
   }
 
   uploadList(fileToUpload: PrintUpload, type: string): Observable<string> {
-    console.log(fileToUpload);
     let input = new FormData();
     input.append("token", fileToUpload.token);
     input.append("file", fileToUpload.file);

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, Input, OnInit, SimpleChanges } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
 import { ProductOrderingService } from 'src/app/product-ordering-manager/services/product-ordering.service';
@@ -27,6 +27,8 @@ export class ProductOrderingListFormComponent implements OnInit {
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   action = 'Ok';
   styleNoConnect = 'red-snackbar';
+
+  switchButton: boolean = false;
 
   addToVipiska: AddToVipiska;
   constructor(
@@ -124,4 +126,47 @@ export class ProductOrderingListFormComponent implements OnInit {
         this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
       });
   }
+
+  openDialog() {
+    console.log(this.listVipiska)
+    const dialogRef = this.dialog.open(OrderingDialog);
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+}
+
+@Component({
+  templateUrl: './ordering-dialog/ordering-dialog.html',
+  styleUrls: ['./ordering-dialog/ordering-dialog.scss']
+})
+export class OrderingDialog implements OnInit {
+  constructor(
+    private tokenService: TokenService,
+    public productOrderingService: ProductOrderingService
+  ) { }
+  listVipiska: VipiskaEnd = new VipiskaEnd([], '0');
+  department: string
+  document: string
+  whoIsAccpted: string
+  displayedColumnsPrint = ['photo', 'name', 'quantity', 'mesname', 'barcode']
+  currentDate = new Date()
+  ngOnInit(): void {
+
+    this.getListVipiska()
+    this.department = this.tokenService.getDepartment();
+  }
+
+
+
+  getListVipiska() {
+    this.productOrderingService.getListVipiska(new VipiskaQuery(this.tokenService.getToken())).subscribe(response => {
+      if (response) {
+        this.listVipiska = response;
+      }
+    },
+      error => {
+        console.log(error);
+      });
+  }
+
 }

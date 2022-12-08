@@ -19,7 +19,7 @@ import { ProductProp } from '../models/product-prop';
 import { ProductOrderingListFormComponent } from 'src/app/product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { RequestProductManagerFormComponent } from 'src/app/request-product-manager/request-product-manager-form/request-product-manager-form.component';
-
+import { PrintWindowComponent } from 'src/app/price-tags/dialog-windows/print-window/print-window.component';
 interface PoductNode {
   id: string;
   name: string;
@@ -413,5 +413,15 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     }
   }
 
-
+  onPrintLable(article: string) {
+    const dialogRef = this.dialog.open(PrintWindowComponent, {
+      width: '900px',
+      height: '1000px',
+      data: { article: article, printType: 'etiketka' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
 }

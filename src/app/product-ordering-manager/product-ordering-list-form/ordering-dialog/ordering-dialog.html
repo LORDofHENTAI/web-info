@@ -1,0 +1,107 @@
+<h2 mat-dialog-title>Накладная на перемещение</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="input-container">
+        <mat-form-field appearance="outline">
+            <mat-label>Документ</mat-label>
+            <input matInput placeholder="Введите значение" [(ngModel)]="document">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Сдал</mat-label>
+            <input matInput placeholder="Введите значение" [(ngModel)]="department">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Принял</mat-label>
+            <input matInput placeholder="Введите значение" [(ngModel)]="whoIsAccpted">
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align=" end">
+    <button mat-button mat-dialog-close>Отмена</button>
+    <!-- <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" data-placement="bottom"
+    matTooltip="Печать"
+    [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
+    printSectionId="print-section" ngxPrint>
+    Печать
+</button> -->
+    <button mat-button cdkFocusInitial matTooltip="Печать"
+        [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
+        printSectionId="print-section1" ngxPrint>Печать</button>
+</mat-dialog-actions>
+
+
+
+
+
+<!-- ---------------------------------------------------------------------- -->
+<div id="print-section1" hidden>
+    <h2>
+        Документ о перемещении {{document}}
+    </h2>
+    <ng-container *ngIf="listVipiska">
+        <table mat-table [dataSource]="listVipiska.list">
+            <ng-container matColumnDef="photo">
+                <th mat-header-cell *matHeaderCellDef> Фото </th>
+                <td mat-cell *matCellDef="let element">
+                    <img width="48px" height="48px" *ngIf="element.img" src="{{element.img | urlImg}}">
+                    <img width="48px" height="48px" *ngIf="!element.img" src="../../../../../assets/no_photo.png">
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Наименование </th>
+                <td mat-cell *matCellDef="let element">
+                    <div>{{element.name}}</div>
+                    <div>Артикул: {{element.article}}</div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef> Количество </th>
+                <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="mesname">
+                <th mat-header-cell *matHeaderCellDef> Ед. изм. </th>
+                <td mat-cell *matCellDef="let element"> {{element.mesname}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="barcode">
+                <th mat-header-cell *matHeaderCellDef> Штрихкод </th>
+                <td mat-cell *matCellDef="let element">
+                    <img style="margin: 15px;" *ngIf="element.barcode" [src]="element.barcode | barcodeImg | async"
+                        width="150" height="50">
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsPrint; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsPrint; let i = index"></tr>
+        </table>
+        <div style="display: flex;">
+            <div style="display: flex; flex-direction: column; margin-right: 50px;">
+                <span>
+                    Сдал
+                </span>
+                <span>
+                    Принял
+                </span>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <span>
+                    {{department}}
+                </span>
+                <span>
+                    {{whoIsAccpted}}
+                </span>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <span>
+                    _______________________
+                </span>
+                <span>
+                    _______________________
+                </span>
+            </div>
+        </div>
+        <span>{{currentDate | date:'dd-MM-yyyy'}}</span>
+    </ng-container>
+</div>

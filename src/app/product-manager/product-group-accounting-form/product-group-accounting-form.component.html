@@ -130,6 +130,10 @@
                                 matTooltip="Добавить в товарную яму">
                                 <mat-icon>move_to_inbox</mat-icon>
                             </button>
+                            <button id="push" mat-icon-button (click)="onPrintLable(element.article)"
+                                matTooltip="Печать этикетки">
+                                <mat-icon>print</mat-icon>
+                            </button>
                         </ng-container>
                     </td>
                 </ng-container>

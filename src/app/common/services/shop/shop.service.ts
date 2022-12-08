@@ -13,7 +13,7 @@ export class ShopService {
 
   private urlShop = environment.apiUrl + 'wms/store/list/';
   private urlType = environment.apiUrl + 'wms/store/price/';
-  private urlGetDepartment = environment.apiUrl + 'wms/store/department/'; //! delete
+  private urlGetDepartment = environment.apiUrl + 'wms/store/department/';
 
   constructor(private http: HttpClient) { }
 
@@ -21,7 +21,7 @@ export class ShopService {
     return this.http.get<StoreList[]>(`${this.urlShop}`);
   }
 
-  getTypes(): Observable<PriceTypeList[]> {  //! delete
+  getTypes(): Observable<PriceTypeList[]> {
     return this.http.get<PriceTypeList[]>(`${this.urlType}`);
   }
 
