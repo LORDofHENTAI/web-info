@@ -10,7 +10,8 @@ import { VipiskaQuery } from 'src/app/product-ordering-manager/models/vipiska-qu
 import { VipiskaEdit } from 'src/app/product-ordering-manager/models/vipiska-edit';
 import { SelectCountComponent } from 'src/app/product-ordering-manager/dialog-windows/select-count/select-count.component';
 import { AddToVipiska } from 'src/app/product-ordering-manager/models/add-to-vipiska';
-
+import { ShopService } from 'src/app/common/services/shop/shop.service';
+import { DepartmentList } from 'src/app/common/models/departmens';
 @Component({
   selector: 'app-product-ordering-list-form',
   templateUrl: './product-ordering-list-form.component.html',
@@ -142,22 +143,21 @@ export class ProductOrderingListFormComponent implements OnInit {
 export class OrderingDialog implements OnInit {
   constructor(
     private tokenService: TokenService,
-    public productOrderingService: ProductOrderingService
+    private productOrderingService: ProductOrderingService,
+    private shopService: ShopService
+
   ) { }
   listVipiska: VipiskaEnd = new VipiskaEnd([], '0');
-  department: string
+  department: string = this.tokenService.getDepartment();
   document: string
   whoIsAccpted: string
+  departments: DepartmentList[]
   displayedColumnsPrint = ['photo', 'name', 'quantity', 'mesname', 'barcode']
   currentDate = new Date()
   ngOnInit(): void {
-
     this.getListVipiska()
-    this.department = this.tokenService.getDepartment();
+    this.GetDepartment();
   }
-
-
-
   getListVipiska() {
     this.productOrderingService.getListVipiska(new VipiskaQuery(this.tokenService.getToken())).subscribe(response => {
       if (response) {
@@ -167,6 +167,17 @@ export class OrderingDialog implements OnInit {
       error => {
         console.log(error);
       });
+  }
+  GetDepartment() {
+    this.shopService.getDepartmentList().subscribe(response => {
+      response.forEach((i) => {
+        if (this.department === String(i.id))
+          this.department = i.name
+      })
+    },
+      error => {
+        console.log(error)
+      })
   }
 
 }
