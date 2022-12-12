@@ -56,3 +56,16 @@ mat-icon {
     margin-right: 10px;
     color: rgba(90, 106, 252);
 }
+
+mat-slide-toggle{
+    user-select: none;
+}
+.slide{
+    background-color: rgba(128, 128, 128, 0.1);
+    border: 1px solid rgba(128, 128, 128, 0.25);
+	border-radius: 12px;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

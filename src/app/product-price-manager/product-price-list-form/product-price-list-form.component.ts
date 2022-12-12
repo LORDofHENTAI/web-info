@@ -45,6 +45,9 @@ export class ProductPriceListFormComponent implements OnInit {
   styleFileName: string = null;
   priceStyle: PriceStyle;
 
+  switchEditablePrices: boolean = false;
+
+
 
   constructor(
     public dialog: MatDialog,
@@ -125,7 +128,7 @@ export class ProductPriceListFormComponent implements OnInit {
     const dialogRef = this.dialog.open(PrintWindowComponent, {
       width: '900px',
       height: '1000px',
-      data: { priceName: this.styleFileName, idFormat: this.idFormat }
+      data: { priceName: this.styleFileName, idFormat: this.idFormat, switchEditablePrices: this.switchEditablePrices }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

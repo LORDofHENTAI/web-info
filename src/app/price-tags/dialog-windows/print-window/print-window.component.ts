@@ -24,6 +24,7 @@ export class PrintWindowComponent implements OnInit {
   @Input() idFormat: number = this.data.idFormat
   @Input() article: string = this.data.article
   @Input() printType: string = this.data.printType
+  @Input() changeFlag: boolean = this.data.switchEditablePrices
   ngOnInit(): void {
     if (this.printType === 'etiketka')
       this.showPrintableLable()
@@ -32,7 +33,7 @@ export class PrintWindowComponent implements OnInit {
   }
 
   showIFrame() {
-    this.url = `${environment.apiUrl}api/FastReport/ShowReport?idFormat=${this.idFormat}&token=${this.tokenService.getToken()}&name=${this.priceName}&storeLoc=${this.tokenService.getShop()}&priceType=${this.tokenService.getType()}`;
+    this.url = `${environment.apiUrl}api/FastReport/ShowReport?idFormat=${this.idFormat}&token=${this.tokenService.getToken()}&name=${this.priceName}&storeLoc=${this.tokenService.getShop()}&priceType=${this.tokenService.getType()}&changeFlag=${this.changeFlag}`;
   }
   showPrintableLable() {
     this.url = `${environment.apiUrl}api/FastReport/ReportEtiketka?Token=${this.tokenService.getToken()}&Article=${this.article}`;
