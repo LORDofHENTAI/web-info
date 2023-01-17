@@ -27,7 +27,10 @@
                 </mat-select>
             </mat-form-field>
             <div class="slide ml-2">
-                <mat-slide-toggle [(ngModel)]="switchEditablePrices">Редактируемые ценники</mat-slide-toggle>
+                <mat-slide-toggle [(ngModel)]="switchEditablePrices"><span
+                        *ngIf="switchEditablePrices===false">Редактируемые ценники</span>
+                    <span *ngIf="switchEditablePrices===true">{{styleFileName||'Редактируемые ценники'}}</span>
+                </mat-slide-toggle>
             </div>
             <button mat-mini-fab color='none' data-placement="bottom" matTooltip="Очистить список ценников"
                 (click)="onClearList()">
