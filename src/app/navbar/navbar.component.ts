@@ -65,10 +65,8 @@ export class NavbarComponent implements OnInit {
         this.tokenService.deleteCookie();
         this.isLoginUser = false;
         this.router.navigate(['/login']);
-        console.log('попал');
       }
       else {
-        console.log('непопал');
         this.snackbarService.openSnackBar(this.messageFailLogin, this.action, this.styleNoConnect);
       }
     },

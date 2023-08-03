@@ -10,7 +10,7 @@
             <div class="input__wrapper">
                 <input name="file" type="file" name="file" id="input__file" class="input input__file"
                     (change)="selectFile($event)"
-                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .dat">
                 <label for="input__file" class="input__file-button">
                     <span class="input__file-icon-wrapper">
                         <span class="material-icons">
@@ -38,7 +38,7 @@
                 <div class="pic-box">
                     <img src="../../../../assets/pr4.png" alt="" class="dat">
                 </div>
-                <button mat-stroked-button class="dat" matTooltip="Загрузка акционного DAT файла"
+                <button mat-stroked-button class="dat" matTooltip="Загрузка Акта переоценки файла"
                     (click)="upload(type='act')">Загрузить</button>
             </div>
         </div>
