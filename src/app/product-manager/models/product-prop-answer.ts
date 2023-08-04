@@ -1,5 +1,6 @@
 import { ProductGoods } from "./product-goods";
 import { ProductAddon } from "./product-addon";
+import { ProductPrices } from "./product-prices";
 
 export class ProductPropAnswer {
     constructor(
@@ -11,6 +12,7 @@ export class ProductPropAnswer {
         public group: string,
         public delivers: string,
         public goods: ProductGoods[],
+        public prices: ProductPrices[],
         public barcode: string[],
         public addon: ProductAddon[],
         public cashLoad: string

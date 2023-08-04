@@ -30,7 +30,6 @@ import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT
 import { CardComponent } from './product-manager/components/card/card.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DischargePrintComponent } from './product-manager/print-forms/discharge-print/discharge-print.component';
-import { PricesComponent } from './product-manager/components/prices/prices.component';
 import { ProductPitsComponent } from './product-pits-manager/product-pits/product-pits.component';
 import { SimpleTagComponent } from './price-tags/simple-tag/simple-tag.component';
 import { PrintWindowComponent } from './price-tags/dialog-windows/print-window/print-window.component';
@@ -57,6 +56,7 @@ import { SafeUrlPipe } from './pipes/safeUrl.pipe';
 import { LoadActionComponent } from './common/components/dialog-windows/load-action/load-action.component';
 import { RequestProductManagerFormComponent } from './request-product-manager/request-product-manager-form/request-product-manager-form.component'
 import { OrderingDialog } from './product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
+import { PricesComponent } from './product-manager/components/prices/prices.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +75,6 @@ import { OrderingDialog } from './product-ordering-manager/product-ordering-list
     LeavingsComponent,
     CardComponent,
     DischargePrintComponent,
-    PricesComponent,
     ProductPitsComponent,
     SimpleTagComponent,
     PrintWindowComponent,
@@ -98,7 +97,8 @@ import { OrderingDialog } from './product-ordering-manager/product-ordering-list
     SafeUrlPipe,
     LoadActionComponent,
     RequestProductManagerFormComponent,
-    OrderingDialog
+    OrderingDialog,
+    PricesComponent
   ],
   imports: [
     AppRoutingModule,

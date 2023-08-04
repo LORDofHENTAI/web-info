@@ -57,7 +57,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   hoveredIndex: any;
   valueModeVar: string;
 
-  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], [], '');
+  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], [], [], '');
   displayedColumnsProducts = ['article', 'name', 'type', 'goods', 'price', 'stock_price', 'action']; //, 'action'
   displayedColumnsPlaces = ['place', 'bt'];
   displayedColumnsDelivers = ['delivers'];
@@ -248,7 +248,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   clearProp() {
-    this.productPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], [], '');
+    this.productPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], [], [], '');
     this.listPlaces = [];
     this.listDelivers = [];
   }
@@ -310,29 +310,29 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     this.tabIndex = event.index;
     switch (event.index) {
       case 3:
-        this.isOpenOrdering = true;
+        this.isOpenOrdering = false;
         this.isOpenPrices = false;
         this.isOpenProductPits = false;
         break;
 
       case 4:
-        this.isOpenOrdering = false;
-        this.isOpenPrices = true;
+        this.isOpenOrdering = true;
+        this.isOpenPrices = false;
         this.isOpenProductPits = false;
         this.isOpenProductRequest = false;
         break;
 
       case 5:
         this.isOpenOrdering = false;
-        this.isOpenPrices = false;
-        this.isOpenProductPits = true;
+        this.isOpenPrices = true;
+        this.isOpenProductPits = false;
         this.isOpenProductRequest = false;
         break;
       case 6:
         this.isOpenOrdering = false;
         this.isOpenPrices = false;
-        this.isOpenProductPits = false;
-        this.isOpenProductRequest = true;
+        this.isOpenProductPits = true;
+        this.isOpenProductRequest = false;
     }
   }
 
@@ -350,15 +350,15 @@ export class ProductGroupAccountingFormComponent implements OnInit {
 
   onAddProduct(article: string) {
     switch (this.tabIndex) {
-      case 3:
+      case 4:
         this.orderingList.addInExcerpt(article)
         break;
 
-      case 4:
+      case 5:
         this.priceList.addInList(article);
         break;
 
-      case 5:
+      case 6:
         this.orderPits.addProductToOrder(article);
         break;
     }

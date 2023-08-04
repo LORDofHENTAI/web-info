@@ -1,29 +1,6 @@
-.bt-container {
-    display: table-cell;
-}
-.bt-container * {
-    margin-right: .4rem;
-}
-.bt-container > button:first-child {
-    margin-left: .4rem;
-}
-button {
-    width: 5vw;
-    height: calc(22px + 1vh);
-    font-size: calc(4px + .4vw);
-}
-.mat-stroked-button {
-    padding: 0px 5px !important;
-}
-:host ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
-:host ::ng-deep .mat-form-field-label-wrapper { top: -1.3em; }
-
-:host ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-    transform: translateY(-1.1em) scale(.75);
-    width: 133.33333%;
-}
-:host ::ng-deep .mat-form-field-wrapper {
-    padding-bottom: 0.2rem;
+.table-container {
+    height: 30vh;
+    overflow: auto;
 }
 table {
     width: 100%;
@@ -33,9 +10,6 @@ tr.mat-header-row {
 }
 tr.mat-row, tr.mat-footer-row {
     height: 30px;
-}
-::ng-deep .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-    background-color: rgba(185, 151, 218, 0.4);
 }
 .select-row {
     background: rgba(137, 43, 226, 0.5);

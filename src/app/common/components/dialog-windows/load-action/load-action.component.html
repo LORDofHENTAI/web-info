@@ -19,10 +19,27 @@
             <mat-radio-button value="2">Загрузка групп</mat-radio-button>
         </mat-radio-group>
     </div>
+    <div class="select-conteiner">
+        <mat-form-field appearance="outline" style="margin-right: 10px;">
+            <mat-label>Выберите магазин</mat-label>
+            <mat-select [(ngModel)]="selectedStore">
+                <mat-option *ngFor="let s of storeList" [value]="s.id">
+                    {{s.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Выберите тип цены</mat-label>
+            <mat-select [(ngModel)]="selectedPrice">
+                <mat-option *ngFor="let p of priceList" [value]="p.id">
+                    {{p.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
     <button mat-raised-button (click)="upload()">Загрузить</button>
     <div class="tables-container">
         <div>
-            <h3>Контрольная таблица</h3>
             <div class="table-box">
                 <table>
                     <tr>
@@ -54,10 +71,10 @@
             </div>
             <div class="control-box">
                 <button mat-raised-button style="color:red" (click)="clearTempTable()">Очистить</button>
-                <button mat-raised-button style="color: green;" (click)="startAction()">Запустить акцию</button>
+                <!-- <button mat-raised-button style="color: green;" (click)="startAction()">Запустить акцию</button> -->
             </div>
         </div>
-        <div>
+        <!-- <div>
             <h3>Акционная таблица</h3>
             <div class="table-box">
                 <table>
@@ -91,7 +108,7 @@
             <div class="control-box">
                 <button mat-raised-button style="color:red" (click)="clearTeble()">Очистить</button>
             </div>
-        </div>
+        </div> -->
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

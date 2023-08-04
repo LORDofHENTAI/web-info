@@ -1,5 +1,5 @@
 mat-dialog-content{
-    min-width: 55vw!important;
+    min-width: 30vw!important;
     height: 600px;
 }
 ::ng-deep .mat-form-field-wrapper{
@@ -89,7 +89,13 @@ html *::-webkit-scrollbar-thumb {
     margin-left: 10px;
     }
 }
-
+.select-conteiner{
+    margin-top: 5px;
+    margin-bottom: 10px;
+    &:first-child{
+        margin-right: 5px;
+    }
+}
 .table-box{
     height: 330px;
     border: 1px solid black;

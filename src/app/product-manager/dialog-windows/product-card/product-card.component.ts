@@ -12,7 +12,7 @@ import { ProductService } from '../../services/product.service';
 })
 export class ProductCardComponent implements OnInit {
 
-  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], [], '');
+  productPropAnswer: ProductPropAnswer = new ProductPropAnswer('', '', '', '', '', '', '', [], [], [], [], '');
 
   constructor(
     private tokenService: TokenService,

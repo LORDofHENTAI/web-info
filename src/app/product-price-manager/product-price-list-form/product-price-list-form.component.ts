@@ -113,8 +113,8 @@ export class ProductPriceListFormComponent implements OnInit {
   onClearList() {
     this.productPriceService.clearList(new PrintQuery(this.tokenService.getToken())).subscribe(response => {
       if (response = 'true') {
+        setTimeout(() => { this.getListPrices() }, 1000)
         this.snackbarService.openSnackBar('Список ценников очищен.', this.action);
-        this.getListPrices();
       }
     },
       error => {
