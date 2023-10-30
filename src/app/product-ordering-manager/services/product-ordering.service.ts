@@ -8,7 +8,8 @@ import { VipiskaEdit } from 'src/app/product-ordering-manager/models/vipiska-edi
 import { VipiskaEnd } from 'src/app/product-ordering-manager/models/vipiska-end';
 import { VipiskaQuery } from 'src/app/product-ordering-manager/models/vipiska-query';
 import { environment } from 'src/environments/environment';
-
+import { ProductToCassaModel } from '../models/product-to-cassa-model'
+import { StatusMsg } from '../models/status-mas'
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +20,8 @@ export class ProductOrderingService {
   private urlClear = environment.apiUrl + "productlist/clear/";
   private urlDelete = environment.apiUrl + "productlist/delete/";
   private urlEdit = environment.apiUrl + "productlist/edit/";
-
+  private urlUserCheck = environment.apiUrl + "productlist/user/check"
+  private ulrToCassa = environment.apiUrl + 'productlist/tocassa'
   constructor(private http: HttpClient) { }
 
   getListVipiska(data: VipiskaQuery): Observable<VipiskaEnd> {
@@ -44,5 +46,8 @@ export class ProductOrderingService {
   editItem(data: VipiskaEdit): Observable<string> {
     console.log(data);
     return this.http.post<string>(`${this.urlEdit}`, data);
+  }
+  orderToCassa(data: ProductToCassaModel): Observable<StatusMsg> {
+    return this.http.post<StatusMsg>(`${this.ulrToCassa}`, data)
   }
 }

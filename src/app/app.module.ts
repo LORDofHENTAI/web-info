@@ -36,7 +36,7 @@ import { PrintWindowComponent } from './price-tags/dialog-windows/print-window/p
 import { ProductCardComponent } from './product-manager/dialog-windows/product-card/product-card.component';
 import { ProductPriceListFormComponent } from './product-price-manager/product-price-list-form/product-price-list-form.component';
 import { UrlImgPipe } from './pipes/url-img.pipe';
-import { ProductOrderingListFormComponent } from './product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
+import { OrderingCheckDialog, ProductOrderingListFormComponent } from './product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
 import { SelectShopComponent } from './login-manager/select-shop/select-shop.component';
 import { SelectCountComponent } from './product-ordering-manager/dialog-windows/select-count/select-count.component';
 import { PriceCheckerComponent } from './product-manager/dialog-windows/price-checker/price-checker.component';
@@ -57,6 +57,8 @@ import { LoadActionComponent } from './common/components/dialog-windows/load-act
 import { RequestProductManagerFormComponent } from './request-product-manager/request-product-manager-form/request-product-manager-form.component'
 import { OrderingDialog } from './product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
 import { PricesComponent } from './product-manager/components/prices/prices.component';
+import { MatIconModule } from '@angular/material/icon';
+import { UserSettingsComponent } from './common/components/dialog-windows/user-settings/user-settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,7 +100,9 @@ import { PricesComponent } from './product-manager/components/prices/prices.comp
     LoadActionComponent,
     RequestProductManagerFormComponent,
     OrderingDialog,
-    PricesComponent
+    PricesComponent,
+    OrderingCheckDialog,
+    UserSettingsComponent
   ],
   imports: [
     AppRoutingModule,
@@ -117,7 +121,8 @@ import { PricesComponent } from './product-manager/components/prices/prices.comp
     MatDatepickerModule,
     NgxPrintModule,
     NgScrollbarModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatIconModule
   ],
   exports: [AngularMaterialModule],
   providers: [

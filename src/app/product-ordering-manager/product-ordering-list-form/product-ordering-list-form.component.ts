@@ -12,6 +12,10 @@ import { SelectCountComponent } from 'src/app/product-ordering-manager/dialog-wi
 import { AddToVipiska } from 'src/app/product-ordering-manager/models/add-to-vipiska';
 import { ShopService } from 'src/app/common/services/shop/shop.service';
 import { DepartmentList } from 'src/app/common/models/departmens';
+import { ProductToCassaModel } from '../models/product-to-cassa-model';
+import { UserService } from 'src/app/common/services/user/user.service';
+import { CheckUserModel } from 'src/app/common/models/users/check-user-model';
+import { InfoWorkersModel } from 'src/app/common/models/users/info-workers-model';
 @Component({
   selector: 'app-product-ordering-list-form',
   templateUrl: './product-ordering-list-form.component.html',
@@ -28,6 +32,7 @@ export class ProductOrderingListFormComponent implements OnInit {
   messageNoConnect = 'Нет соединения, попробуйте позже.';
   action = 'Ok';
   styleNoConnect = 'red-snackbar';
+  orderBarcode: string = ''
 
   switchButton: boolean = false;
 
@@ -134,6 +139,13 @@ export class ProductOrderingListFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
+  openCheckDialog() {
+    const dialogRef = this.dialog.open(OrderingCheckDialog, {
+      data: {
+        list: this.listVipiska
+      }
+    })
+  }
 }
 
 @Component({
@@ -178,6 +190,67 @@ export class OrderingDialog implements OnInit {
       error => {
         console.log(error)
       })
+  }
+}
+
+@Component({
+  templateUrl: './ordering-check-dialog/ordering-check-dialog.html',
+  styleUrls: ['./ordering-check-dialog/ordering-check-dialog.scss']
+})
+export class OrderingCheckDialog implements OnInit {
+  constructor(
+    private tokenService: TokenService,
+    private productOrderingService: ProductOrderingService,
+    private userService: UserService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
+  userChecked: string = 'false'
+  displayedColumnsPrint = ['photo', 'name', 'quantity', 'mesname', 'price', 'summa', 'barcode'];
+  listVipiska: VipiskaEnd = this.data.list
+  input: string
+  worker: InfoWorkersModel
+  orderBarcode: string = '9522895000046'
+
+  ngOnInit(): void {
+    console.log(this.listVipiska)
+  }
+  check() {
+    this.userService.CheckUser(new CheckUserModel(this.tokenService.getToken(), this.input)).subscribe(
+      result => {
+        if (result) {
+          this.worker = result
+          this.userChecked = 'true'
+        }
+        else
+          this.userChecked = 'error'
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+  orderToCassa() {
+    var printButton = document.getElementById('print')
+    this.productOrderingService.orderToCassa(new ProductToCassaModel(this.tokenService.getToken(), this.worker.name, this.tokenService.getShop(), this.tokenService.getType())).subscribe(
+      result => {
+        switch (result.status) {
+          case 'BadAuth':
+            break;
+          case 'error':
+            break;
+          case 'null':
+            break;
+          default:
+            this.orderBarcode = result.status
+            printButton.click();
+            break;
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
+
   }
 
 }

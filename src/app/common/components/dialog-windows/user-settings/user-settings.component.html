@@ -1,0 +1,110 @@
+<h2>Настройка сотрудников</h2>
+<mat-dialog-content class="mat-typography" style="overflow: hidden;">
+
+    <div class="table-conteiner">
+        <mat-form-field class="example-form-field" appearance="outline">
+            <mat-label>Поиск</mat-label>
+            <input matInput type="text" [(ngModel)]="searchInput" (keyup.enter)="SearchUser()">
+            <button matSuffix mat-icon-button matTooltip="Поиск" (click)="SearchUser()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
+        <div class="table-box">
+            <table>
+                <tr>
+                    <td>
+                        ФИО
+                    </td>
+                    <td>
+                        Торговый объект
+                    </td>
+                    <td>
+                        Логин
+                    </td>
+                    <td>
+                        Действие
+                    </td>
+                </tr>
+                <tr *ngFor="let u of userList">
+                    <td>
+                        {{u.name}}
+                    </td>
+                    <td>
+                        {{u.store}}
+                    </td>
+                    <td>
+                        {{u.barcode}}
+                    </td>
+                    <td>
+                        <button mat-raised-button [matMenuTriggerFor]="menu">Действие</button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item style="color: rgb(46, 43, 226);"
+                                (click)="printBadge(u.barcode)">Печать
+                                <mat-icon style="color: rgb(46, 43, 226); user-select: none;">
+                                    print
+                                </mat-icon>
+                            </button>
+                            <button mat-menu-item style="color: blueviolet;"
+                                (click)="[NewUpdateSwitch(), StartUpdate(u)]" *ngIf="!editSwitch">Изменить
+                                <mat-icon style="color: blueviolet; user-select: none;">
+                                    edit
+                                </mat-icon>
+                            </button>
+                            <button mat-menu-item style="color: orange;" (click)="[NewUpdateSwitch(), CleanInput()]"
+                                *ngIf="editSwitch">Отмена изенений
+                                <mat-icon style="color: orange; user-select: none;">
+                                    cancel
+                                </mat-icon>
+                            </button>
+                            <button mat-menu-item style="color: red;" (click)="DeleteUser(u.id)">Удалить
+                                <mat-icon style="color: red; user-select: none;">
+                                    delete
+                                </mat-icon>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="control-conteiner">
+        <mat-form-field appearance="outline">
+            <mat-label>Введите ФИО</mat-label>
+            <input matInput [(ngModel)]="userName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Торговый объект</mat-label>
+            <mat-select [(ngModel)]="userStore">
+                <mat-option *ngFor="let s of storeList" [value]="s.id">
+                    {{s.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Введите логин</mat-label>
+            <input matInput [(ngModel)]="userBarcode">
+        </mat-form-field>
+        <button mat-raised-button style="color: green;" *ngIf="!editSwitch" (click)="NewUser()">Добавить</button>
+        <button mat-raised-button style="color: blueviolet;" *ngIf="editSwitch" (click)="UpdateUser()">
+            Сохранить
+        </button>
+        <button mat-raised-button style="color: orange;" *ngIf="editSwitch" (click)="[NewUpdateSwitch(), CleanInput()]">
+            Отмена изменений
+        </button>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button cdkFocusInitial [mat-dialog-close]="null">Закрыть</button>
+    <button id="print" mat-raised-button color="primary" class="btn btn-default"
+        [printStyle]="{ img: { 'padding': '10px', 'border': '1px solid black'}}" printSectionId="print-badge-section"
+        ngxPrint hidden> Печать
+    </button>
+</mat-dialog-actions>
+
+
+
+<div id="print-badge-section" hidden>
+    <div class="badge">
+        <img [src]="imgSource" width="280" height="130">
+    </div>
+</div>

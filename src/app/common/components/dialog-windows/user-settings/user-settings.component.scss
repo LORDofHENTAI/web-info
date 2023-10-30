@@ -1,0 +1,55 @@
+mat-dialog-content{
+    min-width: 40vw!important;
+    min-height: 500px;
+    display: flex;
+}
+::ng-deep .mat-form-field-wrapper{
+    padding: 0!important;
+}
+*::-webkit-scrollbar,
+html *::-webkit-scrollbar {
+    height: 5px;
+    width: 4px;
+}
+*::-webkit-scrollbar-track,
+html *::-webkit-scrollbar-track {
+    background: inherit;
+    margin: 8px;
+}
+*::-webkit-scrollbar-thumb,
+html *::-webkit-scrollbar-thumb {
+    background-color: #324CA8;
+    border-radius: 5px;
+}
+.table-conteiner{
+    width: 70%;
+}
+.table-box{
+    width: 100%;
+    text-align: center;
+    border-radius: 20px;
+    overflow: auto;
+    height: 89%;
+    table{
+        width: 100%;
+        tr:first-child{
+            background-color: #324CA8;
+            color: white;
+        }
+        tr{
+            height: 25px;
+        }
+    }
+}
+.badge {
+    padding: 2em;
+    border: 1pt solid black;
+}
+.control-conteiner{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    button{
+        margin-top: 5px;
+    }
+}

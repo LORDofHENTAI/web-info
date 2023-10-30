@@ -57,12 +57,16 @@
                     (click)="openDialog()" *ngIf="switchButton===true">
                     Печать
                 </button>
-                <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" data-placement="bottom"
+                <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" matTooltip="Печать"
+                    (click)="openCheckDialog()" *ngIf="switchButton===false">
+                    Печать
+                </button>
+                <!-- <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" data-placement="bottom"
                     matTooltip="Печать"
                     [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
                     printSectionId="print-section" ngxPrint *ngIf="switchButton===false">
                     Печать
-                </button>
+                </button> -->
                 <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" data-placement="bottom"
                     matTooltip="Очистить" (click)="onClearList()">
                     Очистить
@@ -70,7 +74,7 @@
             </div>
         </div>
 
-        <div id="print-section" hidden>
+        <!-- <div id="print-section" hidden>
             <ng-container *ngIf="listVipiska">
                 <table mat-table [dataSource]="listVipiska.list">
 
@@ -124,6 +128,6 @@
                 </table>
                 <div class="card-summ"><b>Сумма: {{listVipiska.summa | number:'1.0-2'}}</b></div>
             </ng-container>
-        </div>
+        </div> -->
     </ng-container>
 </div>

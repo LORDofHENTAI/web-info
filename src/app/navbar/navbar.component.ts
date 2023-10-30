@@ -9,6 +9,7 @@ import { SelectShopComponent } from '../login-manager/select-shop/select-shop.co
 import { LoginService } from '../login-manager/services/login.service';
 import { PriceSettingsDialogComponent } from '../common/components/dialog-windows/price-settings-dialog/price-settings-dialog.component';
 import { LoadActionComponent } from '../common/components/dialog-windows/load-action/load-action.component';
+import { UserSettingsComponent } from '../common/components/dialog-windows/user-settings/user-settings.component';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -101,6 +102,11 @@ export class NavbarComponent implements OnInit {
 
     });
   }
+  openUsersSetting() {
+    const dialogRef = this.dialog.open(UserSettingsComponent);
+    dialogRef.afterClosed().subscribe(result => {
 
+    });
+  }
 
 }
