@@ -13,7 +13,7 @@
           <a> {{userName}} </a>
           <mat-divider></mat-divider>
           <a class="dropdown-item waves-light" mdbWavesEffect (click)="openSelectShop()">Настрройки</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect (click)="openUsersSetting()">Настройка пользователей</a>
+          <!-- <a class="dropdown-item waves-light" mdbWavesEffect (click)="openUsersSetting()">Настройка пользователей</a> -->
           <a class="dropdown-item waves-light" mdbWavesEffect *ngIf="isAdmin === '1'"
             (click)="openPriceSettingsDialog()">Настройка ценников</a>
           <a class="dropdown-item waves-light" mdbWavesEffect *ngIf="isAdmin === '1'"

@@ -27,6 +27,7 @@ export class UserService {
     return this.http.post<InfoWorkersModel[]>(this.getUsersURL, data)
   }
   NewUsers(data: NewUserModel): Observable<Status> {
+    console.log(data)
     return this.http.post<Status>(this.newUsersURL, data)
   }
   DeleteUser(data: DeleteWorkerModel): Observable<Status> {

@@ -47,7 +47,7 @@ export class ProductOrderingService {
     console.log(data);
     return this.http.post<string>(`${this.urlEdit}`, data);
   }
-  orderToCassa(data: ProductToCassaModel): Observable<StatusMsg> {
-    return this.http.post<StatusMsg>(`${this.ulrToCassa}`, data)
-  }
+  // orderToCassa(data: ProductToCassaModel): Observable<StatusMsg> {
+  //   return this.http.post<StatusMsg>(`${this.ulrToCassa}`, data)
+  // }
 }

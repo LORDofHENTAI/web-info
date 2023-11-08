@@ -209,7 +209,7 @@ export class OrderingCheckDialog implements OnInit {
   listVipiska: VipiskaEnd = this.data.list
   input: string
   worker: InfoWorkersModel
-  orderBarcode: string = '9522895000046'
+  orderBarcode: string = ''
 
   ngOnInit(): void {
     console.log(this.listVipiska)
@@ -229,28 +229,29 @@ export class OrderingCheckDialog implements OnInit {
       }
     )
   }
-  orderToCassa() {
-    var printButton = document.getElementById('print')
-    this.productOrderingService.orderToCassa(new ProductToCassaModel(this.tokenService.getToken(), this.worker.name, this.tokenService.getShop(), this.tokenService.getType())).subscribe(
-      result => {
-        switch (result.status) {
-          case 'BadAuth':
-            break;
-          case 'error':
-            break;
-          case 'null':
-            break;
-          default:
-            this.orderBarcode = result.status
-            printButton.click();
-            break;
-        }
-      },
-      error => {
-        console.log(error)
-      }
-    )
+  // orderToCassa() {
+  //   var printButton = document.getElementById('print')
+  //   this.productOrderingService.orderToCassa(new ProductToCassaModel(this.tokenService.getToken(), this.worker.name, this.tokenService.getShop(), this.tokenService.getType())).subscribe(
+  //     result => {
+  //       switch (result.status) {
+  //         case 'BadAuth':
+  //           break;
+  //         case 'error':
+  //           break;
+  //         case 'null':
+  //           break;
+  //         default:
+  //           this.orderBarcode = result.status
+  //           console.log(this.orderBarcode)
+  //           setTimeout(() => printButton.click(), 2000)
+  //           break;
+  //       }
+  //     },
+  //     error => {
+  //       console.log(error)
+  //     }
+  //   )
 
-  }
+  // }
 
 }

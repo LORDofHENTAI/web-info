@@ -49,12 +49,12 @@ export class UserSettingsComponent implements OnInit {
     )
   }
   NewUser() {
-    this.userService.NewUsers(new NewUserModel(this.tokenService.getToken(), new InfoWorkersModel(0, this.userName, this.userStore, this.userBarcode))).subscribe(
+    this.userService.NewUsers(new NewUserModel(this.tokenService.getToken(), new InfoWorkersModel(0, this.userName, String(this.userStore), this.userBarcode))).subscribe(
       result => {
         switch (result.status) {
           case 'true':
             this.snackBarService.openSnackBar('Пользователь добавлен', this.action, this.styleAccess)
-            this.GetUsers
+            this.GetUsers()
             break
           case 'BadAuth':
             this.snackBarService.openSnackBar('Неверный логин', this.action, this.styleNoConnect)
@@ -76,7 +76,7 @@ export class UserSettingsComponent implements OnInit {
         switch (result.status) {
           case 'true':
             this.snackBarService.openSnackBar('Пользователь удален', this.action, this.styleAccess)
-            this.GetUsers
+            this.GetUsers()
             break
           case 'BadAuth':
             this.snackBarService.openSnackBar('Неверный логин', this.action, this.styleNoConnect)
@@ -93,31 +93,31 @@ export class UserSettingsComponent implements OnInit {
     )
   }
   UpdateUser() {
-    this.userService.UpdateUser(new NewUserModel(this.tokenService.getToken(), new InfoWorkersModel(0, this.userName, this.userStore, this.userBarcode))).subscribe(
+    this.userService.UpdateUser(new NewUserModel(this.tokenService.getToken(), new InfoWorkersModel(0, this.userName, String(this.userStore), this.userBarcode))).subscribe(
       result => {
         switch (result.status) {
           case 'true':
             this.snackBarService.openSnackBar('Пользователь удален', this.action, this.styleAccess)
-            this.GetUsers
-            this.CleanInput
-            this.NewUpdateSwitch
+            this.GetUsers()
+            this.CleanInput()
+            this.NewUpdateSwitch()
             break
           case 'BadAuth':
             this.snackBarService.openSnackBar('Неверный логин', this.action, this.styleNoConnect)
-            this.CleanInput
-            this.NewUpdateSwitch
+            this.CleanInput()
+            this.NewUpdateSwitch()
             break
           case 'error':
             this.snackBarService.openSnackBar('Ошибка', this.action, this.styleNoConnect)
-            this.CleanInput
-            this.NewUpdateSwitch
+            this.CleanInput()
+            this.NewUpdateSwitch()
             break
         }
       },
       error => {
         console.log(error)
-        this.CleanInput
-        this.NewUpdateSwitch
+        this.CleanInput()
+        this.NewUpdateSwitch()
         this.snackBarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect)
       }
     )
@@ -150,8 +150,8 @@ export class UserSettingsComponent implements OnInit {
   StartUpdate(element: InfoWorkersModel) {
     this.userId = element.id
     this.userName = element.name
-    this.userStore = element.barcode
-    this.userBarcode = element.store
+    this.userBarcode = element.barcode
+    this.userStore = element.store
   }
   CleanInput() {
     this.userName = ''
