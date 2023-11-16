@@ -178,10 +178,6 @@ export class ProductPriceListFormComponent implements OnInit {
       });
   }
 
-  // printPriceList() {
-  //   window.open('path');
-  // }
-
 }
 
 @Component({
@@ -196,7 +192,6 @@ export class PricePrintDialog {
   selectedPriceFormat: string = 'none';
   selectedPriceCategory: string = 'none';
   priceFromFile = false;
-  filterShow = false;
   showLoadingBar = false;
   type: string;
   constructor(private router: Router, private productPriceService: ProductPriceService, private tokenService: TokenService, public dialogRef: MatDialogRef<ProductPriceListFormComponent>) { }

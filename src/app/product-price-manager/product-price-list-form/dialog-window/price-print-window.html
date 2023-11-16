@@ -1,8 +1,5 @@
 <div class="header" *ngIf="showLoadingBar === false">
     <h2>Загрузка акционного файла</h2>
-    <mat-slide-toggle [(ngModel)]="filterShow">
-        Фильтрация
-    </mat-slide-toggle>
 </div>
 <mat-dialog-content class="mat-typography">
     <div class="dialog-conteiner" *ngIf="showLoadingBar === false">
@@ -42,37 +39,9 @@
                     (click)="upload(type='act')">Загрузить</button>
             </div>
         </div>
-        <div *ngIf="filterShow === true" class="filter-conteiner-show">
-            <div class="filter-conteiner">
-                <div class="filter-box">
-                    <span>Категории ценников:</span>
-                    <div class="parice-category-check">
-                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
-                            [(ngModel)]="selectedPriceCategory">
-                            <mat-radio-button class="example-radio-button" *ngFor="let category of priceCategoryList"
-                                [value]="category">
-                                {{category}}
-                            </mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-                <div class="filter-box">
-                    <span>Формат ценников:</span>
-                    <div class="parice-format-check">
-                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
-                            [(ngModel)]="selectedPriceFormat">
-                            <mat-radio-button class="example-radio-button" *ngFor="let format of priceFormatList"
-                                [value]="format">
-                                {{format}}
-                            </mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                </div>
-            </div>
-            <div class="price-from-file-box">
-                <mat-checkbox class="example-margin" [(ngModel)]="priceFromFile">Взять цену из файла</mat-checkbox>
-            </div>
-        </div>
+    </div>
+    <div class="price-from-file-box">
+        <mat-checkbox class="example-margin" [(ngModel)]="priceFromFile">Взять цену из файла</mat-checkbox>
     </div>
     <div class="loader" *ngIf="showLoadingBar === true">
         <div class="box">
