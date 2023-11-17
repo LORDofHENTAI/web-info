@@ -59,6 +59,7 @@ import { OrderingDialog } from './product-ordering-manager/product-ordering-list
 import { PricesComponent } from './product-manager/components/prices/prices.component';
 import { MatIconModule } from '@angular/material/icon';
 import { UserSettingsComponent } from './common/components/dialog-windows/user-settings/user-settings.component';
+import { PricePrintWindowFiltred } from './product-price-manager/product-price-list-form/product-price-list-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,7 +103,8 @@ import { UserSettingsComponent } from './common/components/dialog-windows/user-s
     OrderingDialog,
     PricesComponent,
     OrderingCheckDialog,
-    UserSettingsComponent
+    UserSettingsComponent,
+    PricePrintWindowFiltred
   ],
   imports: [
     AppRoutingModule,

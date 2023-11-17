@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
@@ -20,6 +20,9 @@ import { GetPriceTemp } from '../models/price-settings-models/get-price-temp';
 import { PriceStyle } from '../models/price-settings-models/price-style';
 import { FindStyle } from '../models/price-settings-models/find-price-style';
 import { environment } from 'src/environments/environment';
+import { GetFiltredPrintListModel } from '../models/print-list-filtred';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { error } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-product-price-list-form',
@@ -47,8 +50,6 @@ export class ProductPriceListFormComponent implements OnInit {
 
   switchEditablePrices: boolean = false;
 
-
-
   constructor(
     public dialog: MatDialog,
     private tokenService: TokenService,
@@ -60,8 +61,6 @@ export class ProductPriceListFormComponent implements OnInit {
     this.getListPrices();
     this.getPriceFormatList();
   }
-
-
 
   ngOnChanges(changes: SimpleChanges) {
     this.getListPrices();
@@ -144,14 +143,30 @@ export class ProductPriceListFormComponent implements OnInit {
       }
     );
     dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.snackbarService.openSnackBar("Загрузка завершена", this.action, this.styleStandart);
-        this.getListPrices();
-      }
-      else
-        if (result === false)
+
+      switch (result) {
+        case "canceled": {
+          this.onClearList();
+          break;
+        }
+        case 'true': {
+          this.getListPrices();
+          break;
+        }
+        case false: {
           this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+          break;
+        }
+      }
     });
+  }
+
+  openPrintListDialogFilter() {
+    const dialogRef = this.dialog.open(PricePrintWindowFiltred,
+      {
+        disableClose: true,
+      }
+    );
   }
 
 
@@ -185,6 +200,7 @@ export class ProductPriceListFormComponent implements OnInit {
   templateUrl: 'dialog-window/price-print-window.html',
   styleUrls: ['dialog-window/price-print-window.scss']
 })
+
 export class PricePrintDialog {
 
   priceFormatList = ['none', 'А3', 'А4', 'А4 гор', 'А5', 'А5 гор', 'А6', 'А6 гор'];
@@ -194,7 +210,11 @@ export class PricePrintDialog {
   priceFromFile = false;
   showLoadingBar = false;
   type: string;
-  constructor(private router: Router, private productPriceService: ProductPriceService, private tokenService: TokenService, public dialogRef: MatDialogRef<ProductPriceListFormComponent>) { }
+  constructor(private router: Router,
+    private productPriceService: ProductPriceService,
+    private tokenService: TokenService,
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<ProductPriceListFormComponent>,) { }
 
   selectedFiles: File;
   selectedFile: File;
@@ -212,19 +232,81 @@ export class PricePrintDialog {
     this.showLoadingBar = true;
     this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.selectedPriceCategory, this.selectedPriceFormat, this.tokenService.getShop(), this.tokenService.getType()), type).subscribe(
       responce => {
-        console.log(responce);
         this.showLoadingBar = false;
-        if (responce = 'true') {
-          this.dialogRef.close(true);
-        }
-        else {
-          this.dialogRef.close(false);
-        }
+
+        let dialogRef = this.dialog.open(PricePrintWindowFiltred, {
+          data: { responce }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result === "canceled") {
+            this.dialogRef.close("canceled");
+          }
+          else{
+            this.dialogRef.close("true");
+          }
+        })
       },
       error => {
         this.showLoadingBar = false;
         console.log(error);
       });
   }
+}
 
+@Component({
+  selector: 'price-print-window-filtred',
+  templateUrl: 'dialog-window/price-print-window-filtred.html',
+  styleUrls: ['dialog-window/price-print-window.scss']
+})
+
+export class PricePrintWindowFiltred implements OnInit {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<PricePrintWindowFiltred>,
+    public printService: ProductPriceService,
+    public tokenService: TokenService
+  ) { }
+  formatList: string[] = [];
+  categoryList: string[] = [];
+  checkedFormatList: string[] = [];
+  checkedCategoryList: string[] = [];
+  ngOnInit(): void {
+    this.formatList = this.data.responce.formats;
+    this.categoryList = this.data.responce.categories;
+  }
+  closeDialog() {
+    this.dialogRef.close("canceled");
+  }
+  checkFormat(formatName: string, event: any, categoryName: string) {
+    if (categoryName === "category") {
+      if (event.checked === true) {
+        this.checkedCategoryList.push(formatName);
+      }
+      else {
+        const index = this.checkedCategoryList.indexOf(formatName);
+        if (index > -1) {
+          this.checkedCategoryList.splice(index, 1);
+        }
+      }
+    }
+    else {
+      if (event.checked === true) {
+        this.checkedFormatList.push(formatName);
+      }
+      else {
+        const index = this.checkedFormatList.indexOf(formatName);
+        if (index > -1) {
+          this.checkedFormatList.splice(index, 1);
+        }
+      }
+    }
+    
+  }
+  filterFunction(){
+    this.printService.getFiltredPrintList(new GetFiltredPrintListModel(this.checkedCategoryList, this.checkedFormatList, this.tokenService.getToken())).subscribe(result=> {
+      this.dialogRef.close('true');
+    }, error=>{
+      console.log(error);
+    })
+  }
 }

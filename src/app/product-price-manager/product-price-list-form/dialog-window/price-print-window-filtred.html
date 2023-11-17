@@ -1,0 +1,23 @@
+<h2>Выбор категории/фильтра.</h2>
+<div>
+    <div class="listOfCatFormat">
+        <div class="categoryList">
+            <mat-list role="list" *ngFor="let c of categoryList">
+                <mat-list-item role="listitem">
+                    <mat-checkbox class="example-margin" (change)="checkFormat(c, $event, 'category')">{{c}}</mat-checkbox>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <div class="formatList">
+            <mat-list role="list" *ngFor="let format of formatList">
+                <mat-list-item role="listitem">
+                    <mat-checkbox class="example-margin" (change)="checkFormat(format, $event, 'filter')">{{format}}</mat-checkbox>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+</div>
+<div class="buttons">
+    <button mat-raised-button color="primary" class="filtred" (click)="filterFunction()" [disabled]="checkedFormatList.length ===0 || checkedCategoryList.length ===0">Фильтровать</button>
+    <button mat-raised-button color="warn" class="cancel" (click)="closeDialog()">Отмена </button>
+</div>

@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="price-from-file-box">
-        <mat-checkbox class="example-margin" [(ngModel)]="priceFromFile">Взять цену из файла</mat-checkbox>
+        <mat-checkbox class="example-margin" [(ngModel)]="priceFromFile" *ngIf="showLoadingBar === false">Взять цену из файла</mat-checkbox>
     </div>
     <div class="loader" *ngIf="showLoadingBar === true">
         <div class="box">

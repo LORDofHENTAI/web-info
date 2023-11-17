@@ -15,6 +15,7 @@ import { DeletePriceTemp } from '../models/price-settings-models/delete-price-te
 import { PriceStyle } from '../models/price-settings-models/price-style'
 import { AddPriceStyle } from '../models/price-settings-models/add-price-style'
 import { FindStyle } from '../models/price-settings-models/find-price-style'
+import { GetFiltredPrintListModel } from '../models/print-list-filtred'
 @Injectable({
   providedIn: 'root'
 })
@@ -34,7 +35,7 @@ export class ProductPriceService {
   private urlAddPriceStyle = environment.apiUrl + "printlist/addPriceStyle/";
   private urlDeletePriceStyle = environment.apiUrl + "printlist/deletePriceStyle/";
   private urlStyleByFormat = environment.apiUrl + "printlist/findIdFormat/";
-
+  private urlGetFiltredPrintList = environment.apiUrl + "printlist/getFiltredPrintList/";
 
   constructor(private http: HttpClient) { }
 
@@ -55,7 +56,7 @@ export class ProductPriceService {
     return this.http.post<string>(`${this.urlDelete}`, data);
   }
 
-  uploadList(fileToUpload: PrintUpload, type: string): Observable<string> {
+  uploadList(fileToUpload: PrintUpload, type: string): Observable<GetFiltredPrintListModel> {
     let input = new FormData();
     input.append("token", fileToUpload.token);
     input.append("file", fileToUpload.file);
@@ -68,15 +69,15 @@ export class ProductPriceService {
     input.append("shop", fileToUpload.shop);
     input.append("priceType", fileToUpload.priceType);
     console.log(fileToUpload);
-    if (type === 'mile')
-      return this.http.post<string>(`${this.urlUploadMile}`, input);
-    else
-      if (type === 'act') {
-        return this.http.post<string>(`${this.urlUploadActs}`, input);
-      }
-      else
-        if (type === 'dat')
-          return this.http.post<string>(`${this.urlUploadDat}`, input);
+    // if (type === 'mile')
+      return this.http.post<GetFiltredPrintListModel>(`${this.urlUploadMile}`, input);
+    // else
+    //   if (type === 'act') {
+    //     return this.http.post<string>(`${this.urlUploadActs}`, input);
+    //   }
+    //   else
+    //     if (type === 'dat')
+    //       return this.http.post<string>(`${this.urlUploadDat}`, input);
   }
 
   getPriceFormat(data: GetPriceTemp): Observable<PriceFormat> {
@@ -118,5 +119,8 @@ export class ProductPriceService {
     return this.http.post<PriceStyle>(`${this.urlStyleByFormat}`, data);
   }
 
+  getFiltredPrintList(data: GetFiltredPrintListModel): Observable<string> {
+    return this.http.post<string>(this.urlGetFiltredPrintList, data);
+  }
 
 }
