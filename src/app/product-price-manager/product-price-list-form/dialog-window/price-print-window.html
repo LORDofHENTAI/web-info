@@ -1,5 +1,6 @@
 <div class="header" *ngIf="showLoadingBar === false">
     <h2>Загрузка акционного файла</h2>
+    <mat-slide-toggle [(ngModel)]="showParams">Дополнительные параметры</mat-slide-toggle>
 </div>
 <mat-dialog-content class="mat-typography">
     <div class="dialog-conteiner" *ngIf="showLoadingBar === false">
@@ -39,9 +40,20 @@
                     (click)="upload(type='act')">Загрузить</button>
             </div>
         </div>
+        <div class="parametrs" *ngIf="showParams">
+            <mat-form-field appearance="outline">
+                <mat-label>Дата проведения акции</mat-label>
+                <input matInput [(ngModel)]="actionDate">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Отоброжаемый процент</mat-label>
+                <input matInput [(ngModel)]="maxPercent">
+            </mat-form-field>
+        </div>
     </div>
     <div class="price-from-file-box">
-        <mat-checkbox class="example-margin" [(ngModel)]="priceFromFile" *ngIf="showLoadingBar === false">Взять цену из файла</mat-checkbox>
+        <mat-checkbox class="example-margin" [(ngModel)]="priceFromFile" *ngIf="showLoadingBar === false">Взять цену из
+            файла</mat-checkbox>
     </div>
     <div class="loader" *ngIf="showLoadingBar === true">
         <div class="box">

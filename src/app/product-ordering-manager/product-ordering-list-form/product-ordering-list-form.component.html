@@ -62,9 +62,7 @@
                     Печать
                 </button> -->
                 <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" data-placement="bottom"
-                    matTooltip="Печать"
-                    [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
-                    printSectionId="print-section" ngxPrint *ngIf="switchButton===false">
+                    matTooltip="Печать" (click)="onPrintVipiska()" *ngIf="switchButton===false">
                     Печать
                 </button>
                 <button mdbBtn type="button" class="m-1 heavy-rain-gradient" size="sm" data-placement="bottom"

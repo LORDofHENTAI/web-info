@@ -10,6 +10,9 @@ import { LoginService } from '../login-manager/services/login.service';
 import { PriceSettingsDialogComponent } from '../common/components/dialog-windows/price-settings-dialog/price-settings-dialog.component';
 import { LoadActionComponent } from '../common/components/dialog-windows/load-action/load-action.component';
 import { UserSettingsComponent } from '../common/components/dialog-windows/user-settings/user-settings.component';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -31,6 +34,7 @@ export class NavbarComponent implements OnInit {
     private loginService: LoginService,
     private tokenService: TokenService,
     private snackbarService: SnackbarService,
+    private http: HttpClient
   ) {
     this.tokenService.events$.forEach(value => { this.eventLogin(value) });
   }
@@ -109,4 +113,15 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  getDocumentacion() {
+    this.http.get(environment.apiUrl + 'document', { responseType: 'blob' }).subscribe({
+      next: result => {
+        saveAs(result, 'Документация')
+      },
+      error: error => {
+        console.log(error)
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      }
+    })
+  }
 }

@@ -3,7 +3,7 @@
   "version": "9.3.0",
   "scripts": {
     "ng": "ng",
-    "start": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --host 192.168.1.130 --port 80  --open",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --host 192.168.1.21 --port 80  --open",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -27,6 +27,7 @@
     "angular-in-memory-web-api": "~0.11.0",
     "chart.js": "^2.5.0",
     "cors": "^2.8.5",
+    "file-saver": "^2.0.5",
     "hammerjs": "^2.0.8",
     "internal-ip": "^6.2.0",
     "local-ipv4-address": "0.0.2",

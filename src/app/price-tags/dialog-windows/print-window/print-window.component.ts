@@ -20,16 +20,29 @@ export class PrintWindowComponent implements OnInit {
     private productPriceService: ProductPriceService
 
   ) { }
-  @Input() priceName: string = this.data.priceName
-  @Input() idFormat: number = this.data.idFormat
-  @Input() article: string = this.data.article
-  @Input() printType: string = this.data.printType
-  @Input() changeFlag: boolean = this.data.switchEditablePrices
+  @Input() priceName?: string = this.data.priceName
+  @Input() idFormat?: number = this.data.idFormat
+  @Input() article?: string = this.data.article
+  @Input() printType?: string = this.data.printType
+  @Input() changeFlag?: boolean = this.data.switchEditablePrices
+  @Input() whoIsAccpted?: string = this.data.whoIsAccpted
+  @Input() document?: string = this.data.document
+  @Input() department?: string = this.data.department
   ngOnInit(): void {
-    if (this.printType === 'etiketka')
-      this.showPrintableLable()
-    else
-      this.showIFrame()
+    switch (this.printType) {
+      case 'etiketka':
+        this.showPrintableLable()
+        break;
+      case 'Vipiska1.frx':
+        this.showVipiska()
+        break;
+      case 'Vipiska2.frx':
+        this.showMovingInvoice()
+        break;
+      default:
+        this.showIFrame()
+        break;
+    }
   }
 
   showIFrame() {
@@ -37,5 +50,11 @@ export class PrintWindowComponent implements OnInit {
   }
   showPrintableLable() {
     this.url = `${environment.apiUrl}api/FastReport/ReportEtiketka?Token=${this.tokenService.getToken()}&Article=${this.article}`;
+  }
+  showVipiska() {
+    this.url = `${environment.apiUrl}productlist/print?token=${this.tokenService.getToken()}&type=${this.printType}`
+  }
+  showMovingInvoice() {
+    this.url = `${environment.apiUrl}productlist/print?token=${this.tokenService.getToken()}&type=${this.printType}&document=${this.document}&department=${this.department}&whoAccepted=${this.whoIsAccpted}`
   }
 }

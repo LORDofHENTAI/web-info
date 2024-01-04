@@ -3,9 +3,9 @@ export class PrintUpload {
         public token: string,
         public file: File,
         public priceFromFile: boolean,
-        public filterCategory: string,
-        public filterFormat: string,
         public shop: string,
-        public priceType: string
+        public priceType: string,
+        public actionDate?: string,
+        public maxPercent?: string
     ) { }
 }

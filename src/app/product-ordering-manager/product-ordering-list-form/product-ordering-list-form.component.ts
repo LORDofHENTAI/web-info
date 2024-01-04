@@ -16,6 +16,7 @@ import { ProductToCassaModel } from '../models/product-to-cassa-model';
 import { UserService } from 'src/app/common/services/user/user.service';
 import { CheckUserModel } from 'src/app/common/models/users/check-user-model';
 import { InfoWorkersModel } from 'src/app/common/models/users/info-workers-model';
+import { PrintWindowComponent } from 'src/app/price-tags/dialog-windows/print-window/print-window.component';
 @Component({
   selector: 'app-product-ordering-list-form',
   templateUrl: './product-ordering-list-form.component.html',
@@ -146,6 +147,23 @@ export class ProductOrderingListFormComponent implements OnInit {
       }
     })
   }
+  onPrintVipiska() {
+    let filename
+    if (this.switchButton == false)
+      filename = 'Vipiska1.frx'
+    else
+      filename = 'Vipiska2.frx'
+    const dialogRef = this.dialog.open(PrintWindowComponent, {
+      width: '900px',
+      height: '1000px',
+      data: { printType: filename }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.getListVipiska()
+      }
+    });
+  }
 }
 
 @Component({
@@ -156,29 +174,15 @@ export class OrderingDialog implements OnInit {
   constructor(
     private tokenService: TokenService,
     private productOrderingService: ProductOrderingService,
-    private shopService: ShopService
-
+    private shopService: ShopService,
+    private dialog: MatDialog
   ) { }
   listVipiska: VipiskaEnd = new VipiskaEnd([], '0');
   department: string = this.tokenService.getDepartment();
   document: string
   whoIsAccpted: string
-  departments: DepartmentList[]
-  displayedColumnsPrint = ['photo', 'name', 'quantity', 'mesname', 'barcode']
-  currentDate = new Date()
   ngOnInit(): void {
-    this.getListVipiska()
     this.GetDepartment();
-  }
-  getListVipiska() {
-    this.productOrderingService.getListVipiska(new VipiskaQuery(this.tokenService.getToken())).subscribe(response => {
-      if (response) {
-        this.listVipiska = response;
-      }
-    },
-      error => {
-        console.log(error);
-      });
   }
   GetDepartment() {
     this.shopService.getDepartmentList().subscribe(response => {
@@ -191,8 +195,20 @@ export class OrderingDialog implements OnInit {
         console.log(error)
       })
   }
+  onPrintVipiska() {
+    let filename
+    filename = 'Vipiska2.frx'
+    const dialogRef = this.dialog.open(PrintWindowComponent, {
+      width: '900px',
+      height: '1000px',
+      data: { printType: filename, whoIsAccpted: this.whoIsAccpted, department: this.department, document: this.document }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
 }
 
+//! вырезанный контент
 @Component({
   templateUrl: './ordering-check-dialog/ordering-check-dialog.html',
   styleUrls: ['./ordering-check-dialog/ordering-check-dialog.scss']
@@ -229,6 +245,8 @@ export class OrderingCheckDialog implements OnInit {
       }
     )
   }
+
+
   // orderToCassa() {
   //   var printButton = document.getElementById('print')
   //   this.productOrderingService.orderToCassa(new ProductToCassaModel(this.tokenService.getToken(), this.worker.name, this.tokenService.getShop(), this.tokenService.getType())).subscribe(

@@ -203,13 +203,11 @@ export class ProductPriceListFormComponent implements OnInit {
 
 export class PricePrintDialog {
 
-  priceFormatList = ['none', 'А3', 'А4', 'А4 гор', 'А5', 'А5 гор', 'А6', 'А6 гор'];
-  priceCategoryList = ['none', 'Акция', 'Ликвидация', 'Скидка', 'Новинка', 'Товар недели', 'Черная пятница', "Акт переоценки"];
-  selectedPriceFormat: string = 'none';
-  selectedPriceCategory: string = 'none';
   priceFromFile = false;
   showLoadingBar = false;
   type: string;
+
+
   constructor(private router: Router,
     private productPriceService: ProductPriceService,
     private tokenService: TokenService,
@@ -227,10 +225,12 @@ export class PricePrintDialog {
     this.selectedFile = this.selectedFiles[0];
     console.log(this.selectedFile);
   }
-
+  maxPercent: string
+  actionDate: string
+  showParams: boolean = false
   upload(type: string): void {
     this.showLoadingBar = true;
-    this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.selectedPriceCategory, this.selectedPriceFormat, this.tokenService.getShop(), this.tokenService.getType()), type).subscribe(
+    this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent), type).subscribe(
       responce => {
         this.showLoadingBar = false;
 
@@ -241,7 +241,7 @@ export class PricePrintDialog {
           if (result === "canceled") {
             this.dialogRef.close("canceled");
           }
-          else{
+          else {
             this.dialogRef.close("true");
           }
         })
@@ -300,12 +300,12 @@ export class PricePrintWindowFiltred implements OnInit {
         }
       }
     }
-    
+
   }
-  filterFunction(){
-    this.printService.getFiltredPrintList(new GetFiltredPrintListModel(this.checkedCategoryList, this.checkedFormatList, this.tokenService.getToken())).subscribe(result=> {
+  filterFunction() {
+    this.printService.getFiltredPrintList(new GetFiltredPrintListModel(this.checkedCategoryList, this.checkedFormatList, this.tokenService.getToken())).subscribe(result => {
       this.dialogRef.close('true');
-    }, error=>{
+    }, error => {
       console.log(error);
     })
   }

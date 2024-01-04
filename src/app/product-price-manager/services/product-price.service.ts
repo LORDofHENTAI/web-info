@@ -60,8 +60,8 @@ export class ProductPriceService {
     let input = new FormData();
     input.append("token", fileToUpload.token);
     input.append("file", fileToUpload.file);
-    input.append("filterCategory", fileToUpload.filterCategory);
-    input.append("filterFormat", fileToUpload.filterFormat);
+    input.append("actionDate", fileToUpload.actionDate)
+    input.append("maxPercent", fileToUpload.maxPercent)
     if (type === 'act')
       input.append("priceFromFile", 'true');
     else
@@ -70,7 +70,7 @@ export class ProductPriceService {
     input.append("priceType", fileToUpload.priceType);
     console.log(fileToUpload);
     // if (type === 'mile')
-      return this.http.post<GetFiltredPrintListModel>(`${this.urlUploadMile}`, input);
+    return this.http.post<GetFiltredPrintListModel>(`${this.urlUploadMile}`, input);
     // else
     //   if (type === 'act') {
     //     return this.http.post<string>(`${this.urlUploadActs}`, input);
