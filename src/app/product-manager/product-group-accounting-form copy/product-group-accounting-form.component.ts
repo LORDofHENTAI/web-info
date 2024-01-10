@@ -35,11 +35,11 @@ interface ExampleFlatNode {
 }
 
 @Component({
-  selector: 'app-product-group-accounting-form',
+  selector: 'app-product-group-accounting-form-test',
   templateUrl: './product-group-accounting-form.component.html',
   styleUrls: ['./product-group-accounting-form.component.scss']
 })
-export class ProductGroupAccountingFormComponent implements OnInit {
+export class ProductGroupAccountingFormComponentTest implements OnInit {
 
   @ViewChild("orderingList", { static: false }) orderingList: ProductOrderingListFormComponent;
   @ViewChild("priceList", { static: false }) priceList: ProductPriceListFormComponent;

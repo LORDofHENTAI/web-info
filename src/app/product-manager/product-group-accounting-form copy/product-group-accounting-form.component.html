@@ -182,7 +182,7 @@
                 <mat-tab label="Цены">
                     <app-prices *ngIf="tabIndex === 3" [data]="productPropAnswer.prices"></app-prices>
                 </mat-tab>
-                <mat-tab label="Выписка">
+                <mat-tab label="Выписка" *ngIf="screenWidth > 1000">
                     <!-- *ngIf="tabIndex === 4"  -->
                     <app-product-ordering-list-form *ngIf="tabIndex === 4" #orderingList [isOpen]="isOpenOrdering">
                     </app-product-ordering-list-form>

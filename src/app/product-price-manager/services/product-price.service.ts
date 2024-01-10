@@ -44,6 +44,7 @@ export class ProductPriceService {
   }
 
   addPrice(data: AddToPrint): Observable<string> {
+    console.log('++++-----')
     return this.http.post<string>(`${this.urlAdd}`, data);
   }
 
@@ -69,15 +70,17 @@ export class ProductPriceService {
     input.append("shop", fileToUpload.shop);
     input.append("priceType", fileToUpload.priceType);
     console.log(fileToUpload);
-    // if (type === 'mile')
-    return this.http.post<GetFiltredPrintListModel>(`${this.urlUploadMile}`, input);
-    // else
-    //   if (type === 'act') {
-    //     return this.http.post<string>(`${this.urlUploadActs}`, input);
-    //   }
-    //   else
-    //     if (type === 'dat')
-    //       return this.http.post<string>(`${this.urlUploadDat}`, input);
+    switch (type) {
+      case 'mile':
+        return this.http.post<GetFiltredPrintListModel>(`${this.urlUploadMile}`, input);
+        break;
+      case 'act':
+        return this.http.post<GetFiltredPrintListModel>(`${this.urlUploadActs}`, input);
+        break;
+      case 'dat':
+        return this.http.post<GetFiltredPrintListModel>(`${this.urlUploadDat}`, input);
+        break;
+    }
   }
 
   getPriceFormat(data: GetPriceTemp): Observable<PriceFormat> {

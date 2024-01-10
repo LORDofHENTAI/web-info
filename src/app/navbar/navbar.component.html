@@ -1,29 +1,20 @@
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark blue-gradient" [containerInside]="false" *ngIf="isLoginUser">
-
-  <mdb-navbar-brand><a class="navbar-brand" href="#">Info</a></mdb-navbar-brand>
-  <links>
-
-    <ul class="navbar-nav ml-auto">
-
-      <li class="nav-item dropdown" dropdown>
-        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-          <mdb-icon fas icon="user"></mdb-icon> Профиль <span class="caret"></span>
-        </a>
-        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-          <a> {{userName}} </a>
-          <mat-divider></mat-divider>
-          <a class="dropdown-item waves-light" mdbWavesEffect (click)="getDocumentacion()">Инструкция</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect (click)="openSelectShop()">Настройки</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect *ngIf="isAdmin === '1'"
-            (click)="openPriceSettingsDialog()">Настройка ценников</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect *ngIf="isAdmin === '1'"
-            (click)="openLoadAction()">Загрузка акций</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect (click)="onClickLogout()">Выйти</a>
-        </div>
-      </li>
-
-    </ul>
-
-  </links>
-
-</mdb-navbar>
+<div class="navbar">
+  <div class="navbar-logo">
+    <a class="navbar-brand" href="#">Info</a>
+  </div>
+  <div class="navbar-profile">
+    <button mat-button [matMenuTriggerFor]="menu" class="menu-button">
+      <mat-icon aria-hidden="false">
+        person
+      </mat-icon>
+      Профиль
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="getDocumentacion()">Инструкция</button>
+      <button mat-menu-item (click)="openSelectShop()">Настройки</button>
+      <button mat-menu-item *ngIf="isAdmin === '1'" (click)="openPriceSettingsDialog()">Настройка ценников</button>
+      <button mat-menu-item *ngIf="isAdmin === '1'" (click)="openLoadAction()">Загрузка акций</button>
+      <button mat-menu-item (click)="onClickLogout()">Выйти</button>
+    </mat-menu>
+  </div>
+</div>

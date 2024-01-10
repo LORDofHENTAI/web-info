@@ -4,3 +4,15 @@
     height: 30px;
     padding-top: 0;
 }
+.navbar{
+    height: 46px;
+    background: rgb(68,195,247);
+    background: linear-gradient(90deg, rgba(68,195,247,1) 0%, rgba(48,64,160,1) 100%);
+    a{
+        color: white;
+    }
+    .menu-button{
+        color: white;
+        
+    }
+}

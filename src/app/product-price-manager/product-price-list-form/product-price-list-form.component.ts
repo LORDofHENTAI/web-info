@@ -83,6 +83,7 @@ export class ProductPriceListFormComponent implements OnInit {
   }
 
   addInList(article: string) {
+
     let addToPrint = new AddToPrint(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType());
     this.productPriceService.addPrice(addToPrint).subscribe(response => {
       if (response = 'true') {

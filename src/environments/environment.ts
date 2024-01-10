@@ -9,7 +9,7 @@ export const environment = {
   // apiUrl: 'http://192.168.1.130:7298/',
   // apiUrl: 'http://192.168.7.190:80/',
   apiUrlImg: 'https://mile.by/gtools/getImg/index.php',
-  cookieName: 'user-info-mile',
+  cookieName: 'user-info-mile-new',
   positionHead: 'руководитель',
 };
 

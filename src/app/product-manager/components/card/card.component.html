@@ -39,7 +39,7 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="card-info">
+    <div class="card-info" *ngIf="this.screenWidth > 1000">
         <div class="card-info-flex">
             <div class="list-prop">
                 <table mat-table [dataSource]="data.delivers | split:splitElement" class="table-hover">

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PlaceListFormComponent } from '../../dialog-windows/place-list-form/place-list-form.component';
 import { StoragePlacesEditorComponent } from '../../dialog-windows/storage-places-editor/storage-places-editor.component';
@@ -21,7 +21,21 @@ export class CardComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
   ) { }
-
+  screenHeight: number
+  screenWidth: number
+  shortVersion: boolean = false
   ngOnInit(): void {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth > 1000) {
+      this.shortVersion = false
+    } else {
+      this.shortVersion = true
+    }
+    console.log(this.shortVersion)
   }
+
+
+
+
 }
