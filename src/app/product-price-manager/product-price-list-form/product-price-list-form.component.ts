@@ -144,7 +144,6 @@ export class ProductPriceListFormComponent implements OnInit {
       }
     );
     dialogRef.afterClosed().subscribe(result => {
-
       switch (result) {
         case "canceled": {
           this.onClearList();
@@ -234,18 +233,21 @@ export class PricePrintDialog {
     this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent), type).subscribe(
       responce => {
         this.showLoadingBar = false;
-
-        let dialogRef = this.dialog.open(PricePrintWindowFiltred, {
-          data: { responce }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result === "canceled") {
-            this.dialogRef.close("canceled");
-          }
-          else {
-            this.dialogRef.close("true");
-          }
-        })
+        if (type === 'mile') {
+          let dialogRef = this.dialog.open(PricePrintWindowFiltred, {
+            data: { responce }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result === "canceled") {
+              this.dialogRef.close("canceled");
+            }
+            else {
+              this.dialogRef.close("true");
+            }
+          })
+        }
+        else
+          this.dialogRef.close("true");
       },
       error => {
         this.showLoadingBar = false;
