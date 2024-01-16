@@ -28,7 +28,7 @@ export class LoginPageComponent implements OnInit {
     // "userType": new FormControl(null, Validators.required),
     "userDepartment": new FormControl(null, Validators.required),
   });
-
+  inputType: string = 'password'
   loginQuery: LoginQuery;
   shops: StoreList[];
   types: PriceTypeList[];
@@ -66,10 +66,8 @@ export class LoginPageComponent implements OnInit {
 
   submit() {
     this.loginQuery = new LoginQuery(this.userForm.value.userName, this.userForm.value.userPassword);
-    console.log('>>>>>>>>>>>>>>' + this.userForm.value.userShop.id)
     this.loginService.getLogin(this.loginQuery).subscribe(response => {
       if (this.checkResponse(response)) {
-        console.log('>>>>>>>>>>>>>>' + this.userForm.value.userShop.id, this.userForm.value.userShop.priceType, this.userForm.value.userDepartment, response)
         this.tokenService.setCookie(
           CookieLogin.setCookieLogin(String(this.userForm.value.userShop.id), this.userForm.value.userShop.priceType, this.userForm.value.userDepartment, response)
         );

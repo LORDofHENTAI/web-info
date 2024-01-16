@@ -1,6 +1,11 @@
 .card-p {
     display: flex;
 }
+@media screen and (max-width: 1000px) {
+    .card-p {
+        display: block;
+    }
+}
 .card-info {
     flex-grow: 1;
     display: block;

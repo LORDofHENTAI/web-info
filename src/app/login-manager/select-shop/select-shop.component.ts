@@ -8,6 +8,14 @@ import { ShopService } from 'src/app/common/services/shop/shop.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
 import { CookieLogin } from '../models/cookie-login';
 
+interface Themes {
+  Name: string,
+  Color: string,
+  Background?: string,
+  NavBard?: string,
+  Selecter?: string,
+  TextColor?: string
+}
 @Component({
   selector: 'app-select-shop',
   templateUrl: './select-shop.component.html',
@@ -20,15 +28,29 @@ export class SelectShopComponent implements OnInit {
   types: PriceTypeList[];
   departments: DepartmentList[];
   shopForm: FormGroup;
+  mainThemes: Themes[] = [
+    { Name: 'Light', Color: '#fff' },
+    { Name: 'Dark', Color: '#0F0F0F' }
+  ]
+  colorThemes: Themes[] = [
+    { Name: 'Standart', Color: 'linear-gradient(to right,#a8edea,#fed6e3)' },
+    { Name: 'Red', Color: '#F44336' },
+    { Name: 'Blue', Color: '#376FBF' },
+    { Name: 'Green', Color: '#2dce98' },
+    { Name: 'Orange', Color: '#F79546' },
+    { Name: 'Purple', Color: '#6440B6' },
+    { Name: 'Grey', Color: '#9c9c9c' },
+    { Name: 'White', Color: '#e2e2e2' },
+  ]
 
   constructor(
     private shopService: ShopService,
     private tokenService: TokenService,
     public dialogRef: MatDialogRef<SelectShopComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  ) { 
+  ) {
     this.cookie = this.tokenService.getCookie();
-    this.shopForm = new FormGroup({ 
+    this.shopForm = new FormGroup({
       "shop": new FormControl(this.cookie.shopId, Validators.required),
       "type": new FormControl(this.cookie.typeId, Validators.required),
       "department": new FormControl(this.cookie.departmentId, Validators.required),
@@ -43,32 +65,32 @@ export class SelectShopComponent implements OnInit {
 
   getShopList() {
     this.shopService.getShops().subscribe(response => {
-      if(response)
+      if (response)
         this.shops = response;
-    }, 
-    error => { 
-      console.log(error);
-    });
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   getTypeList() {
     this.shopService.getTypes().subscribe(response => {
-      if(response)
+      if (response)
         this.types = response;
-    }, 
-    error => { 
-      console.log(error);
-    });
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   getDepartmensList() {
     this.shopService.getDepartmentList().subscribe(response => {
-      if(response)
+      if (response)
         this.departments = response;
-    }, 
-    error => { 
-      console.log(error);
-    });
+    },
+      error => {
+        console.log(error);
+      });
   }
 
   submit() {

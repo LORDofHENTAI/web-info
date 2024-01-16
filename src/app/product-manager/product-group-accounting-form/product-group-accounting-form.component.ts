@@ -285,8 +285,10 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       this.countListProducts = this.dataSourceProducts.length;
       this.onSelectRowClick(this.dataSourceProducts[0]);
       if (response.length > 0) {
-        if (this.searchValue.length >= 12)
-          this.onOpenPriceChecker(this.dataSourceProducts[0]);
+        if (this.searchValue.length >= 12) {
+          if (this.screenWidth > 1000)
+            this.onOpenPriceChecker(this.dataSourceProducts[0]);
+        }
         this.searchValue = '';
       }
     }

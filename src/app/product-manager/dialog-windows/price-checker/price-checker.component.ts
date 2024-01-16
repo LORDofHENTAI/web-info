@@ -9,6 +9,8 @@ import { ProductAnswer } from '../../models/product-answer';
 import { ProductProp } from '../../models/product-prop';
 import { ProductPropAnswer } from '../../models/product-prop-answer';
 import { ProductService } from '../../services/product.service';
+import { AddToPrint } from 'src/app/product-price-manager/models/add-to-print';
+import { ProductPriceService } from 'src/app/product-price-manager/services/product-price.service';
 
 @Component({
   selector: 'app-price-checker',
@@ -36,6 +38,7 @@ export class PriceCheckerComponent implements OnInit {
     private productOrderingService: ProductOrderingService,
     public dialogRef: MatDialogRef<PriceCheckerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProductAnswer,
+    public productPriceService: ProductPriceService
   ) {
     this.shopId = this.tokenService.getShop();
   }
@@ -61,9 +64,7 @@ export class PriceCheckerComponent implements OnInit {
       if (result) {
 
         this.addToVipiska = new AddToVipiska(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType(), String(result));
-
         this.productOrderingService.addToVipiska(this.addToVipiska).subscribe(response => {
-          console.log('>>>>>>>>>>>>>>' + response);
           if (response = 'OK') {
             this.snackbarService.openSnackBar('Товар добавлен в выписку.', this.action);
             this.article = article;
@@ -75,6 +76,19 @@ export class PriceCheckerComponent implements OnInit {
           });
       }
     });
+  }
+  addInList(article: string) {
+    let addToPrint = new AddToPrint(this.tokenService.getToken(), article, this.tokenService.getShop(), this.tokenService.getType());
+    this.productPriceService.addPrice(addToPrint).subscribe(response => {
+      if (response = 'true') {
+        this.snackbarService.openSnackBar('Товар добавлен в список ценников.', this.action);
+        this.article = article;
+      }
+    },
+      error => {
+        console.log(error);
+        this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
+      });
   }
 
   onNoClick() {

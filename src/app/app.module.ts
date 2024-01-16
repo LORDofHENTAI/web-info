@@ -60,7 +60,6 @@ import { PricesComponent } from './product-manager/components/prices/prices.comp
 import { MatIconModule } from '@angular/material/icon';
 import { UserSettingsComponent } from './common/components/dialog-windows/user-settings/user-settings.component';
 import { PricePrintWindowFiltred } from './product-price-manager/product-price-list-form/product-price-list-form.component';
-import { ProductGroupAccountingFormComponentTest } from './product-manager/product-group-accounting-form copy/product-group-accounting-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,8 +104,7 @@ import { ProductGroupAccountingFormComponentTest } from './product-manager/produ
     PricesComponent,
     OrderingCheckDialog,
     UserSettingsComponent,
-    PricePrintWindowFiltred,
-    ProductGroupAccountingFormComponentTest
+    PricePrintWindowFiltred
   ],
   imports: [
     AppRoutingModule,

@@ -1,5 +1,5 @@
 <div class="content" *ngIf="isOpen">
-    <div class="price-menu">
+    <div class="price-menu" [hidden]="screenWidth < 1000">
         <div class="foot">
             <button mat-stroked-button data-placement="bottom" matTooltip="Загрузка акционного файла"
                 (click)="openPrintDialog()">
@@ -26,7 +26,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <div class="slide ml-2">
+            <!-- <div class="slide ml-2">
                 <mat-slide-toggle [(ngModel)]="switchEditablePrices">
                     <span *ngIf="switchEditablePrices===false">Редактируемые ценники
                     </span>
@@ -34,7 +34,7 @@
                         {{styleFileName||'Редактируемые ценники'}}
                     </span>
                 </mat-slide-toggle>
-            </div>
+            </div> -->
             <button mat-mini-fab color='none' data-placement="bottom" matTooltip="Очистить список ценников"
                 (click)="onClearList()">
                 <span class="material-icons">

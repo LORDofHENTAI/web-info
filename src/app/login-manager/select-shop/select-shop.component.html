@@ -13,12 +13,35 @@
             <option [value]="null" disabled>Выберите отдел</option>
             <option *ngFor="let department of departments" [value]="department.id">{{department.name}}</option>
         </select>
-        
+
         <select class="form-control mb-4" placeholder="Тип цены" formControlName="type">
             <option [value]="null" disabled>Выберите тип цены</option>
             <option *ngFor="let type of types" [value]="type.id">{{type.name}}</option>
         </select>
-    
+        <!-- <div class="them-select">
+            <p class="h4 mb-4">Выбор темы</p>
+            <div class="main-them-select">
+                <ul>
+                    <li *ngFor="let m of mainThemes">
+                        <a class="them-button">
+                            <div class="color-circle" [ngStyle]="{'background':m.Color}">
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <p class="h4 mb-4">Выбор цвета компонентов темы</p>
+            <div class="main-them-select">
+                <ul>
+                    <li *ngFor="let c of colorThemes">
+                        <a class="them-button">
+                            <div class="color-circle" [ngStyle]="{'background':c.Color}">
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
         <div mat-dialog-actions align="end">
             <button mat-stroked-button type="button" (click)="onNoClick()">Отмена</button>
             <button mat-stroked-button type="submit" [disabled]="shopForm.invalid">Выбрать</button>

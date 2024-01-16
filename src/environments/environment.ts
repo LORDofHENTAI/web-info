@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // apiUrl: 'http://192.168.7.190:466/',
-  //apiUrl: 'http://192.168.1.21:7298/',
+  // apiUrl: 'http://192.168.1.21:7298/',
   // apiUrl: 'http://192.168.1.130:7298/',
   apiUrl: 'http://192.168.7.190:80/',
   apiUrlImg: 'https://mile.by/gtools/getImg/index.php',

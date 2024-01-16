@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
@@ -60,6 +60,7 @@ export class ProductPriceListFormComponent implements OnInit {
   ngOnInit(): void {
     this.getListPrices();
     this.getPriceFormatList();
+    this.onResize()
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -192,7 +193,15 @@ export class ProductPriceListFormComponent implements OnInit {
         console.log(error);
       });
   }
+  //! Адаптив
 
+  screenHeight: number
+  screenWidth: number
+  @HostListener('window:resize', ['$event'])
+  onResize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+  }
 }
 
 @Component({
@@ -312,4 +321,7 @@ export class PricePrintWindowFiltred implements OnInit {
       console.log(error);
     })
   }
+
+
+
 }

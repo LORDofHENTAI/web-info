@@ -3,33 +3,53 @@
 
         <p class="h4 mb-4">Вход</p>
 
-        <form [formGroup]="userForm" (ngSubmit)="submit()">
+        <form [formGroup]="userForm">
 
-            <input type="text" class="form-control mb-4" placeholder="Имя пользователя" formControlName="userName">
-
-            <input type="password" class="form-control mb-4" placeholder="Пароль" formControlName="userPassword">
-
-            <select class="form-control mb-4" placeholder="Магазин" formControlName="userShop">
+            <!-- <input type="text" class="form-control mb-4" placeholder="Имя пользователя" formControlName="userName"> -->
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Имя пользователя</mat-label>
+                <input matInput type="text" formControlName="userName">
+            </mat-form-field>
+            <!-- <input type="password" class="form-control mb-4" placeholder="Пароль" formControlName="userPassword"> -->
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Пароль</mat-label>
+                <input matInput type='{{inputType}}' formControlName="userPassword">
+                <button matSuffix mat-icon-button (mousedown)="inputType = 'text'" (mouseup)="inputType = 'password'"
+                    (mouseleave)="inputType = 'password'">
+                    <mat-icon>
+                        visibility
+                    </mat-icon>
+                </button>
+            </mat-form-field>
+            <!-- <select class="form-control mb-4" placeholder="Магазин" formControlName="userShop">
                 <option [value]="null" disabled>Выберите магазин</option>
                 <option *ngFor="let shop of shops" [ngValue]="shop">{{shop.name}}</option>
             </select>
-
             <select class="form-control mb-4" placeholder="Отдел" formControlName="userDepartment">
                 <option [value]="null" disabled>Выберите отдел</option>
                 <option *ngFor="let department of departments" [value]="department.id">{{department.name}}</option>
-            </select>
-
+            </select> -->
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Выберите магазин</mat-label>
+                <mat-select formControlName="userShop">
+                    <mat-option [value]='s' *ngFor="let s of shops">{{s.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Выберите отдел</mat-label>
+                <mat-select formControlName="userDepartment">
+                    <mat-option [value]="d.id" *ngFor="let d of departments">{{d.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
             <!-- <select class="form-control" placeholder="Тип цены" formControlName="userType">
                 <option [value]="null" disabled>Выберите тип цены</option>
                 <option *ngFor="let type of types" [value]="type.id">{{type.name}}</option>
             </select> -->
-
             <div class="d-flex align-items-center justify-content-center">
-                <button class="btn btn-info btn-block my-4 bt-signin" [disabled]="userForm.invalid">
+                <button class="btn btn-info btn-block my-4 bt-signin" [disabled]="userForm.invalid" (click)="submit()">
                     Войти
                 </button>
             </div>
-
         </form>
     </div>
 </div>
