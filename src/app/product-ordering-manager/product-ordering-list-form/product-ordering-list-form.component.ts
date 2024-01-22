@@ -124,8 +124,8 @@ export class ProductOrderingListFormComponent implements OnInit {
   onClearList() {
     this.productOrderingService.clearList(new VipiskaQuery(this.tokenService.getToken())).subscribe(response => {
       if (response = 'true') {
+        setTimeout(() => { this.getListVipiska(); }, 1000)
         this.snackbarService.openSnackBar('Выписка очищена.', this.action);
-        this.getListVipiska();
       }
     },
       error => {

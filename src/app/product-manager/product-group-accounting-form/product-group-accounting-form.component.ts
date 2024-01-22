@@ -213,7 +213,9 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       data: row
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) { }
+      if (result) {
+
+      }
     });
   }
 
@@ -316,7 +318,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
 
   onSelectTab(event: MatTabChangeEvent) {
     this.tabIndex = event.index;
-    switch (event.index) {
+    switch (this.tabIndex) {
       case 3:
         this.isOpenOrdering = false;
         this.isOpenPrices = false;
@@ -429,8 +431,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       data: { article: article, printType: 'etiketka' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
+      if (result) { }
     });
   }
   //! адаптив
