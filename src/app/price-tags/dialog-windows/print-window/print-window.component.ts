@@ -55,6 +55,6 @@ export class PrintWindowComponent implements OnInit {
     this.url = `${environment.apiUrl}productlist/print?token=${this.tokenService.getToken()}&type=${this.printType}`
   }
   showMovingInvoice() {
-    this.url = `${environment.apiUrl}productlist/print?token=${this.tokenService.getToken()}&type=${this.printType}&document=${this.document}&department=${this.department}&whoAccepted=${this.whoIsAccpted}`
+    this.url = `${environment.apiUrl}productlist/print?token=${this.tokenService.getToken()}&type=${this.printType}&store=${this.tokenService.getShop()}&document=${this.document}&department=${this.department}&whoAccepted=${this.whoIsAccpted}`
   }
 }
