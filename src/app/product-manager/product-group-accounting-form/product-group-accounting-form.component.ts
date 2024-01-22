@@ -118,7 +118,8 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     public dialog: MatDialog,
     private tokenService: TokenService,
     private productService: ProductService,
-    private snackbarService: SnackbarService,) {
+    private snackbarService: SnackbarService
+    ) {
     this.onResize();
   }
 
@@ -213,7 +214,10 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       data: row
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) { }
+      if (result) {
+        console.log("12312");
+        
+      }
     });
   }
 
@@ -314,7 +318,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     }
   }
 
-  onSelectTab(event: MatTabChangeEvent) {
+  onSelectTab(event: MatTabChangeEvent ) {
     this.tabIndex = event.index;
     switch (event.index) {
       case 3:

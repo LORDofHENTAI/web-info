@@ -38,7 +38,7 @@
             <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Выберите отдел</mat-label>
                 <mat-select formControlName="userDepartment">
-                    <mat-option [value]="d.id" *ngFor="let d of departments">{{d.name}}</mat-option>
+                    <mat-option [value]="d.name" *ngFor="let d of departments">{{d.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <!-- <select class="form-control" placeholder="Тип цены" formControlName="userType">

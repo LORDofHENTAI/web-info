@@ -213,6 +213,7 @@ export class ProductPriceListFormComponent implements OnInit {
 export class PricePrintDialog {
 
   priceFromFile = false;
+  selectSection: boolean = false
   showLoadingBar = false;
   type: string;
 
@@ -239,7 +240,9 @@ export class PricePrintDialog {
   showParams: boolean = false
   upload(type: string): void {
     this.showLoadingBar = true;
-    this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent), type).subscribe(
+    console.log(this.selectSection);
+    
+    this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.selectSection,this.tokenService.getDepartment(),this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent), type).subscribe(
       responce => {
         this.showLoadingBar = false;
         if (type === 'mile') {
