@@ -118,7 +118,8 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     public dialog: MatDialog,
     private tokenService: TokenService,
     private productService: ProductService,
-    private snackbarService: SnackbarService,) {
+    private snackbarService: SnackbarService
+  ) {
     this.onResize();
   }
 
@@ -214,7 +215,6 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-
       }
     });
   }

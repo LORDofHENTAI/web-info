@@ -63,10 +63,13 @@ export class ProductPriceService {
     input.append("file", fileToUpload.file);
     input.append("actionDate", fileToUpload.actionDate)
     input.append("maxPercent", fileToUpload.maxPercent)
-    if (type === 'act')
+    if (type === 'act') {
       input.append("priceFromFile", 'true');
+    }
     else
       input.append("priceFromFile", String(fileToUpload.priceFromFile));
+    input.append("selectSection", String(fileToUpload.selectSection));
+    input.append("sectionName",fileToUpload.sectionName);
     input.append("shop", fileToUpload.shop);
     input.append("priceType", fileToUpload.priceType);
     console.log(fileToUpload);
