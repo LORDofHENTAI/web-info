@@ -23,6 +23,7 @@ import { environment } from 'src/environments/environment';
 import { GetFiltredPrintListModel } from '../models/print-list-filtred';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { error } from '@angular/compiler/src/util';
+import { ShopSection } from '../models/ShopSection';
 
 @Component({
   selector: 'app-product-price-list-form',
@@ -210,14 +211,18 @@ export class ProductPriceListFormComponent implements OnInit {
   styleUrls: ['dialog-window/price-print-window.scss']
 })
 
-export class PricePrintDialog {
+export class PricePrintDialog implements OnInit{
 
   priceFromFile = false;
   selectSection: boolean = false
+  shopSections: ShopSection[]
+  selectedSection:string
   showLoadingBar = false;
   type: string;
 
-
+ngOnInit(): void {
+  this.getshopSections()
+}
   constructor(private router: Router,
     private productPriceService: ProductPriceService,
     private tokenService: TokenService,
@@ -235,15 +240,16 @@ export class PricePrintDialog {
     this.selectedFile = this.selectedFiles[0];
     console.log(this.selectedFile);
   }
+ 
+
   maxPercent: string
   actionDate: string
-  showParams: boolean = false
+  showParams: boolean = true;
   upload(type: string): void {
     this.showLoadingBar = true;
-    console.log(this.selectSection);
-    
-    this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.selectSection,this.tokenService.getDepartment(),this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent), type).subscribe(
+    this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.selectSection, this.selectedSection, this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent), type).subscribe(
       responce => {
+        console.log(this.selectedSection)
         this.showLoadingBar = false;
         if (type === 'mile') {
           let dialogRef = this.dialog.open(PricePrintWindowFiltred, {
@@ -265,6 +271,16 @@ export class PricePrintDialog {
         this.showLoadingBar = false;
         console.log(error);
       });
+  }
+  getshopSections(){
+    this.productPriceService.getShopSections().subscribe({
+      next: res=>{
+        this.shopSections = res
+      },
+      error: error=>{
+        console.log(error)
+      }
+    })
   }
 }
 
