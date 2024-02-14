@@ -145,11 +145,26 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   onSelectNode(node: PoductNode) {
+    // this.clearProp();
+    this.selectedRowTree = node.name;
+    console.log(node);
+    this.group = node.name.split(" ")[0];
+    if (this.group) {
+      this.dataSourceProducts = [];
+      this.scrollPosition = 5000;
+      // this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), ''));
+    }
+  }
+
+  onSelectNodeSearch(node: PoductNode) {
     this.clearProp();
     this.selectedRowTree = node.name;
     console.log(node);
     this.group = node.name.split(" ")[0];
     if (this.group) {
+      if(this.group === "0."){
+        this.group = '';
+      }
       this.dataSourceProducts = [];
       this.scrollPosition = 5000;
       this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), ''));
@@ -171,7 +186,6 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     this.clearProp();
     if (this.searchValue) {
       this.scrollPosition = 5000;
-      this.group = '';
       this.dataSourceProducts = [];
       console.log(this.searchValue);
       this.isEmptySearchValue = false;
@@ -182,19 +196,23 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   getProductsBySelectedSearchVar() {
+    console.log(this.group);
+    if(this.group === "0."){
+      this.group = '';
+    }
     if (this.selectedSearchVar === 'article') {
       this.getProductsForSearch(
-        new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', this.searchValue, '', '', this.tokenService.getShop(), this.tokenService.getType(), '')
+        new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, this.searchValue, '', '', this.tokenService.getShop(), this.tokenService.getType(), '')
       );
     }
     if (this.selectedSearchVar === 'name') {
       this.getProductsForSearch(
-        new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', '', this.searchValue, '', this.tokenService.getShop(), this.tokenService.getType(), '')
+        new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', this.searchValue, '', this.tokenService.getShop(), this.tokenService.getType(), '')
       );
     }
     if (this.selectedSearchVar === 'barcode') {
       this.getProductsForSearch(
-        new ProductQuery(this.tokenService.getToken(), this.isExcluded, '', '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), '')
+        new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), '')
       );
     }
   }
