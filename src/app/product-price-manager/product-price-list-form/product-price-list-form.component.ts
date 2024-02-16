@@ -127,6 +127,7 @@ export class ProductPriceListFormComponent implements OnInit {
   onPrintLable() {
     console.log(this.styleFileName);
     const dialogRef = this.dialog.open(PrintWindowComponent, {
+      disableClose: true,
       width: '900px',
       height: '1000px',
       data: { priceName: this.styleFileName, idFormat: this.idFormat, switchEditablePrices: this.switchEditablePrices }
@@ -241,8 +242,8 @@ export class PricePrintDialog {
   upload(type: string): void {
     this.showLoadingBar = true;
     console.log(this.selectSection);
-    
-    this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.selectSection,this.tokenService.getDepartment(),this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent), type).subscribe(
+
+    this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.selectSection, this.tokenService.getDepartment(), this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent), type).subscribe(
       responce => {
         this.showLoadingBar = false;
         if (type === 'mile') {

@@ -68,7 +68,7 @@ export class PriceCheckerComponent implements OnInit {
           if (response = 'OK') {
             this.snackbarService.openSnackBar('Товар добавлен в выписку.', this.action);
             this.article = article;
-            this.onNoClick();
+            this.onNoClick('order');
           }
         },
           error => {
@@ -84,7 +84,7 @@ export class PriceCheckerComponent implements OnInit {
       if (response = 'true') {
         this.snackbarService.openSnackBar('Товар добавлен в список ценников.', this.action);
         this.article = article;
-        this.onNoClick();
+        this.onNoClick('print');
       }
     },
       error => {
@@ -93,7 +93,7 @@ export class PriceCheckerComponent implements OnInit {
       });
   }
 
-  onNoClick() {
-    this.dialogRef.close(this.article);
+  onNoClick(type: string) {
+    this.dialogRef.close(type);
   }
 } 

@@ -110,6 +110,22 @@ export class TokenService {
       alert('login error')
     }
   }
+  getTitle(): string {
+    try {
+      if (this.cookieService.check(this.cookieName)) {
+        let fullData = this.cookieService.get(this.cookieName);
+        let loginFromCookie = JSON.parse(fullData);
+        if (loginFromCookie) {
+          return loginFromCookie.title;
+        }
+      }
+      else return '';
+    }
+    catch (error) {
+      console.error();
+      alert('login error')
+    }
+  }
 
   getIsAdmin(): string {
     try {

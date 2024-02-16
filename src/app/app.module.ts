@@ -30,7 +30,6 @@ import { MatRippleModule, MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT
 import { CardComponent } from './product-manager/components/card/card.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DischargePrintComponent } from './product-manager/print-forms/discharge-print/discharge-print.component';
-import { ProductPitsComponent } from './product-pits-manager/product-pits/product-pits.component';
 import { SimpleTagComponent } from './price-tags/simple-tag/simple-tag.component';
 import { PrintWindowComponent } from './price-tags/dialog-windows/print-window/print-window.component';
 import { ProductCardComponent } from './product-manager/dialog-windows/product-card/product-card.component';
@@ -42,11 +41,6 @@ import { SelectCountComponent } from './product-ordering-manager/dialog-windows/
 import { PriceCheckerComponent } from './product-manager/dialog-windows/price-checker/price-checker.component';
 import { DatePipe } from '@angular/common';
 import { FilterlistPipe } from './pipes/filterlist.pipe';
-import { OrderFormComponent } from './product-pits-manager/components/order-form/order-form.component';
-import { OrdersListFormComponent } from './product-pits-manager/components/orders-list-form/orders-list-form.component';
-import { OrderFilterFormComponent } from './product-pits-manager/components/order-filter-form/order-filter-form.component';
-import { OrderBodyListFormComponent } from './product-pits-manager/components/order-body-list-form/order-body-list-form.component';
-import { OrderSaveFormComponent } from './product-pits-manager/components/order-save-form/order-save-form.component';
 import { StrToDataPipe } from './pipes/str-to-data.pipe';
 import { BarcodeImgPipe } from './pipes/barcode-img/barcode-img.pipe';
 import { PricePrintDialog } from './product-price-manager/product-price-list-form/product-price-list-form.component';
@@ -60,6 +54,8 @@ import { PricesComponent } from './product-manager/components/prices/prices.comp
 import { MatIconModule } from '@angular/material/icon';
 import { UserSettingsComponent } from './common/components/dialog-windows/user-settings/user-settings.component';
 import { PricePrintWindowFiltred } from './product-price-manager/product-price-list-form/product-price-list-form.component';
+import { PitsItemsComponent } from './product-pits-manager/components/pits-items.component/pits-items.component'
+import { PitsComponent } from './product-pits-manager/components/pits-component/pits.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,7 +74,6 @@ import { PricePrintWindowFiltred } from './product-price-manager/product-price-l
     LeavingsComponent,
     CardComponent,
     DischargePrintComponent,
-    ProductPitsComponent,
     SimpleTagComponent,
     PrintWindowComponent,
     ProductCardComponent,
@@ -88,11 +83,6 @@ import { PricePrintWindowFiltred } from './product-price-manager/product-price-l
     SelectCountComponent,
     PriceCheckerComponent,
     FilterlistPipe,
-    OrderFormComponent,
-    OrdersListFormComponent,
-    OrderFilterFormComponent,
-    OrderBodyListFormComponent,
-    OrderSaveFormComponent,
     StrToDataPipe,
     BarcodeImgPipe,
     PricePrintDialog,
@@ -104,7 +94,9 @@ import { PricePrintWindowFiltred } from './product-price-manager/product-price-l
     PricesComponent,
     OrderingCheckDialog,
     UserSettingsComponent,
-    PricePrintWindowFiltred
+    PricePrintWindowFiltred,
+    PitsItemsComponent,
+    PitsComponent,
   ],
   imports: [
     AppRoutingModule,

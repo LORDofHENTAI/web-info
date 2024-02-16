@@ -1,0 +1,85 @@
+<app-pits-items #pitsItem [data]="selectedPit" *ngIf="PitsItemsOpened === true"
+    (hideChild)="openPitItems()"></app-pits-items>
+<div class="main-conteiner" *ngIf="PitsItemsOpened === false">
+    <div class="control-conteiner">
+        <div class="button-conteiner">
+            <button mat-raised-button (click)="createPit()">Новый документ</button>
+            <button mat-raised-button (click)="openPitItems()" [disabled]="!selectedRow">Просмотр</button>
+        </div>
+        <div class="filter-conteiner">
+            <div class="filter-box">
+                <mat-form-field appearance="outline">
+                    <mat-label>Выберите статус</mat-label>
+                    <mat-select [(ngModel)]="selectedStatus">
+                        <mat-option value="Все">Все документы</mat-option>
+                        <mat-option value="Черновик">Черновик</mat-option>
+                        <mat-option value="Отправлено в товарный отдел">Отправлено в товарный отдел</mat-option>
+                        <mat-option value="Заказано поставщику">Заказано поставщику</mat-option>
+                        <mat-option value="Звершен">Завершен</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-raised-button (click)="GetPitList()">Отобрать по фильтру</button>
+                <button mat-raised-button (click)="showAll()">Отобрать все</button>
+            </div>
+            <div class="filter-box">
+                <mat-form-field appearance="outline">
+                    <mat-label>Отделы</mat-label>
+                    <mat-select [(ngModel)]="selectedDepartment">
+                        <mat-option value="Все">Все отделы</mat-option>
+                        <mat-option *ngFor="let d of departments" [value]="d.name">{{d.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Выберите магазин</mat-label>
+                    <mat-select [(ngModel)]="selectedStore">
+                        <mat-option value="Все">Все торговые объекты</mat-option>
+                        <mat-option *ngFor="let s of shops" [value]="s.name">{{s.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="filter-box">
+                <span>Дата документа ... в диапазоне с </span>
+                <mat-form-field appearance="outline">
+                    <mat-label>Выберите дату</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <span>по</span>
+                <mat-form-field appearance="outline">
+                    <mat-label>Выберите дату</mat-label>
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="table-conteiner">
+        <table>
+            <tr>
+                <td *ngFor="let c of tableColumns">
+                    {{c}}
+                </td>
+            </tr>
+            <tr *ngFor="let p of pitsList" (click)="selectPit(p)" [ngClass]="{ 'selected-row': selectedRow == p.id }"
+                (dblclick)="openPitItems()">
+                <td>
+                    {{p.id}}
+                </td>
+                <td>
+                    {{p.doc_date| date: 'dd.MM.yyyy'}}
+                </td>
+                <td>
+                    {{p.department}}
+                </td>
+                <td>
+                    {{p.status}}
+                </td>
+                <td>
+                    {{p.storeLoc}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -2,8 +2,8 @@
     <mat-drawer #drawer mode="side" [opened]="screenStartWidth > 1000" class="rare-wind-gradient">
         <div class="tree-group">
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (dblclick)="onSelectNode(node)"
-                    [ngClass]="{ 'select-row': selectedRowTree == node.name }">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onSelectNode1(node)"
+                    (dblclick)="onSelectNode(node)" [ngClass]="{ 'select-row': selectedRowTree == node.name }">
                     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
                         <mat-icon class="mat-icon-rtl-mirror" *ngIf="node.children">
                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
@@ -12,8 +12,10 @@
                     </button>
                 </mat-tree-node>
                 <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
-                    (dblclick)="onSelectNode(node)" [ngClass]="{ 'select-row': selectedRowTree == node.name }">
-                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                    (click)="onSelectNode1(node)" (dblclick)="onSelectNode(node)"
+                    [ngClass]="{ 'select-row': selectedRowTree == node.name }">
+                    <button mat-icon-button matTreeNodeToggle (click)="onSelectNode1(node)"
+                        [attr.aria-label]="'toggle ' + node.name">
                         <mat-icon class="mat-icon-rtl-mirror">
                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                         </mat-icon>
@@ -144,10 +146,10 @@
                                     matTooltip="Добавить в ценники">
                                     <mat-icon>local_atm</mat-icon>
                                 </button>
-                                <button id="push" mat-icon-button (click)="onAddProductToOrder(element.article)"
+                                <!-- <button id="push" mat-icon-button (click)="onAddProductToOrder(element.article)"
                                     matTooltip="Добавить в товарную яму">
                                     <mat-icon>move_to_inbox</mat-icon>
-                                </button>
+                                </button> -->
                                 <button id="push" mat-icon-button (click)="onPrintLable(element.article)"
                                     matTooltip="Печать этикетки">
                                     <mat-icon>print</mat-icon>
@@ -192,9 +194,9 @@
                     <app-product-price-list-form *ngIf="tabIndex === 5" #priceList [isOpen]="isOpenPrices">
                     </app-product-price-list-form>
                 </mat-tab>
-                <!-- <mat-tab label="Товарные ямы">
-                    <app-product-pits #orderPits *ngIf="tabIndex === 6" [isOpen]="isOpenProductPits"></app-product-pits>
-                </mat-tab> -->
+                <mat-tab label="Товарные ямы">
+                    <app-pits #orderPits *ngIf="tabIndex === 6" [isOpen]="isOpenProductPits"></app-pits>
+                </mat-tab>
                 <!-- <mat-tab label="Заявка">
                     <app-request-product-manager-form #requestList *ngIf="tabIndex === 6" [isOpen]="isOpenProductRequest">
                     </app-request-product-manager-form>

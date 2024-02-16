@@ -16,4 +16,22 @@ export class SnackbarService {
       panelClass: [className]
     });
   }
+  openRedSnackBar(message: string = 'Нет соединения, попробуйте позже.', action: string = 'OK', className: string = 'red-snackbar') {
+    this.snackBar.open(message, action, {
+      duration: 8000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: [className]
+    });
+  }
+  openSnackGreenBar(message: string, action: string = "OK", className: string = 'green-snackbar') {
+    this.snackBar.open(message, action, {
+      duration: 8000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: [className]
+    });
+  }
+
+
 }

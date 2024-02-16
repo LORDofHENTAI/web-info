@@ -1,0 +1,130 @@
+<div class="main-conteiner">
+    <div class="control-conteiner">
+        <div class="logo">
+            <span>Документ:</span>
+            <span>№{{data.id}}</span>
+        </div>
+        <div class="button-conteiner">
+            <div>
+                <button mat-raised-button *ngIf="editableMode" (click)="[editableModeON(), updateDocItems()]">
+                    Сохранить
+                </button>
+                <button mat-raised-button *ngIf="!editableMode" (click)="editableModeON()">
+                    Редактировать
+                </button>
+                <button mat-raised-button [disabled]="editableMode">
+                    Печать
+                </button>
+                <button mat-raised-button (click)="Back()">
+                    Закрыть
+                </button>
+            </div>
+            <div>
+                <div style="display: none;">
+                    <input name="file" type="file" name="file" id="input__file" (change)="selectFile($event)"
+                        accept=".dat">
+                    <label for="input__file"></label>
+                </div>
+                <button mat-raised-button [disabled]="editableMode || data.status != 'Черновик'"
+                    onclick="document.getElementById('input__file').click();">
+                    Импорт
+                </button>
+            </div>
+            <div>
+                <button mat-raised-button [disabled]="editableMode || data.status != 'Черновик'" (click)="clearDoc()">
+                    Очистить
+                </button>
+                <button mat-raised-button [disabled]="editableMode || data.status != 'Черновик'"
+                    (click)="DeliteDocItem()">
+                    Удалить
+                </button>
+            </div>
+        </div>
+
+        <div class="admin-conteiner" *ngIf="jobTitle == 'Товарник' || 'dev'">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Выберите дату поставки</mat-label>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <button mat-raised-button [disabled]="editableMode" (click)="PitsItemSuply()">
+                    Добавить дату поставки
+                </button>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Введите поставщика</mat-label>
+                    <input matInput [(ngModel)]="provider">
+                </mat-form-field>
+                <button mat-raised-button [disabled]="editableMode" (click)="PitsItemSuply()">
+                    Добавить поставщика
+                </button>
+            </div>
+        </div>
+        <div class="accept-conteiner" *ngIf="data.status ==='Заказано поставщику'">
+            <button mat-raised-button [disabled]='!selectedRow'>
+                Принят
+            </button>
+            <button mat-raised-button [disabled]='!selectedRow'>
+                Отсутствует
+            </button>
+        </div>
+        <button mat-raised-button (click)="sendDoc()" [disabled]="editableMode" *ngIf="data.status ==='Черновик'">
+            Отправить в товарный отдел
+        </button>
+    </div>
+    <div class="table-container">
+        <table>
+            <tr>
+                <td *ngFor="let c of tableColumns">
+                    {{c}}
+                </td>
+            </tr>
+            <tr *ngFor="let i of pitsItemsList" (click)="selectPit(i)"
+                [ngClass]="[(selectedRow == i.id? 'selected-row': (i.status == 'true' ? 'green-status':(i.status == 'false'? 'red-status': '' )))]">
+                <td>
+                    <span *ngIf="!editableMode">{{i.group}}</span>
+                    <input type="text" [(ngModel)]="i.group" *ngIf="editableMode">
+                </td>
+                <td>
+                    <span *ngIf="!editableMode">{{i.article}}</span>
+                    <input type="text" [(ngModel)]="i.article" *ngIf="editableMode">
+                </td>
+                <td>
+                    <span *ngIf="!editableMode">{{i.barcode}}</span>
+                    <input type="text" [(ngModel)]="i.barcode" *ngIf="editableMode">
+                </td>
+                <td>
+                    <span *ngIf="!editableMode">{{i.name}}</span>
+                    <input type="text" [(ngModel)]="i.name" *ngIf="editableMode">
+                </td>
+                <td>
+                    <span *ngIf="!editableMode">{{i.provider}}</span>
+                    <input type="text" [(ngModel)]="i.provider" *ngIf="editableMode">
+                </td>
+                <td>
+                    <span *ngIf="!editableMode">{{i.goods}}</span>
+                    <input type="text" [(ngModel)]="i.goods" *ngIf="editableMode">
+                </td>
+                <td>
+                    <span *ngIf="!editableMode">{{i.daylySails}}</span>
+                    <input type="text" [(ngModel)]="i.daylySails" *ngIf="editableMode">
+                </td>
+                <td>
+                    <span *ngIf="!editableMode">{{i.supplyDate}}</span>
+                    <input type="text" [(ngModel)]="i.supplyDate" *ngIf="editableMode">
+                </td>
+                <td>
+                    <span *ngIf="!editableMode">{{i.comment}}</span>
+                    <input type="text" [(ngModel)]="i.comment" *ngIf="editableMode">
+                </td>
+                <td>
+                    <span *ngIf="!editableMode">{{i.note}}</span>
+                    <input type="text" [(ngModel)]="i.note" *ngIf="editableMode">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

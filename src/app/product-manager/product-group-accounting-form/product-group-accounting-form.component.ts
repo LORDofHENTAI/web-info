@@ -14,13 +14,16 @@ import { ProductAnswer } from '../models/product-answer';
 import { PriceCheckerComponent } from '../dialog-windows/price-checker/price-checker.component';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ProductPriceListFormComponent } from 'src/app/product-price-manager/product-price-list-form/product-price-list-form.component';
-import { ProductPitsComponent } from 'src/app/product-pits-manager/product-pits/product-pits.component';
 import { ProductProp } from '../models/product-prop';
 import { ProductOrderingListFormComponent } from 'src/app/product-ordering-manager/product-ordering-list-form/product-ordering-list-form.component';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { RequestProductManagerFormComponent } from 'src/app/request-product-manager/request-product-manager-form/request-product-manager-form.component';
 import { PrintWindowComponent } from 'src/app/price-tags/dialog-windows/print-window/print-window.component';
 import { HostListener } from "@angular/core";
+import { PitsComponent } from 'src/app/product-pits-manager/components/pits-component/pits.component';
+import { PitsService } from 'src/app/product-pits-manager/services/pits.service';
+import { AddPitsItem } from 'src/app/product-pits-manager/models/add-pits.model';
+import { PitsItemsComponent } from 'src/app/product-pits-manager/components/pits-items.component/pits-items.component';
 interface PoductNode {
   id: string;
   name: string;
@@ -43,8 +46,9 @@ export class ProductGroupAccountingFormComponent implements OnInit {
 
   @ViewChild("orderingList", { static: false }) orderingList: ProductOrderingListFormComponent;
   @ViewChild("priceList", { static: false }) priceList: ProductPriceListFormComponent;
-  @ViewChild("orderPits", { static: false }) orderPits: ProductPitsComponent;
-  @ViewChild("requestList", { static: false }) requestList: RequestProductManagerFormComponent
+  @ViewChild("orderPits", { static: false }) orderPits: PitsComponent;
+  @ViewChild("requestList", { static: false }) requestList: RequestProductManagerFormComponent;
+
 
   productArticlePrice: string;
   group: string = '';
@@ -118,7 +122,8 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     public dialog: MatDialog,
     private tokenService: TokenService,
     private productService: ProductService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private pitsService: PitsService
   ) {
     this.onResize();
   }
@@ -148,6 +153,17 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       this.dataSourceProducts = [];
       this.scrollPosition = 5000;
       this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), ''));
+    }
+  }
+  onSelectNode1(node: PoductNode) {
+    // this.clearProp();
+    this.selectedRowTree = node.name;
+    console.log(node);
+    this.group = node.name.split(" ")[0];
+    if (this.group) {
+      this.dataSourceProducts = [];
+      this.scrollPosition = 5000;
+      // this.getProducts(new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', '', '', this.tokenService.getShop(), this.tokenService.getType(), ''));
     }
   }
 
@@ -214,7 +230,13 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       data: row
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      switch (result) {
+        case 'print':
+          this.priceList.getListPrices()
+          break;
+        case 'order':
+          this.orderingList.getListVipiska();
+          break;
       }
     });
   }
@@ -347,7 +369,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   onAddProductToOrder(article: string) {
-    this.orderPits.addProductToOrder(article);
+    // this.orderPits.addProductToOrder(article);
   }
 
   onClickAddArticleOrdering(article: string) {
@@ -357,7 +379,6 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   onAdInPriceList(article: string) {
     this.priceList.addInList(article);
   }
-
   onAddProduct(article: string) {
     setTimeout(() => {
       switch (this.tabIndex) {
@@ -367,9 +388,8 @@ export class ProductGroupAccountingFormComponent implements OnInit {
         case 5:
           this.priceList.addInList(article);
           break;
-
         case 6:
-          this.orderPits.addProductToOrder(article);
+          this.orderPits.addProductToOrder(article)
           break;
       }
     }, 1000)
