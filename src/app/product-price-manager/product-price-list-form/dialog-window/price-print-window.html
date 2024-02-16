@@ -23,7 +23,7 @@
                     <img src="../../../../assets/1200px-microsoft_excel_2013_logo.svg_.png" alt="">
                 </div>
                 <button mat-stroked-button matTooltip="Загрузка акционного Excel файла для Mile"
-                    (click)="upload(type='mile')">Загрузить</button>
+                    (click)="upload(type='mile')" [disabled]="selectSection && !selectedSection" >Загрузить</button>
             </div>
             <div class="print-conteiner-box">
                 <div class="pic-box">
@@ -49,15 +49,25 @@
                 <mat-label>Отоброжаемый процент</mat-label>
                 <input matInput [(ngModel)]="maxPercent">
             </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Выберите секцию</mat-label>
+                <mat-select [(ngModel)]="selectedSection"
+                    [disabled]="selectSection === false">
+                    <mat-option  *ngFor="let d of shopSections" [value]="d.name">{{d.name}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+
         </div>
     </div>
     <div class="price-from-file-box">
         <mat-checkbox class="example-margin" [(ngModel)]="priceFromFile" *ngIf="showLoadingBar === false">Взять цену из
             файла</mat-checkbox>
-            
+
     </div>
-    <div class="price-from-file-box"><mat-checkbox class="example-margin2" [(ngModel)]="selectSection" *ngIf="showLoadingBar === false">Брать только секцию?</mat-checkbox></div>
-    
+    <div class="price-from-file-box"><mat-checkbox class="example-margin2" [(ngModel)]="selectSection"
+            *ngIf="showLoadingBar === false">Брать только секцию?</mat-checkbox>
+        </div>
+
     <div class="loader" *ngIf="showLoadingBar === true">
         <div class="box">
             <span data-text="LOADING...">LOADING...</span>
