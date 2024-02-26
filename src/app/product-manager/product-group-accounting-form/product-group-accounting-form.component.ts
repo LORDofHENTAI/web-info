@@ -162,7 +162,7 @@ export class ProductGroupAccountingFormComponent implements OnInit {
     console.log(node);
     this.group = node.name.split(" ")[0];
     if (this.group) {
-      if(this.group === "0."){
+      if (this.group === "0.") {
         this.group = '';
       }
       this.dataSourceProducts = [];
@@ -183,21 +183,33 @@ export class ProductGroupAccountingFormComponent implements OnInit {
   }
 
   onSearch() {
-    this.clearProp();
-    if (this.searchValue) {
-      this.scrollPosition = 5000;
-      this.dataSourceProducts = [];
-      console.log(this.searchValue);
-      this.isEmptySearchValue = false;
-      this.getProductsBySelectedSearchVar();
-    } else {
-      this.isEmptySearchValue = true;
+    if (this.selectedSearchVar == 'barcode') {
+      if (this.searchValue) {
+        console.log(this.dataSourceProducts);
+        console.log(this.searchValue);
+        this.isEmptySearchValue = false;
+        this.getProductsBySelectedSearchVar();
+      } else {
+        this.isEmptySearchValue = true;
+      }
+    }
+    else {
+      this.clearProp();
+      if (this.searchValue) {
+        this.scrollPosition = 5000;
+        this.dataSourceProducts = [];
+        console.log(this.searchValue);
+        this.isEmptySearchValue = false;
+        this.getProductsBySelectedSearchVar();
+      } else {
+        this.isEmptySearchValue = true;
+      }
     }
   }
 
   getProductsBySelectedSearchVar() {
     console.log(this.group);
-    if(this.group === "0."){
+    if (this.group === "0.") {
       this.group = '';
     }
     if (this.selectedSearchVar === 'article') {
@@ -211,9 +223,11 @@ export class ProductGroupAccountingFormComponent implements OnInit {
       );
     }
     if (this.selectedSearchVar === 'barcode') {
+      console.log(111111);
       this.getProductsForSearch(
         new ProductQuery(this.tokenService.getToken(), this.isExcluded, this.group, '', '', this.searchValue, this.tokenService.getShop(), this.tokenService.getType(), '')
       );
+
     }
   }
 
