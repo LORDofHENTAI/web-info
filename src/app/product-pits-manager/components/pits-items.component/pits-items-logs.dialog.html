@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>История документа {{data}}</h2>
+<mat-dialog-content>
+    <table>
+        <tr>
+            <td *ngFor="let c of tableColums">
+                {{c}}
+            </td>
+        </tr>
+        <tr *ngFor="let i of logList">
+            <td>
+                {{i.login}}
+            </td>
+            <td>
+                {{i.action}}
+            </td>
+            <td>
+                {{i.actionDate | date: 'dd.MM.yyyy h:mm:ss'}}
+            </td>
+        </tr>
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Закрыть</button>
+</mat-dialog-actions>

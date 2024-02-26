@@ -56,6 +56,7 @@ import { UserSettingsComponent } from './common/components/dialog-windows/user-s
 import { PricePrintWindowFiltred } from './product-price-manager/product-price-list-form/product-price-list-form.component';
 import { PitsItemsComponent } from './product-pits-manager/components/pits-items.component/pits-items.component'
 import { PitsComponent } from './product-pits-manager/components/pits-component/pits.component'
+import { PitsLogsComponent } from './product-pits-manager/components/pits-items.component/pits-items.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,6 +98,7 @@ import { PitsComponent } from './product-pits-manager/components/pits-component/
     PricePrintWindowFiltred,
     PitsItemsComponent,
     PitsComponent,
+    PitsLogsComponent
   ],
   imports: [
     AppRoutingModule,

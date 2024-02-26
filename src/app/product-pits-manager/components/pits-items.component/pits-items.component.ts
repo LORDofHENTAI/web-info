@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular
 import { PitsService } from '../../services/pits.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Pits } from '../../models/pits.model';
 import { GetPitsItems } from '../../models/get-pits-items.model';
 import { PitsList } from '../../models/pits-list.model';
@@ -12,6 +12,9 @@ import { DeletePitsItem } from '../../models/delete-pits-item.model';
 import { ImportPitsModel } from '../../models/import-pits.model';
 import { PitsItemSuply } from '../../models/pits-item-suply.model';
 import { formatDate } from '@angular/common';
+import { ApplyItem } from '../../models/apply-item.model';
+import { saveAs } from 'file-saver';
+import { PitsLogs } from '../../models/pits-logs.model';
 
 @Component({
     selector: 'app-pits-items',
@@ -21,22 +24,24 @@ import { formatDate } from '@angular/common';
 export class PitsItemsComponent implements OnInit {
     @Input() data: Pits;
     @Output('hideChild') hide: EventEmitter<any> = new EventEmitter();
-
+    jobTitle: string
     tableColumns: string[] = ['Группа', 'Артикул', 'Штрихкод', 'Наименование', 'Поставщик', 'Остаток', 'Ср. сут. реал.', 'Дата поставкки', 'Комментарий руководителя', 'Примечание']
     constructor(
         private pitsService: PitsService,
         private tokenService: TokenService,
-        private snackBarService: SnackbarService
+        private snackBarService: SnackbarService,
+        public dialog: MatDialog
     ) { }
     pitsItemsList: PitsList[]
     selectedDate = new Date()
     editableMode: boolean = false
     selectedRow: number
-    jobTitle: string
+
     provider: string
     ngOnInit(): void {
         this.getPitsItems()
         this.jobTitle = this.tokenService.getTitle()
+        console.log(this.jobTitle)
     }
     getPitsItems() {
         this.pitsService.GetPitsItems(new GetPitsItems(this.tokenService.getToken(), this.data.id)).subscribe({
@@ -54,21 +59,8 @@ export class PitsItemsComponent implements OnInit {
         if (this.data.status == "Черновик") {
             this.pitsService.AddPitsItem(new AddPitsItem(this.tokenService.getToken(), this.tokenService.getShop(), this.data.id, element)).subscribe({
                 next: result => {
-                    switch (result.status) {
-                        case "true":
-                            this.snackBarService.openSnackGreenBar('Добавлено в документ')
-                            this.getPitsItems()
-                            break;
-                        case "BadAuth":
-                            this.snackBarService.openRedSnackBar('Ошибка токена')
-                            break;
-                        case "null":
-                            this.snackBarService.openRedSnackBar('Пустое значение')
-                            break;
-                        case "error":
-                            this.snackBarService.openRedSnackBar()
-                            break;
-                    }
+                    if (this.StatusReader(result.status, 'Добавлено в документ'))
+                        this.getPitsItems()
                 },
                 error: error => {
                     console.log(error)
@@ -81,21 +73,8 @@ export class PitsItemsComponent implements OnInit {
     sendDoc() {
         this.pitsService.SendDoc(new GetPitsItems(this.tokenService.getToken(), this.data.id)).subscribe({
             next: result => {
-                switch (result.status) {
-                    case "true":
-                        this.snackBarService.openSnackGreenBar('Отправлено в товарный отдел')
-                        this.Back()
-                        break;
-                    case "BadAuth":
-                        this.snackBarService.openRedSnackBar('Ошибка токена')
-                        break;
-                    case "null":
-                        this.snackBarService.openRedSnackBar('Пустое значение')
-                        break;
-                    case "error":
-                        this.snackBarService.openRedSnackBar()
-                        break;
-                }
+                if (this.StatusReader(result.status, 'Отправлено в товарный отдел'))
+                    this.Back()
             },
             error: error => {
                 console.log(error);
@@ -106,21 +85,9 @@ export class PitsItemsComponent implements OnInit {
     updateDocItems() {
         this.pitsService.UpdatePitsItems(new UpdatePits(this.tokenService.getToken(), this.pitsItemsList)).subscribe({
             next: result => {
-                switch (result.status) {
-                    case "true":
-                        this.snackBarService.openSnackGreenBar('Сохранено')
-                        this.Back()
-                        break;
-                    case "BadAuth":
-                        this.snackBarService.openRedSnackBar('Ошибка токена')
-                        break;
-                    case "null":
-                        this.snackBarService.openRedSnackBar('Пустое значение')
-                        break;
-                    case "error":
-                        this.snackBarService.openRedSnackBar()
-                        break;
-                }
+                if (this.StatusReader(result.status, 'Сохранено'))
+                    this.getPitsItems()
+
             },
             error: error => {
                 console.log(error)
@@ -131,21 +98,8 @@ export class PitsItemsComponent implements OnInit {
     clearDoc() {
         this.pitsService.DeleteAllPitsItems(new DeletePitsItem(this.tokenService.getToken(), this.data.id)).subscribe({
             next: result => {
-                switch (result.status) {
-                    case "true":
-                        this.snackBarService.openSnackGreenBar('Документ очищен')
-                        this.getPitsItems()
-                        break;
-                    case "BadAuth":
-                        this.snackBarService.openRedSnackBar('Ошибка токена')
-                        break;
-                    case "null":
-                        this.snackBarService.openRedSnackBar('Пустое значение')
-                        break;
-                    case "error":
-                        this.snackBarService.openRedSnackBar()
-                        break;
-                }
+                if (this.StatusReader(result.status, 'Документ очищен'))
+                    this.getPitsItems()
             },
             error: error => {
                 console.log(error);
@@ -156,21 +110,8 @@ export class PitsItemsComponent implements OnInit {
     DeliteDocItem() {
         this.pitsService.DeletePitsItem(new DeletePitsItem(this.tokenService.getToken(), this.selectedRow)).subscribe({
             next: result => {
-                switch (result.status) {
-                    case "true":
-                        this.snackBarService.openSnackGreenBar('Удалено')
-                        this.getPitsItems()
-                        break;
-                    case "BadAuth":
-                        this.snackBarService.openRedSnackBar('Ошибка токена')
-                        break;
-                    case "null":
-                        this.snackBarService.openRedSnackBar('Пустое значение')
-                        break;
-                    case "error":
-                        this.snackBarService.openRedSnackBar()
-                        break;
-                }
+                if (this.StatusReader(result.status, 'Удалено'))
+                    this.getPitsItems()
             },
             error: error => {
                 console.log(error);
@@ -193,21 +134,8 @@ export class PitsItemsComponent implements OnInit {
         let dat = new ImportPitsModel(this.tokenService.getToken(), String(this.data.id), this.tokenService.getShop(), this.selectedFile)
         this.pitsService.ImportFromDat(dat).subscribe({
             next: result => {
-                switch (result.status) {
-                    case "true":
-                        this.snackBarService.openSnackGreenBar('Добавлено')
-                        this.getPitsItems()
-                        break;
-                    case "BadAuth":
-                        this.snackBarService.openRedSnackBar('Ошибка токена')
-                        break;
-                    case "null":
-                        this.snackBarService.openRedSnackBar('Пустое значение')
-                        break;
-                    case "error":
-                        this.snackBarService.openRedSnackBar()
-                        break;
-                }
+                if (this.StatusReader(result.status, 'успешно'))
+                    this.getPitsItems()
             },
             error: error => {
                 console.log(error);
@@ -220,24 +148,32 @@ export class PitsItemsComponent implements OnInit {
         let suply = formatDate(this.selectedDate, 'dd.MM.yyyy', 'en-US')
         this.pitsService.PitsItemSuply(new PitsItemSuply(this.tokenService.getToken(), this.data.id, this.selectedRow, suply, this.provider)).subscribe({
             next: result => {
-                switch (result.status) {
-                    case "true":
-                        this.snackBarService.openSnackGreenBar('Успешно')
+                if (result.status == 'true+')
+                    this.Back()
+                else
+                    if (this.StatusReader(result.status, 'успешно'))
                         this.getPitsItems()
-                        break;
-                    case "BadAuth":
-                        this.snackBarService.openRedSnackBar('Ошибка токена')
-                        break;
-                    case "null":
-                        this.snackBarService.openRedSnackBar('Пустое значение')
-                        break;
-                    case "error":
-                        this.snackBarService.openRedSnackBar()
-                        break;
-                }
             },
             error: error => {
                 console.log(error)
+                this.snackBarService.openRedSnackBar()
+            }
+        })
+    }
+
+    ApplyItem(element: string) {
+        this.pitsService.ApplyItem(new ApplyItem(this.tokenService.getToken(), this.data.id, this.selectedRow, element)).subscribe({
+            next: result => {
+                console.log(result.status)
+                if (result.status == 'true+')
+                    this.Back()
+                else
+                    if (this.StatusReader(result.status, 'успешно'))
+                        this.getPitsItems()
+
+            },
+            error: error => {
+                console.log(error);
                 this.snackBarService.openRedSnackBar()
             }
         })
@@ -251,5 +187,71 @@ export class PitsItemsComponent implements OnInit {
     }
     Back() {
         this.hide.emit()
+    }
+    StatusReader(element: string, message: string): boolean {
+        switch (element) {
+            case "true":
+                this.snackBarService.openSnackGreenBar(message)
+                return true
+                break;
+            case "BadAuth":
+                this.snackBarService.openRedSnackBar('Ошибка токена')
+                return false
+                break;
+            case "null":
+                this.snackBarService.openRedSnackBar('Пустое значение')
+                return false
+                break;
+            case "error":
+                this.snackBarService.openRedSnackBar()
+                return false
+                break;
+        }
+    }
+
+    printPit() {
+        this.pitsService.PrintPits(new GetPitsItems(this.tokenService.getToken(), this.data.id)).subscribe({
+            next: result => {
+                saveAs(result, `Документ:${this.data.id}`)
+            },
+            error: error => {
+                console.log(error)
+                this.snackBarService.openRedSnackBar()
+            }
+        })
+    }
+
+    openDialog() {
+        this.dialog.open(PitsLogsComponent, {
+            data: this.data.id
+        });
+    }
+}
+
+@Component({
+    selector: 'app-pits-items-logs-dialog',
+    templateUrl: './pits-items-logs.dialog.html',
+    styleUrls: ['./pits-items.component.scss']
+})
+export class PitsLogsComponent implements OnInit {
+    constructor(
+        private pitsService: PitsService,
+        private tokenService: TokenService,
+        @Inject(MAT_DIALOG_DATA) public data: number
+    ) { }
+    tableColums: string[] = ['Логин пользователя', 'Действия', 'Дата действия']
+    logList: PitsLogs[]
+    ngOnInit(): void {
+        this.GetPitsLogs()
+    }
+    GetPitsLogs() {
+        this.pitsService.GetPitsLogs(new GetPitsItems(this.tokenService.getToken(), this.data)).subscribe({
+            next: result => {
+                this.logList = result
+            },
+            error: error => {
+                console.log(error)
+            }
+        })
     }
 }

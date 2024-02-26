@@ -12,7 +12,7 @@
                 <button mat-raised-button *ngIf="!editableMode" (click)="editableModeON()">
                     Редактировать
                 </button>
-                <button mat-raised-button [disabled]="editableMode">
+                <button mat-raised-button [disabled]="editableMode" (click)="printPit()">
                     Печать
                 </button>
                 <button mat-raised-button (click)="Back()">
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="admin-conteiner" *ngIf="jobTitle == 'Товарник' || 'dev'">
+        <div class="admin-conteiner" *ngIf="jobTitle === 'Товарник' || jobTitle === 'dev'">
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Выберите дату поставки</mat-label>
@@ -62,12 +62,15 @@
                     Добавить поставщика
                 </button>
             </div>
+            <button mat-raised-button (click)="openDialog()">
+                История документа
+            </button>
         </div>
         <div class="accept-conteiner" *ngIf="data.status ==='Заказано поставщику'">
-            <button mat-raised-button [disabled]='!selectedRow'>
+            <button mat-raised-button [disabled]='!selectedRow' (click)="ApplyItem('true')">
                 Принят
             </button>
-            <button mat-raised-button [disabled]='!selectedRow'>
+            <button mat-raised-button [disabled]='!selectedRow' (click)="ApplyItem('false')">
                 Отсутствует
             </button>
         </div>

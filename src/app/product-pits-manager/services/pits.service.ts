@@ -13,6 +13,8 @@ import { AddPitsItem } from '../models/add-pits.model'
 import { DeletePitsItem } from '../models/delete-pits-item.model'
 import { PitsItemSuply } from '../models/pits-item-suply.model'
 import { ImportPitsModel } from '../models/import-pits.model'
+import { ApplyItem } from '../models/apply-item.model'
+import { PitsLogs } from '../models/pits-logs.model'
 @Injectable({
     providedIn: 'root'
 })
@@ -29,9 +31,11 @@ export class PitsService {
     sendDocURL = environment.apiUrl + 'SendDoc'
     deletePitsItemURL = environment.apiUrl + 'DeletePitsItem'
     deleteAllPitsItemsURL = environment.apiUrl + 'DeleteAllPitsItems'
-    docOrderedURL = environment.apiUrl + 'DocOrdered'
     pitsItemSuplyURL = environment.apiUrl + 'PitsItemSuply'
+    applyItemURL = environment.apiUrl + 'ApplyItem'
     importFromDatURL = environment.apiUrl + 'ImportFromDat'
+    printPitsURL = environment.apiUrl + 'PrintPitsList'
+    getPitsLogsURL = environment.apiUrl + 'GetPitsLogs'
 
     GetPits(data: GetPitsModel): Observable<Pits[]> {
         return this.http.post<Pits[]>(this.getPitsURL, data)
@@ -57,13 +61,12 @@ export class PitsService {
     DeleteAllPitsItems(data: DeletePitsItem): Observable<StatusMsg> {
         return this.http.post<StatusMsg>(this.deleteAllPitsItemsURL, data)
     }
-    DocOrdered(data: GetPitsItems): Observable<StatusMsg> {
-        return this.http.post<StatusMsg>(this.docOrderedURL, data)
-    }
     PitsItemSuply(data: PitsItemSuply): Observable<StatusMsg> {
-        console.log(data);
-
         return this.http.post<StatusMsg>(this.pitsItemSuplyURL, data)
+    }
+    ApplyItem(data: ApplyItem): Observable<StatusMsg> {
+        console.log(data)
+        return this.http.post<StatusMsg>(this.applyItemURL, data)
     }
     ImportFromDat(data: ImportPitsModel): Observable<StatusMsg> {
         let input = new FormData();
@@ -73,4 +76,11 @@ export class PitsService {
         input.append("file", data.file)
         return this.http.post<StatusMsg>(this.importFromDatURL, input)
     }
+    PrintPits(data: GetPitsItems) {
+        return this.http.get(this.printPitsURL + `?Token=${data.token}&DocId=${data.docId}`, { responseType: 'blob' })
+    }
+    GetPitsLogs(data: GetPitsItems): Observable<PitsLogs[]> {
+        return this.http.post<PitsLogs[]>(this.getPitsLogsURL, data)
+    }
 }
+

@@ -113,6 +113,7 @@ export class PitsComponent implements OnInit {
     }
     openPitItems() {
         this.PitsItemsOpened = !this.PitsItemsOpened
+        this.GetPitList()
     }
     addProductToOrder(element: string) {
         this.pitsItem.addProductToOrder(element)

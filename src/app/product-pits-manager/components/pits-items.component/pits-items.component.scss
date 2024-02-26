@@ -112,10 +112,15 @@
     background-image: linear-gradient(to right, rgba(161, 106, 216, 0.5), rgba(240, 10, 228, 0.5))!important;
 }
 .red-status{
-    background-color: red;
+    background-image: linear-gradient(to right, rgb(160, 0, 0), rgb(255, 0, 0))!important;
     color: white;
 }
 .green-status{
-    background-color: green;
+    background-image: linear-gradient(to right, green, rgb(1, 158, 1))!important;
     color: white;
+}
+
+mat-dialog-content{
+    max-height: 500px;
+    overflow: auto;
 }
