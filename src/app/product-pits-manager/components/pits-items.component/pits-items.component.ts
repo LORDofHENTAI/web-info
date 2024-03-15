@@ -255,3 +255,12 @@ export class PitsLogsComponent implements OnInit {
         })
     }
 }
+
+@Component({
+    selector: 'app-pits-items-file-dialog',
+    templateUrl: './pits-items-file-dialog.html',
+    styleUrls: ['./pits-items.component.scss']
+})
+export class PitsItemFileDialog {
+
+}

@@ -7,9 +7,11 @@ import { ShopService } from 'src/app/common/services/shop/shop.service';
 import { StoreList } from 'src/app/common/models/store-list';
 import { DepartmentList } from 'src/app/common/models/departmens';
 import { formatDate } from '@angular/common';
-import { CreatePits } from '../../models/create-pits.model';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
 import { PitsItemsComponent } from '../pits-items.component/pits-items.component';
+import { SearchPitModel } from '../../models/search-pit-model';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CreatePits } from '../../models/create-pits.model';
 @Component({
     selector: 'app-pits',
     templateUrl: './pits.component.html',
@@ -30,12 +32,13 @@ export class PitsComponent implements OnInit {
     selectedRow: number
     selectedPit: Pits
     PitsItemsOpened: boolean = false
-
+    searchingDoc: number
     constructor(
         private pitsService: PitsService,
         private tokenService: TokenService,
         private shopService: ShopService,
         private snackBarService: SnackbarService,
+        public dialog: MatDialog,
     ) { }
 
     ngOnInit(): void {
@@ -49,11 +52,19 @@ export class PitsComponent implements OnInit {
         let pitsModel = new GetPitsModel(this.tokenService.getToken(), start, end, this.selectedDepartment, this.selectedStatus, this.selectedStore)
         this.pitsService.GetPits(pitsModel).subscribe({
             next: result => {
-                console.log(result)
                 this.pitsList = result
             },
             error: error => {
                 console.log(error);
+            }
+        })
+    }
+    GetMyPits() {
+        this.pitsService.GetMyPits(new GetPitsModel(this.tokenService.getToken())).subscribe({
+            next: result => {
+                this.pitsList = result
+            }, error: error => {
+                console.log(error)
             }
         })
     }
@@ -64,29 +75,10 @@ export class PitsComponent implements OnInit {
         this.GetPitList()
     }
     createPit() {
-        this.pitsService.CreateNewDocument(new CreatePits(this.tokenService.getToken(), this.tokenService.getDepartment(), this.tokenService.getShop())).subscribe({
-            next: result => {
-                switch (result.status) {
-                    case 'true':
-                        this.GetPitList()
-                        this.snackBarService.openSnackGreenBar('Документ создан успешно!')
-                        break;
-                    case 'BadAuth':
-                        this.snackBarService.openRedSnackBar('Ошибка авторизации')
-                        break;
-                    case 'error':
-                        this.snackBarService.openRedSnackBar()
-                        break;
-                    case 'null':
-                        this.snackBarService.openRedSnackBar('Пустое значение')
-                        break;
-                }
-            },
-            error: error => {
-                console.log(error);
-                this.snackBarService.openRedSnackBar()
-            }
-        })
+        const dialogRef = this.dialog.open(PitsDialogComponent);
+        dialogRef.afterClosed().subscribe(result => {
+            this.GetPitList()
+        });
     }
     getShopList() {
         this.shopService.getShops().subscribe(response => {
@@ -117,5 +109,96 @@ export class PitsComponent implements OnInit {
     }
     addProductToOrder(element: string) {
         this.pitsItem.addProductToOrder(element)
+    }
+    searchPit() {
+        this.pitsService.SearchPit(new SearchPitModel(this.tokenService.getToken(), this.searchingDoc)).subscribe({
+            next: result => {
+                this.pitsList = []
+                this.pitsList.push(result)
+            },
+            error: error => {
+                console.log(error);
+            }
+        })
+    }
+    DeletePit() {
+        this.pitsService.DeletePit(new SearchPitModel(this.tokenService.getToken(), this.selectedRow)).subscribe({
+            next: result => {
+                switch (result.status) {
+                    case 'true':
+                        this.snackBarService.openSnackGreenBar('Документ удален!')
+                        this.GetPitList()
+                        break;
+                    case 'BadAuth':
+                        this.snackBarService.openRedSnackBar('Ошибка авторизации')
+                        break;
+                    case 'error':
+                        this.snackBarService.openRedSnackBar()
+                        break;
+                    case 'block':
+                        this.snackBarService.openRedSnackBar('Чужой документ')
+                        break;
+                    case 'null':
+                        this.snackBarService.openRedSnackBar('Пустое значение')
+                        break;
+                }
+            }, error: error => {
+                console.log(error);
+            }
+        })
+    }
+}
+
+@Component({
+    selector: 'app-pits-dialog',
+    templateUrl: './pits.component.dialog.window.html',
+    styleUrls: ['./pits.component.scss']
+})
+export class PitsDialogComponent implements OnInit {
+    constructor(
+        private tokenService: TokenService,
+        private shopService: ShopService,
+        private pitsService: PitsService,
+        private snackBarService: SnackbarService,
+        public dialogRef: MatDialogRef<PitsComponent>,
+    ) { }
+    departments: DepartmentList[]
+    selectedDepartment: string
+    ngOnInit(): void {
+        this.getDepartments()
+    }
+    getDepartments() {
+        this.shopService.getDepartmentList().subscribe(response => {
+            if (response)
+                this.departments = response;
+        },
+            error => {
+                console.log(error);
+            });
+    }
+    newPit() {
+        this.pitsService.CreateNewDocument(new CreatePits(this.tokenService.getToken(), this.selectedDepartment, this.tokenService.getShop())).subscribe({
+            next: result => {
+                switch (result.status) {
+                    case 'true':
+                        this.snackBarService.openSnackGreenBar('Документ создан успешно!')
+                        break;
+                    case 'BadAuth':
+                        this.snackBarService.openRedSnackBar('Ошибка авторизации')
+                        break;
+                    case 'error':
+                        this.snackBarService.openRedSnackBar()
+                        break;
+                    case 'null':
+                        this.snackBarService.openRedSnackBar('Пустое значение')
+                        break;
+                }
+                this.dialogRef.close();
+            },
+            error: error => {
+                console.log(error);
+                this.snackBarService.openRedSnackBar()
+            }
+        })
     }
 }

@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Создание Документа</h2>
+<div class="mat-typography">
+    <mat-form-field appearance="outline">
+        <mat-label>Отделы</mat-label>
+        <mat-select [(ngModel)]="selectedDepartment">
+            <mat-option *ngFor="let d of departments" [value]="d.name">{{d.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-raised-button (click)="newPit()">Создать</button>
+    <button mat-raised-button mat-dialog-close>Отмена</button>
+</div>

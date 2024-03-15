@@ -1,8 +1,8 @@
 import { Vipiska } from "./vipiska";
 
-export class VipiskaEnd{
+export class VipiskaEnd {
     constructor(
-        public list: Array<Vipiska>,
-        public summa: string,
-    ){}
+        public list?: Array<Vipiska>,
+        public summa?: string,
+    ) { }
 }

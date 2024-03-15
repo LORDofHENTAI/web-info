@@ -5,6 +5,9 @@
         <div class="button-conteiner">
             <button mat-raised-button (click)="createPit()">Новый документ</button>
             <button mat-raised-button (click)="openPitItems()" [disabled]="!selectedRow">Просмотр</button>
+            <button mat-raised-button (click)="DeletePit()" [disabled]="!selectedRow" style="color: red;">
+                Удалить
+            </button>
         </div>
         <div class="filter-conteiner">
             <div class="filter-box">
@@ -20,6 +23,7 @@
                 </mat-form-field>
                 <button mat-raised-button (click)="GetPitList()">Отобрать по фильтру</button>
                 <button mat-raised-button (click)="showAll()">Отобрать все</button>
+                <button mat-raised-button (click)="GetMyPits()">Мои документы</button>
             </div>
             <div class="filter-box">
                 <mat-form-field appearance="outline">
@@ -35,6 +39,13 @@
                         <mat-option value="Все">Все торговые объекты</mat-option>
                         <mat-option *ngFor="let s of shops" [value]="s.name">{{s.name}}</mat-option>
                     </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Поиск по номеру</mat-label>
+                    <input matInput [(ngModel)]="searchingDoc" type="number" (keyup.enter)="searchPit()">
+                    <button matSuffix mat-icon-button (click)="searchPit()">
+                        <mat-icon>search</mat-icon>
+                    </button>
                 </mat-form-field>
             </div>
             <div class="filter-box">

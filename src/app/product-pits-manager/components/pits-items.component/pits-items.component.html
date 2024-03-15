@@ -89,39 +89,47 @@
                 [ngClass]="[(selectedRow == i.id? 'selected-row': (i.status == 'true' ? 'green-status':(i.status == 'false'? 'red-status': '' )))]">
                 <td>
                     <span *ngIf="!editableMode">{{i.group}}</span>
-                    <input type="text" [(ngModel)]="i.group" *ngIf="editableMode">
+                    <input type="text" [(ngModel)]="i.group" *ngIf="editableMode"
+                        [readonly]="data.status !== 'Черновик'">
                 </td>
                 <td>
                     <span *ngIf="!editableMode">{{i.article}}</span>
-                    <input type="text" [(ngModel)]="i.article" *ngIf="editableMode">
+                    <input type="text" [(ngModel)]="i.article" *ngIf="editableMode"
+                        [readonly]="data.status !== 'Черновик'">
                 </td>
                 <td>
                     <span *ngIf="!editableMode">{{i.barcode}}</span>
-                    <input type="text" [(ngModel)]="i.barcode" *ngIf="editableMode">
+                    <input type="text" [(ngModel)]="i.barcode" *ngIf="editableMode"
+                        [readonly]="data.status !== 'Черновик'">
                 </td>
                 <td>
                     <span *ngIf="!editableMode">{{i.name}}</span>
-                    <input type="text" [(ngModel)]="i.name" *ngIf="editableMode">
+                    <input type="text" [(ngModel)]="i.name" *ngIf="editableMode"
+                        [readonly]="data.status !== 'Черновик'">
                 </td>
                 <td>
                     <span *ngIf="!editableMode">{{i.provider}}</span>
-                    <input type="text" [(ngModel)]="i.provider" *ngIf="editableMode">
+                    <input type="text" [(ngModel)]="i.provider" *ngIf="editableMode"
+                        [readonly]="data.status !== 'Черновик'">
                 </td>
                 <td>
                     <span *ngIf="!editableMode">{{i.goods}}</span>
-                    <input type="text" [(ngModel)]="i.goods" *ngIf="editableMode">
+                    <input type="text" [(ngModel)]="i.goods" *ngIf="editableMode"
+                        [readonly]="data.status !== 'Черновик'">
                 </td>
                 <td>
                     <span *ngIf="!editableMode">{{i.daylySails}}</span>
-                    <input type="text" [(ngModel)]="i.daylySails" *ngIf="editableMode">
+                    <input type="text" [(ngModel)]="i.daylySails" *ngIf="editableMode"
+                        [readonly]="data.status !== 'Черновик'">
                 </td>
                 <td>
                     <span *ngIf="!editableMode">{{i.supplyDate}}</span>
-                    <input type="text" [(ngModel)]="i.supplyDate" *ngIf="editableMode">
+                    <input type="text" [(ngModel)]="i.supplyDate" *ngIf="editableMode"
+                        [readonly]="data.status !== 'Черновик'">
                 </td>
                 <td>
                     <span *ngIf="!editableMode">{{i.comment}}</span>
-                    <input type="text" [(ngModel)]="i.comment" *ngIf="editableMode">
+                    <input type="text" [(ngModel)]="i.comment" *ngIf="editableMode ">
                 </td>
                 <td>
                     <span *ngIf="!editableMode">{{i.note}}</span>

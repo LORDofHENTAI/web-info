@@ -15,8 +15,9 @@
             margin-left: 10px;
             button{
                 width: 98%;
-                &:last-child{
-                    margin-top: 15px;
+                &:nth-child(2){
+                    margin-top: 10px;
+                    margin-bottom: 10px;
                 }
             }
         }
@@ -50,6 +51,17 @@
                 }
             }
         }
+    }
+}
+.mat-typography{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    mat-form-field{
+        width: 100%;
+    }
+    button{
+        margin-top: 10px;
     }
 }
 .selected-row{
