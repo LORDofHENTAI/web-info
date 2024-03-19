@@ -54,9 +54,8 @@ import { PricesComponent } from './product-manager/components/prices/prices.comp
 import { MatIconModule } from '@angular/material/icon';
 import { UserSettingsComponent } from './common/components/dialog-windows/user-settings/user-settings.component';
 import { PricePrintWindowFiltred } from './product-price-manager/product-price-list-form/product-price-list-form.component';
-import { PitsItemsComponent } from './product-pits-manager/components/pits-items.component/pits-items.component'
+import { PitsItemsComponent, PitsItemFileDialog, PitsLogsComponent } from './product-pits-manager/components/pits-items.component/pits-items.component'
 import { PitsComponent, PitsDialogComponent } from './product-pits-manager/components/pits-component/pits.component'
-import { PitsLogsComponent } from './product-pits-manager/components/pits-items.component/pits-items.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -99,7 +98,8 @@ import { PitsLogsComponent } from './product-pits-manager/components/pits-items.
     PitsItemsComponent,
     PitsComponent,
     PitsLogsComponent,
-    PitsDialogComponent
+    PitsDialogComponent,
+    PitsItemFileDialog
   ],
   imports: [
     AppRoutingModule,

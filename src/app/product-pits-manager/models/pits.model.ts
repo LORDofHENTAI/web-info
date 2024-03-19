@@ -4,6 +4,7 @@ export class Pits {
         public doc_date: Date,
         public department: string,
         public status: string,
-        public storeLoc: string
+        public storeLoc: string,
+        public token?: string
     ) { }
 }

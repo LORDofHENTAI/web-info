@@ -1,0 +1,64 @@
+<div class="header" *ngIf="showLoadingBar === false && showFilter === false">
+    <h2>Импорт</h2>
+</div>
+<mat-dialog-content class="mat-typography">
+    <div class="dialog-conteiner" *ngIf="showLoadingBar === false && showFilter === false">
+        <div class="print-conteiner">
+            <div class="input__wrapper">
+                <input name="file" type="file" name="file" id="input__file" class="input input__file"
+                    (change)="selectFile($event)"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .dat">
+                <label for="input__file" class="input__file-button">
+                    <span class="input__file-icon-wrapper">
+                        <span class="material-icons">
+                            file_download
+                        </span>
+                    </span>
+                    <span class="input__file-button-text">{{selectedFileName}}</span>
+                </label>
+            </div>
+            <div class="print-conteiner-box">
+                <div class="pic-box">
+                    <img src="../../../../assets/1200px-microsoft_excel_2013_logo.svg_.png" alt="">
+                </div>
+                <button mat-stroked-button matTooltip="Загрузка Excel файла"
+                    (click)="upload('Excel')">Загрузить</button>
+            </div>
+            <div class="print-conteiner-box">
+                <div class="pic-box">
+                    <img src="../../../../assets/dat.png" alt="" class="dat">
+                </div>
+                <button mat-stroked-button class="dat" matTooltip="Загрузка DAT файла"
+                    (click)="upload('dat')">Загрузить</button>
+            </div>
+        </div>
+    </div>
+    <div class="loader" *ngIf="showLoadingBar === true">
+        <div class="box">
+            <span data-text="LOADING...">LOADING...</span>
+        </div>
+    </div>
+    <div *ngIf="showFilter === true">
+        <h2>Выбор категории/фильтра.</h2>
+        <div>
+            <div class="listOfCatFormat">
+                <div class="formatList">
+                    <mat-list role="list" *ngFor="let f of uploadReq.filters">
+                        <mat-list-item role="listitem">
+                            <mat-checkbox class="example-margin" (change)="checkFormat(f, $event)">
+                                {{f}}
+                            </mat-checkbox>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button mat-raised-button color="primary" class="filtred" (click)="filterFunction()">Фильтровать</button>
+            <button mat-raised-button color="warn" class="cancel" (click)="closeDialog()">Отмена </button>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" *ngIf="showLoadingBar === false && showFilter === false">
+    <button mat-button cdkFocusInitial [mat-dialog-close]="null">Закрыть</button>
+</mat-dialog-actions>

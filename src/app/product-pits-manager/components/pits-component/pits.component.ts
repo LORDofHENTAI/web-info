@@ -43,7 +43,10 @@ export class PitsComponent implements OnInit {
 
     ngOnInit(): void {
         this.getShopList()
-        this.GetPitList()
+        if (this.tokenService.getGroup() != 'Товарник')
+            this.GetMyPits()
+        else
+            this.GetPitList()
         this.getDepartmentsList()
     }
     GetPitList() {
@@ -82,7 +85,6 @@ export class PitsComponent implements OnInit {
     }
     getShopList() {
         this.shopService.getShops().subscribe(response => {
-            console.log(response)
             if (response)
                 this.shops = response;
         },
@@ -104,8 +106,12 @@ export class PitsComponent implements OnInit {
         this.selectedPit = element
     }
     openPitItems() {
-        this.PitsItemsOpened = !this.PitsItemsOpened
-        this.GetPitList()
+        if (this.checkDocToken() == false) {
+            this.PitsItemsOpened = !this.PitsItemsOpened
+            this.GetPitList()
+        } else {
+            this.snackBarService.openRedSnackBar('Чужой документ')
+        }
     }
     addProductToOrder(element: string) {
         this.pitsItem.addProductToOrder(element)
@@ -146,6 +152,17 @@ export class PitsComponent implements OnInit {
                 console.log(error);
             }
         })
+    }
+    checkDocToken(): boolean {
+        let token = this.tokenService.getToken();
+        let rule = this.tokenService.getGroup();
+        if (!this.selectedRow) {
+            return true
+        }
+        if (this.selectedPit.token != token && (rule != 'Товарник' && rule != 'Руководитель направлений' && rule != 'dev')) {
+            return true
+        }
+        return false
     }
 }
 

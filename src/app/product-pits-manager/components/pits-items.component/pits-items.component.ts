@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular
 import { PitsService } from '../../services/pits.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Pits } from '../../models/pits.model';
 import { GetPitsItems } from '../../models/get-pits-items.model';
 import { PitsList } from '../../models/pits-list.model';
@@ -15,6 +15,8 @@ import { formatDate } from '@angular/common';
 import { ApplyItem } from '../../models/apply-item.model';
 import { saveAs } from 'file-saver';
 import { PitsLogs } from '../../models/pits-logs.model';
+import { PrintUpload } from 'src/app/product-price-manager/models/print-upload';
+import { GetFilterExcelModel } from '../../models/get-filter-excel.model';
 
 @Component({
     selector: 'app-pits-items',
@@ -189,6 +191,7 @@ export class PitsItemsComponent implements OnInit {
         this.hide.emit()
     }
     StatusReader(element: string, message: string): boolean {
+        console.log(element)
         switch (element) {
             case "true":
                 this.snackBarService.openSnackGreenBar(message)
@@ -200,6 +203,10 @@ export class PitsItemsComponent implements OnInit {
                 break;
             case "null":
                 this.snackBarService.openRedSnackBar('Пустое значение')
+                return false
+                break;
+            case "block":
+                this.snackBarService.openRedSnackBar('Приход запрещен')
                 return false
                 break;
             case "error":
@@ -224,6 +231,15 @@ export class PitsItemsComponent implements OnInit {
     openDialog() {
         this.dialog.open(PitsLogsComponent, {
             data: this.data.id
+        });
+    }
+    openImportDialog() {
+        const dialogRef = this.dialog.open(PitsItemFileDialog, {
+            data: this.data.id
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (this.StatusReader(result, 'успешно'))
+                this.getPitsItems()
         });
     }
 }
@@ -254,13 +270,125 @@ export class PitsLogsComponent implements OnInit {
             }
         })
     }
+
 }
 
 @Component({
     selector: 'app-pits-items-file-dialog',
     templateUrl: './pits-items-file-dialog.html',
-    styleUrls: ['./pits-items.component.scss']
+    styleUrls: ['./pits-items-file-dialog.scss']
 })
 export class PitsItemFileDialog {
+    selectedFiles: File;
+    selectedFile: File;
+    selectedFileName: string = 'Выберите файл';
+    showLoadingBar: boolean = false;
+    showFilter: boolean = false;
+    constructor(
+        private tokenService: TokenService,
+        private pitsService: PitsService,
+        @Inject(MAT_DIALOG_DATA) public data: number,
+        public dialogRef: MatDialogRef<PitsItemsComponent>,
+    ) { }
+    selectFile(event: any): void {
+        this.selectedFileName = '';
+        this.selectedFiles = event.target.files;
+        this.selectedFileName = this.selectedFiles[0].name;
+        this.selectedFile = this.selectedFiles[0];
+    }
+    upload(type: string): void {
+        switch (type) {
+            case 'Excel':
+                this.uploadExcel()
+                break;
+            case 'dat':
+                this.uploadDat()
+                break;
+        }
+    }
+    uploadDat() {
+        this.showLoadingBar = true
+        let dat = new ImportPitsModel(this.tokenService.getToken(), String(this.data), this.tokenService.getShop(), this.selectedFile)
+        this.pitsService.ImportFromDat(dat).subscribe({
+            next: result => {
+                this.showLoadingBar = false
+                this.StatusReader(result.status)
+            },
+            error: error => {
+                console.log(error);
+                this.dialogRef.close("error");
+            }
+        })
+    }
+    uploadReq: GetFilterExcelModel
 
+    uploadExcel() {
+        this.showLoadingBar = true
+        let excel = new ImportPitsModel(this.tokenService.getToken(), String(this.data), this.tokenService.getShop(), this.selectedFile)
+        this.pitsService.FilterList(excel).subscribe({
+            next: result => {
+                this.showLoadingBar = false
+                this.uploadReq = result
+                console.log(this.uploadReq)
+                this.showFilter = true
+            },
+            error: error => {
+                console.log(error);
+                this.dialogRef.close("error");
+            }
+        })
+    }
+    checkedFormatList: string[] = []
+    checkFormat(formatName: string, event: any) {
+        if (event.checked === true) {
+            this.checkedFormatList.push(formatName);
+        }
+        else {
+            const index = this.checkedFormatList.indexOf(formatName);
+            if (index > -1) {
+                this.checkedFormatList.splice(index, 1);
+            }
+        }
+    }
+    filterFunction() {
+        this.showLoadingBar = true
+        this.showFilter = false
+        this.uploadReq.filters = this.checkedFormatList
+        this.pitsService.ImportFromExcel(this.uploadReq).subscribe({
+            next: result => {
+                this.showLoadingBar = false
+                this.StatusReader(result.status)
+            },
+            error: error => {
+                console.log(error)
+            }
+        })
+    }
+    closeDialog() {
+        this.pitsService.CancelImport(this.uploadReq).subscribe({
+            next: res => {
+                this.dialogRef.close(res.status)
+            },
+            error: error => {
+                console.log(error);
+            }
+        })
+    }
+
+    StatusReader(element: string) {
+        switch (element) {
+            case "true":
+                this.dialogRef.close("true");
+                break;
+            case "BadAuth":
+                this.dialogRef.close("BadAuth");
+                break;
+            case "null":
+                this.dialogRef.close("null");
+                break;
+            case "error":
+                this.dialogRef.close("error");
+                break;
+        }
+    }
 }

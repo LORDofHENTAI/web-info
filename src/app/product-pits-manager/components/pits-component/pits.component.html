@@ -4,8 +4,8 @@
     <div class="control-conteiner">
         <div class="button-conteiner">
             <button mat-raised-button (click)="createPit()">Новый документ</button>
-            <button mat-raised-button (click)="openPitItems()" [disabled]="!selectedRow">Просмотр</button>
-            <button mat-raised-button (click)="DeletePit()" [disabled]="!selectedRow" style="color: red;">
+            <button mat-raised-button (click)="openPitItems()" [disabled]="checkDocToken()">Просмотр</button>
+            <button mat-raised-button (click)="DeletePit()" [disabled]="checkDocToken()" style="color: red;">
                 Удалить
             </button>
         </div>

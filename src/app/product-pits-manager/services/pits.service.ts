@@ -16,6 +16,7 @@ import { ImportPitsModel } from '../models/import-pits.model'
 import { ApplyItem } from '../models/apply-item.model'
 import { PitsLogs } from '../models/pits-logs.model'
 import { SearchPitModel } from '../models/search-pit-model'
+import { GetFilterExcelModel } from '../models/get-filter-excel.model'
 @Injectable({
     providedIn: 'root'
 })
@@ -41,6 +42,8 @@ export class PitsService {
     searchPitURL = environment.apiUrl + 'SearchPit'
     deletePitURL = environment.apiUrl + 'DeletePit'
     importFromExcelURL = environment.apiUrl + 'ImportFromExcel'
+    filterListURL = environment.apiUrl + 'FilterList'
+    cancelImportURL = environment.apiUrl + 'CancelImport'
 
     GetPits(data: GetPitsModel): Observable<Pits[]> {
         return this.http.post<Pits[]>(this.getPitsURL, data)
@@ -96,12 +99,19 @@ export class PitsService {
     DeletePit(data: SearchPitModel): Observable<StatusMsg> {
         return this.http.post<StatusMsg>(this.deletePitURL, data)
     }
-    ImportFromExcel(data: ImportPitsModel): Observable<StatusMsg> {
+    ImportFromExcel(data: GetFilterExcelModel): Observable<StatusMsg> {
+        return this.http.post<StatusMsg>(this.importFromExcelURL, data)
+    }
+    FilterList(data: ImportPitsModel): Observable<GetFilterExcelModel> {
         let input = new FormData();
+        input.append("token", data.token)
         input.append("docId", data.docId)
         input.append("storeLoc", data.storeLoc)
         input.append("file", data.file)
-        return this.http.post<StatusMsg>(this.importFromExcelURL, input)
+        return this.http.post<GetFilterExcelModel>(this.filterListURL, input)
+    }
+    CancelImport(data: GetFilterExcelModel): Observable<StatusMsg> {
+        return this.http.post<StatusMsg>(this.cancelImportURL, data)
     }
 }
 

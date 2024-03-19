@@ -20,13 +20,8 @@
                 </button>
             </div>
             <div>
-                <div style="display: none;">
-                    <input name="file" type="file" name="file" id="input__file" (change)="selectFile($event)"
-                        accept=".dat">
-                    <label for="input__file"></label>
-                </div>
                 <button mat-raised-button [disabled]="editableMode || data.status != 'Черновик'"
-                    onclick="document.getElementById('input__file').click();">
+                    (click)="openImportDialog()">
                     Импорт
                 </button>
             </div>
@@ -41,7 +36,8 @@
             </div>
         </div>
 
-        <div class="admin-conteiner" *ngIf="jobTitle === 'Товарник' || jobTitle === 'dev'">
+        <div class="admin-conteiner"
+            *ngIf="jobTitle === 'Товарник' || jobTitle === 'dev' || jobTitle === 'Руководитель направлений'">
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Выберите дату поставки</mat-label>
