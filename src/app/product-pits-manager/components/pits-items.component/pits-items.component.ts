@@ -59,16 +59,19 @@ export class PitsItemsComponent implements OnInit {
     }
     addProductToOrder(element: string) {
         if (this.data.status == "Черновик") {
-            this.pitsService.AddPitsItem(new AddPitsItem(this.tokenService.getToken(), this.tokenService.getShop(), this.data.id, element)).subscribe({
-                next: result => {
-                    if (this.StatusReader(result.status, 'Добавлено в документ'))
-                        this.getPitsItems()
-                },
-                error: error => {
-                    console.log(error)
-                    this.snackBarService.openRedSnackBar()
-                }
-            })
+            if (this.data.token == this.tokenService.getToken() || this.tokenService.getTitle() == 'Директор') {
+                this.pitsService.AddPitsItem(new AddPitsItem(this.tokenService.getToken(), this.tokenService.getShop(), this.data.id, element)).subscribe({
+                    next: result => {
+                        if (this.StatusReader(result.status, 'Добавлено в документ'))
+                            this.getPitsItems()
+                    },
+                    error: error => {
+                        console.log(error)
+                        this.snackBarService.openRedSnackBar()
+                    }
+                })
+            } else
+                this.snackBarService.openRedSnackBar('Чужой документ')
         } else
             this.snackBarService.openRedSnackBar('Только черновик')
     }
@@ -242,6 +245,44 @@ export class PitsItemsComponent implements OnInit {
                 this.getPitsItems()
         });
     }
+    checkRole(): boolean {
+        let role = this.tokenService.getTitle()
+        if (this.data.token != this.tokenService.getToken() && (role != "Товарник" && role != "dev" && role != "Руководитель направлений")) {
+            if (this.data.status == "Черновик") {
+                if (role == "Директор") {
+                    return false
+                }
+                return true
+            }
+            return true
+        }
+        return false;
+    }
+    // checkDocToken(pit: Pits): boolean {
+    //     let token = this.tokenService.getToken();
+    //     let rule = this.tokenService.getTitle();
+    //     if (!this.selectedRow) {
+    //         return true
+    //     } else {
+    //         if ((this.selectedPit.token != token && (rule != 'Товарник' && rule != 'Руководитель направлений' && rule != 'dev'))) {
+    //             if (rule == 'Директор') {
+    //                 let dep = this.tokenService.getGroup()
+    //                 let check = true
+    //                 this.shops.forEach(element => {
+    //                     if (String(element.id) == dep) {
+    //                         if (element.name == pit.storeLoc) {
+    //                             check = false
+    //                         }
+    //                     }
+    //                 });
+    //                 return check
+    //             }
+    //             return true
+    //         } else {
+    //             return false
+    //         }
+    //     }
+    // }
 }
 
 @Component({

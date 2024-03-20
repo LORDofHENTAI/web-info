@@ -43,7 +43,7 @@ export class PitsComponent implements OnInit {
 
     ngOnInit(): void {
         this.getShopList()
-        if (this.tokenService.getGroup() != 'Товарник')
+        if (this.tokenService.getTitle() != 'Товарник')
             this.GetMyPits()
         else
             this.GetPitList()
@@ -106,7 +106,7 @@ export class PitsComponent implements OnInit {
         this.selectedPit = element
     }
     openPitItems() {
-        if (this.checkDocToken() == false) {
+        if (this.checkDocToken(this.selectedPit) == false) {
             this.PitsItemsOpened = !this.PitsItemsOpened
             this.GetPitList()
         } else {
@@ -153,16 +153,30 @@ export class PitsComponent implements OnInit {
             }
         })
     }
-    checkDocToken(): boolean {
+    checkDocToken(pit: Pits): boolean {
         let token = this.tokenService.getToken();
-        let rule = this.tokenService.getGroup();
+        let rule = this.tokenService.getTitle();
         if (!this.selectedRow) {
             return true
+        } else {
+            if ((this.selectedPit.token != token && (rule != 'Товарник' && rule != 'Руководитель направлений' && rule != 'dev'))) {
+                if (rule == 'Директор') {
+                    let dep = this.tokenService.getGroup()
+                    let check = true
+                    this.shops.forEach(element => {
+                        if (String(element.id) == dep) {
+                            if (element.name == pit.storeLoc) {
+                                check = false
+                            }
+                        }
+                    });
+                    return check
+                }
+                return true
+            } else {
+                return false
+            }
         }
-        if (this.selectedPit.token != token && (rule != 'Товарник' && rule != 'Руководитель направлений' && rule != 'dev')) {
-            return true
-        }
-        return false
     }
 }
 

@@ -152,7 +152,7 @@ export class TokenService {
         let fullData = this.cookieService.get(this.cookieName);
         let loginFromCookie = JSON.parse(fullData);
         if (loginFromCookie) {
-          return loginFromCookie.title;
+          return loginFromCookie.department;
         }
       }
       else return '';

@@ -9,7 +9,7 @@
                 <button mat-raised-button *ngIf="editableMode" (click)="[editableModeON(), updateDocItems()]">
                     Сохранить
                 </button>
-                <button mat-raised-button *ngIf="!editableMode" (click)="editableModeON()">
+                <button mat-raised-button *ngIf="!editableMode" [disabled]="checkRole()" (click)="editableModeON()">
                     Редактировать
                 </button>
                 <button mat-raised-button [disabled]="editableMode" (click)="printPit()">
@@ -20,16 +20,17 @@
                 </button>
             </div>
             <div>
-                <button mat-raised-button [disabled]="editableMode || data.status != 'Черновик'"
+                <button mat-raised-button [disabled]="editableMode || data.status != 'Черновик' || checkRole()"
                     (click)="openImportDialog()">
                     Импорт
                 </button>
             </div>
             <div>
-                <button mat-raised-button [disabled]="editableMode || data.status != 'Черновик'" (click)="clearDoc()">
+                <button mat-raised-button [disabled]="editableMode || data.status != 'Черновик' ||checkRole()"
+                    (click)="clearDoc()">
                     Очистить
                 </button>
-                <button mat-raised-button [disabled]="editableMode || data.status != 'Черновик'"
+                <button mat-raised-button [disabled]="editableMode || data.status != 'Черновик' ||checkRole()"
                     (click)="DeliteDocItem()">
                     Удалить
                 </button>
@@ -49,7 +50,7 @@
                     Добавить дату поставки
                 </button>
             </div>
-            <div>
+            <!-- <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Введите поставщика</mat-label>
                     <input matInput [(ngModel)]="provider">
@@ -57,16 +58,20 @@
                 <button mat-raised-button [disabled]="editableMode" (click)="PitsItemSuply()">
                     Добавить поставщика
                 </button>
-            </div>
+            </div> -->
             <button mat-raised-button (click)="openDialog()">
                 История документа
             </button>
         </div>
         <div class="accept-conteiner" *ngIf="data.status ==='Заказано поставщику'">
-            <button mat-raised-button [disabled]='!selectedRow' (click)="ApplyItem('true')">
+            <button mat-raised-button
+                [disabled]="!selectedRow || jobTitle === 'Товарник'|| jobTitle === 'Руководитель направлений'"
+                (click)="ApplyItem('true')">
                 Принят
             </button>
-            <button mat-raised-button [disabled]='!selectedRow' (click)="ApplyItem('false')">
+            <button mat-raised-button
+                [disabled]="!selectedRow || jobTitle === 'Товарник'|| jobTitle === 'Руководитель направлений'"
+                (click)="ApplyItem('false')">
                 Отсутствует
             </button>
         </div>
