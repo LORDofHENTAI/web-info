@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SnackbarService } from 'src/app/common/services/snackbar/snackbar.service';
 import { TokenService } from 'src/app/common/services/token/token.service';
@@ -24,6 +24,7 @@ import { GetFiltredPrintListModel } from '../models/print-list-filtred';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { error } from '@angular/compiler/src/util';
 import { ShopSection } from '../models/ShopSection';
+import { GetFilterExcelModel } from 'src/app/product-pits-manager/models/get-filter-excel.model';
 
 @Component({
   selector: 'app-product-price-list-form',
@@ -164,16 +165,6 @@ export class ProductPriceListFormComponent implements OnInit {
     });
   }
 
-  openPrintListDialogFilter() {
-    const dialogRef = this.dialog.open(PricePrintWindowFiltred,
-      {
-        disableClose: true,
-      }
-    );
-  }
-
-
-
   getPriceFormatList() {
     this.productPriceService.getPriceFormat(new GetPriceTemp(this.tokenService.getToken())).subscribe(response => {
       console.log(response);
@@ -214,11 +205,10 @@ export class ProductPriceListFormComponent implements OnInit {
 
 export class PricePrintDialog implements OnInit {
 
-  priceFromFile = false;
-  selectSection: boolean = false
+  priceFromFile = true;
   shopSections: ShopSection[]
-  selectedSection: string
   showLoadingBar = false;
+  showFilterConteiner: boolean = false
   type: string;
 
   ngOnInit(): void {
@@ -228,7 +218,8 @@ export class PricePrintDialog implements OnInit {
     private productPriceService: ProductPriceService,
     private tokenService: TokenService,
     public dialog: MatDialog,
-    public dialogRef: MatDialogRef<ProductPriceListFormComponent>,) { }
+    public dialogRef: MatDialogRef<ProductPriceListFormComponent>,
+    public printService: ProductPriceService,) { }
 
   selectedFiles: File;
   selectedFile: File;
@@ -246,36 +237,21 @@ export class PricePrintDialog implements OnInit {
   maxPercent: string
   actionDate: string
   showParams: boolean = true;
+
   upload(type: string): void {
     this.showLoadingBar = true;
-    console.log(this.selectSection);
-
-
-    this.productPriceService.uploadList(new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.selectSection, this.selectedSection, this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent), type).subscribe(
+    let print = new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent)
+    this.productPriceService.uploadList(print, type).subscribe(
       responce => {
-        console.log(this.selectedSection)
         this.showLoadingBar = false;
-        if (type === 'mile') {
-          let dialogRef = this.dialog.open(PricePrintWindowFiltred, {
-            data: { responce }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            if (result === "canceled") {
-              this.dialogRef.close("canceled");
-            }
-            else {
-              this.dialogRef.close("true");
-            }
-          })
-        }
-        else
-          this.dialogRef.close("true");
+        this.dialogRef.close("true");
       },
       error => {
         this.showLoadingBar = false;
         console.log(error);
       });
   }
+
   getshopSections() {
     this.productPriceService.getShopSections().subscribe({
       next: res => {
@@ -286,65 +262,91 @@ export class PricePrintDialog implements OnInit {
       }
     })
   }
-}
 
-@Component({
-  selector: 'price-print-window-filtred',
-  templateUrl: 'dialog-window/price-print-window-filtred.html',
-  styleUrls: ['dialog-window/price-print-window.scss']
-})
+  filters: GetFiltredPrintListModel
+  uploadMile() {
+    this.showLoadingBar = true;
+    let print = new PrintUpload(this.tokenService.getToken(), this.selectedFile, this.priceFromFile, this.tokenService.getShop(), this.tokenService.getType(), this.actionDate, this.maxPercent)
+    this.productPriceService.FilterMile(print).subscribe({
+      next: responce => {
+        this.showFilterConteiner = true
+        console.log(responce);
 
-export class PricePrintWindowFiltred implements OnInit {
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<PricePrintWindowFiltred>,
-    public printService: ProductPriceService,
-    public tokenService: TokenService
-  ) { }
-  formatList: string[] = [];
-  categoryList: string[] = [];
-  checkedFormatList: string[] = [];
-  checkedCategoryList: string[] = [];
-  ngOnInit(): void {
-    this.formatList = this.data.responce.formats;
-    this.categoryList = this.data.responce.categories;
-  }
-  closeDialog() {
-    this.dialogRef.close("canceled");
-  }
-  checkFormat(formatName: string, event: any, categoryName: string) {
-    if (categoryName === "category") {
-      if (event.checked === true) {
-        this.checkedCategoryList.push(formatName);
+        this.filters = responce
+      },
+      error: error => {
+        this.showLoadingBar = false;
+        this.showFilterConteiner = false
+        console.log(error);
       }
-      else {
-        const index = this.checkedCategoryList.indexOf(formatName);
-        if (index > -1) {
-          this.checkedCategoryList.splice(index, 1);
-        }
-      }
-    }
-    else {
-      if (event.checked === true) {
-        this.checkedFormatList.push(formatName);
-      }
-      else {
-        const index = this.checkedFormatList.indexOf(formatName);
-        if (index > -1) {
-          this.checkedFormatList.splice(index, 1);
-        }
-      }
-    }
-
-  }
-  filterFunction() {
-    this.printService.getFiltredPrintList(new GetFiltredPrintListModel(this.checkedCategoryList, this.checkedFormatList, this.tokenService.getToken())).subscribe(result => {
-      this.dialogRef.close('true');
-    }, error => {
-      console.log(error);
     })
   }
 
+  checkedSectionList: string[] = []
+  checkedFormatList: string[] = [];
+  checkedCategoryList: string[] = [];
+  //#region checkBoxMethod
+  checkFormat(formatName: string, event: any) {
+    if (event.checked === true) {
+      this.checkedFormatList.push(formatName);
+    }
+    else {
+      const index = this.checkedFormatList.indexOf(formatName);
+      if (index > -1) {
+        this.checkedFormatList.splice(index, 1);
+      }
+    }
+  }
+  checkCategorys(formatName: string, event: any) {
+    if (event.checked === true) {
+      this.checkedCategoryList.push(formatName);
+    }
+    else {
+      const index = this.checkedCategoryList.indexOf(formatName);
+      if (index > -1) {
+        this.checkedCategoryList.splice(index, 1);
+      }
+    }
+  }
+  checkSections(formatName: string, event: any) {
+    if (event.checked === true) {
+      this.checkedSectionList.push(formatName);
+    }
+    else {
+      const index = this.checkedSectionList.indexOf(formatName);
+      if (index > -1) {
+        this.checkedSectionList.splice(index, 1);
+      }
+    }
+  }
+  //#endregion
 
-
+  ImportExcel() {
+    this.showFilterConteiner = false
+    this.filters.categories = this.checkedCategoryList
+    this.filters.sections = this.checkedSectionList
+    this.filters.formats = this.checkedFormatList
+    this.printService.ImportFromExcel(this.filters).subscribe({
+      next: responce => {
+        this.dialogRef.close("true")
+        this.showLoadingBar = false;
+      },
+      error: error => {
+        console.log(error);
+        this.showLoadingBar = false;
+      }
+    })
+  }
+  CancelImport() {
+    this.showFilterConteiner = false
+    this.printService.CancelExcel(this.filters).subscribe({
+      next: result => {
+        this.dialogRef.close("true");
+      },
+      error: error => {
+        console.log(error);
+        this.showLoadingBar = false;
+      }
+    })
+  }
 }

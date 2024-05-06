@@ -1,9 +1,9 @@
-<div class="header" *ngIf="showLoadingBar === false">
+<div class="header" *ngIf="showLoadingBar === false && !showFilterConteiner">
     <h2>Загрузка акционного файла</h2>
     <mat-slide-toggle [(ngModel)]="showParams">Дополнительные параметры</mat-slide-toggle>
 </div>
 <mat-dialog-content class="mat-typography">
-    <div class="dialog-conteiner" *ngIf="showLoadingBar === false">
+    <div class="dialog-conteiner" *ngIf="showLoadingBar === false && !showFilterConteiner">
         <div class="print-conteiner">
             <div class="input__wrapper">
                 <input name="file" type="file" name="file" id="input__file" class="input input__file"
@@ -23,7 +23,7 @@
                     <img src="../../../../assets/1200px-microsoft_excel_2013_logo.svg_.png" alt="">
                 </div>
                 <button mat-stroked-button matTooltip="Загрузка акционного Excel файла для Mile"
-                    (click)="upload(type='mile')" [disabled]="selectSection && !selectedSection" >Загрузить</button>
+                    (click)="uploadMile()">Загрузить</button>
             </div>
             <div class="print-conteiner-box">
                 <div class="pic-box">
@@ -49,30 +49,65 @@
                 <mat-label>Отоброжаемый процент</mat-label>
                 <input matInput [(ngModel)]="maxPercent">
             </mat-form-field>
-            <mat-form-field appearance="outline" style="width: 100%;">
-                <mat-label>Выберите секцию</mat-label>
-                <mat-select [(ngModel)]="selectedSection"
-                    [disabled]="selectSection === false">
-                    <mat-option  *ngFor="let d of shopSections" [value]="d.name">{{d.name}} </mat-option>
-                </mat-select>
-            </mat-form-field>
-
         </div>
     </div>
     <div class="price-from-file-box">
         <mat-checkbox class="example-margin" [(ngModel)]="priceFromFile" *ngIf="showLoadingBar === false">Взять цену из
             файла</mat-checkbox>
-
     </div>
-    <div class="price-from-file-box"><mat-checkbox class="example-margin2" [(ngModel)]="selectSection"
-            *ngIf="showLoadingBar === false">Брать только секцию?</mat-checkbox>
-        </div>
-
-    <div class="loader" *ngIf="showLoadingBar === true">
+    <div class="loader" *ngIf="showLoadingBar === true && !showFilterConteiner">
         <div class="box">
             <span data-text="LOADING...">LOADING...</span>
         </div>
     </div>
+    <ng-container *ngIf="showFilterConteiner">
+        <h2>Выбор категории/фильтра.</h2>
+        <div>
+            <div class="listOfCatFormat">
+                <div class="filter-case">
+                    <div class="list-conteiner">
+                        <span>Категория ценника</span>
+                        <mat-list role="list" *ngFor="let c of filters.categories">
+                            <mat-list-item role="listitem">
+                                <mat-checkbox class="example-margin"
+                                    (change)="checkCategorys(c, $event)">{{c}}</mat-checkbox>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                    <div class="list-conteiner">
+                        <span>Формат ценника</span>
+                        <mat-list role="list" *ngFor="let format of filters.formats">
+                            <mat-list-item role="listitem">
+                                <mat-checkbox class="example-margin"
+                                    (change)="checkFormat(format, $event)">{{format}}</mat-checkbox>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+                <div class="filter-case">
+                    <div class="list-conteiner">
+                        <span>Секция</span>
+                        <mat-list role="list" *ngFor="let s of filters.sections">
+                            <mat-list-item role="listitem">
+                                <mat-checkbox class="example-margin"
+                                    (change)="checkSections(s, $event)">{{s}}</mat-checkbox>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <button mat-raised-button color="primary" class="filtred" (click)="ImportExcel()"
+                [disabled]="checkedFormatList.length ===0 || checkedCategoryList.length ===0 || checkedSectionList.length === 0">
+                Фильтровать
+            </button>
+            <button mat-raised-button color="warn" class="cancel" (click)="CancelImport()">
+                Отменить
+            </button>
+        </div>
+    </ng-container>
+
 </mat-dialog-content>
 <mat-dialog-actions align="end" *ngIf="showLoadingBar === false">
     <button mat-button cdkFocusInitial [mat-dialog-close]="null">Закрыть</button>

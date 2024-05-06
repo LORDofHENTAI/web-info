@@ -3,7 +3,7 @@ export class GetFiltredPrintListModel {
         public categories: string[],
         public formats: string[],
         public token: string,
-        public sections: string[],
+        public section: string[],
         public fileName: string,
         public articleColumn: number,
         public sectionColumn: number,

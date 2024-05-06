@@ -1,4 +1,3 @@
-
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -53,7 +52,6 @@ import { OrderingDialog } from './product-ordering-manager/product-ordering-list
 import { PricesComponent } from './product-manager/components/prices/prices.component';
 import { MatIconModule } from '@angular/material/icon';
 import { UserSettingsComponent } from './common/components/dialog-windows/user-settings/user-settings.component';
-import { PricePrintWindowFiltred } from './product-price-manager/product-price-list-form/product-price-list-form.component';
 import { PitsItemsComponent, PitsItemFileDialog, PitsLogsComponent } from './product-pits-manager/components/pits-items.component/pits-items.component'
 import { PitsComponent, PitsDialogComponent } from './product-pits-manager/components/pits-component/pits.component'
 @NgModule({
@@ -94,7 +92,6 @@ import { PitsComponent, PitsDialogComponent } from './product-pits-manager/compo
     PricesComponent,
     OrderingCheckDialog,
     UserSettingsComponent,
-    PricePrintWindowFiltred,
     PitsItemsComponent,
     PitsComponent,
     PitsLogsComponent,

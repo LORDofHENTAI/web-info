@@ -282,6 +282,7 @@ mat-dialog-content {
 
 .listOfCatFormat {
     display: flex;
+    flex-direction: column;
 }
 
 .buttons {
@@ -302,16 +303,19 @@ mat-dialog-content {
     height: 50px;
 }
 
-.formatList {
-    padding: 10px 30px;
-    border: inset 3px #42B3ED;
-    margin: 5px;
-    border-radius: 20px;
+.filter-case{
+    width: 100%;
+    display: flex;
 }
-
-.categoryList {
+.list-conteiner{
     padding: 10px 30px;
     border: inset 3px #42B3ED;
     margin: 5px;
     border-radius: 20px;
+    width: 100%;
+    height: 200px;
+    overflow: auto;
+    span{
+        font-weight: bold;
+    }
 }
