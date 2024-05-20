@@ -283,20 +283,8 @@ export class PricePrintDialog implements OnInit {
   }
 
   checkedSectionList: string[] = []
-  checkedFormatList: string[] = [];
   checkedCategoryList: string[] = [];
   //#region checkBoxMethod
-  checkFormat(formatName: string, event: any) {
-    if (event.checked === true) {
-      this.checkedFormatList.push(formatName);
-    }
-    else {
-      const index = this.checkedFormatList.indexOf(formatName);
-      if (index > -1) {
-        this.checkedFormatList.splice(index, 1);
-      }
-    }
-  }
   checkCategorys(formatName: string, event: any) {
     if (event.checked === true) {
       this.checkedCategoryList.push(formatName);
@@ -325,7 +313,6 @@ export class PricePrintDialog implements OnInit {
     this.showFilterConteiner = false
     this.filters.categories = this.checkedCategoryList
     this.filters.sections = this.checkedSectionList
-    this.filters.formats = this.checkedFormatList
     this.printService.ImportFromExcel(this.filters).subscribe({
       next: responce => {
         this.dialogRef.close("true")

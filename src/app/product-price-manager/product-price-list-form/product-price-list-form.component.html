@@ -18,7 +18,6 @@
                     <mat-option *ngFor="let size of priceFormat" [value]="size.id">{{size.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
-
             <mat-form-field appearance="outline">
                 <mat-label>Тип</mat-label>
                 <mat-select [(value)]="styleFileName">
@@ -51,14 +50,11 @@
                         <img class="card-item-img" *ngIf="price.img" src="{{price.img | urlImg}}">
                         <img width="40px" height="40px" *ngIf="!price.img" src="../../../../../assets/no_photo.png">
                     </div>
-
                     <div class="col-2">Артикул: {{price.article}}</div>
-
                     <div class="col-8">
                         <div class="row card-item-name">{{price.name}}</div>
                         <div class="row"> Цена / {{price.mesname}} : {{price.price}}</div>
                     </div>
-
                     <div class="col-1 mx-auto">
                         <button mat-icon-button>
                             <mat-icon matTooltip="Удалить позицию" (click)="onDeleteItem(price)">delete</mat-icon>
